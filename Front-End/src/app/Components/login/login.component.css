@@ -1,0 +1,269 @@
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    width: 600px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 30px 40px 30px;
+    box-shadow: 0 1px 5px #00000067;
+    position: relative;
+  }
+  
+  form{
+    width: 70%;
+  }
+  
+  .header-title{
+    padding: 20px 30px;
+  }
+  
+  .field{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 2rem 0;
+  }
+  
+  .pass-field{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1.5px solid #dfdfdf;
+    border-radius: 4px;
+    transition: .3s ease-in;
+  }
+  
+  .field .pass-field input{
+    width: calc(100% - 40px);
+    border: 1.5px solid transparent;
+  }
+  
+  .field .pass-field input:focus{
+    outline: none;
+  }
+  
+  .field .pass-field:focus-within{
+    border: 1.5px solid rgb(91,0,218);
+  }
+  
+  .pass-field .showIcon{
+    cursor: pointer;
+    width: 40px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .field label{
+    font-weight: bold;
+    color: #232323;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  .field input{
+    height: 40px;
+    padding: 0 10px;
+    font-size: 1rem;
+    border-style: solid;
+    transition: .3s;
+    border: 1.5px solid #dfdfdf;
+    border-radius: 4px;
+    outline: none;
+    transition: .3s ease-in;
+  }
+  
+  .field input:focus{
+    border: 1.5px solid rgb(91,0,218);
+  }
+  
+  .error-message{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+  }
+  
+  .error-message span{
+    margin: 0;
+    text-transform: capitalize;
+    color: red;
+    font-size: .9rem;
+    position: absolute;
+    top: 0;
+  }
+  
+  .error{
+    border: 1px solid red;
+  }
+  
+  .error::placeholder{
+    color: red;
+  }
+  
+  .checkbox{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .checkbox label{
+    margin: 0;
+  }
+  
+  .forgot-password a{
+    color: rgb(0, 119, 255);
+  }
+  
+  .forgot-password a:hover{
+    text-decoration: underline;
+  }
+  
+  .bottom-content{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0 2rem 0;
+  }
+  
+  .checkbox input{
+    accent-color: rgb(91,0,218);
+  }
+  
+  .btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+  }
+  
+  .btn-submit{
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: rgb(91, 0, 238);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+  }
+  
+  .help{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    font-size: 1.2rem;
+    margin: 1.5rem 0;
+  }
+  
+  .header-help{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    margin: 16px 0;
+  }
+  
+  .header-help span{
+    font-size: .9rem;
+    font-weight: bold;
+    color: #818181a8;
+  }
+  
+  .line{
+    width: 120px;
+    height: 1px;
+    background-color: #81818181;
+  }
+  
+  .help button{
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background: transparent;
+    letter-spacing: 2px;
+    color: #323232;
+    border: 2px solid #323232;
+    border-radius: 4px;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .help button:hover{
+    background-color: #323232;
+    color: #fff;
+  }
+  
+  .icon-out{
+    position: absolute;
+    left: 30px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  
+  .icon-out:hover{
+    background-color: rgba(224, 224, 224, 0.548);
+  }
+  
+  /* RESPONSIVIDADE */
+  
+  @media (max-width: 670px){
+    .container{
+      width: 450px;
+    }
+  
+    .container h1{
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 520px){
+    .container{
+      width: 100%;
+      box-shadow: none;
+      position: absolute;
+      top: 0;
+      height: 100vh;
+      padding: 10px;
+    }
+    .container h1{
+      display: none;
+    }
+  
+    .bottom-content{
+      width: 100%;
+      gap: 20px;
+      font-size: .8rem;
+    }
+  
+    .help{
+      width: 70%;
+      font-size: .9rem;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+  }
+  
