@@ -1,0 +1,15 @@
+<app-header></app-header>
+<main>
+  <!-- CARDS COM AS AÇÕES DO USUÁRIO -->
+  <section class="action-cards">
+    <div class="card" *ngFor="let card of cards">
+      <div class="icon">
+        <i class="fa-solid" ngClass="{{card.icone}}"></i>
+      </div>
+      <div class="text-card">
+        <span>{{card.nome}}</span>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>
