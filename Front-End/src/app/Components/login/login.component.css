@@ -16,6 +16,7 @@ main {
     padding: 15px 30px 40px 30px;
     box-shadow: 0 1px 5px #00000067;
     position: relative;
+    margin-top: 70px;
   }
   
   form{
@@ -53,7 +54,7 @@ main {
   }
   
   .field .pass-field:focus-within{
-    border: 1.5px solid rgb(91,0,218);
+    border: 1.5px solid #8c52ff;
   }
   
   .pass-field .showIcon{
@@ -84,7 +85,7 @@ main {
   }
   
   .field input:focus{
-    border: 1.5px solid rgb(91,0,218);
+    border: 1.5px solid #8c52ff;
   }
   
   .error-message{
@@ -130,14 +131,6 @@ main {
     text-decoration: underline;
   }
   
-  .bottom-content{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1rem 0 2rem 0;
-  }
-  
   .checkbox input{
     accent-color: rgb(91,0,218);
   }
@@ -155,12 +148,15 @@ main {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    background-color: rgb(91, 0, 238);
+    background-color: #8c52ff;
     border: none;
     border-radius: 8px;
     color: #fff;
+    transition: .4s ease-in-out;
   }
-  
+  .btn-submit:hover{
+  background-color: #7244ce;
+  }
   .help{
     display: flex;
     flex-direction: column;
@@ -197,16 +193,19 @@ main {
     font-weight: bold;
     background: transparent;
     letter-spacing: 2px;
-    color: #323232;
-    border: 2px solid #323232;
+    color: #7244ce;
+    border: 2px solid #7244ce;
     border-radius: 4px;
     transition: .3s ease-in-out;
     cursor: pointer;
   }
   
   .help button:hover{
-    background-color: #323232;
+    background-color: #7244ce;
     color: #fff;
+  }
+  .detail{
+    display: none;
   }
   
   .icon-out{
@@ -227,43 +226,5 @@ main {
     background-color: rgba(224, 224, 224, 0.548);
   }
   
-  /* RESPONSIVIDADE */
-  
-  @media (max-width: 670px){
-    .container{
-      width: 450px;
-    }
-  
-    .container h1{
-      font-size: 1.5rem;
-    }
-  }
-  
-  @media (max-width: 520px){
-    .container{
-      width: 100%;
-      box-shadow: none;
-      position: absolute;
-      top: 0;
-      height: 100vh;
-      padding: 10px;
-    }
-    .container h1{
-      display: none;
-    }
-  
-    .bottom-content{
-      width: 100%;
-      gap: 20px;
-      font-size: .8rem;
-    }
-  
-    .help{
-      width: 70%;
-      font-size: .9rem;
-      flex-direction: column;
-      align-items: center;
-    }
-  
-  }
+
   

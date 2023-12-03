@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+/* Paleta de cores: 
+azul ciano: #5ce1e6
+lilás: #8c52ff
+
+*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
