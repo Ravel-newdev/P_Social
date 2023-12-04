@@ -1,56 +1,59 @@
 const express = require('express');
-const router = express.Router()
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
+const app = express()
 const path = require('path')
-const {engine} = require('express-handlebars');
-const routes = require('./routes/routes.js')
-const app = express();
-mongoose.connect('mongodb://127.0.0.1:27017/CLEE_db', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-  console.log('EITA')
-}).catch((err) => {
- console.log('pegou não', err)
-})
+const handlebars = require('express-handlebars');
+const flash = require('connect-flash')
+const session = require('express-session')
+const { abort } = require('process')
+const equip = require('./routes/equip.js')
+
+
+
 //configurações
 //public
-//app.use(express.static(path.join(__dirname,'public')))
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'))
-//body-parser
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+app.use(session({
+  secret:'id',
+  resave:true,
+  saveUninitialized: true
+}))
+
+app.use(flash())
+app.engine('handlebars', handlebars.engine({defaultLayout:'main'}));
+app.set('view engine', 'handlebars');
+
+mongoose.Promise = global.Promise
+mongoose.connect('mongodb://localhost/CLEE_T').then(() => {
+  console.log('EITA. Se conectou com sucesso!')
+}).catch((err) => {
+ console.log('Falha ao se conectar', err)
+})
+
+app.use((req,res,next)=>{ //Middleware
+  res.locals.success_msg = req.flash("success_msg")
+  res.locals.error_msg = req.flash("error_msg")
+  //res.locals.error = req.flash("error")
+  //res.locals.user = req.user || null // - Uma variavel criada pelo passport automaticamente e agora setada
+  next()
+})
+
+
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
 //public
 app.use(express.static(path.join(__dirname,"public")))
 //Handlebars
-//var handle = handlebars.create({
-//    defaultLayout: 'main'
-//    });
 
-app.post('/login/choice/add_equip', async (req, res) => {
-  const { nome, email, senha } = req.body;
 
-  // Criar um modelo Mongoose para o usuário
-  const Equip = mongoose.model('CLEE_Equip', {
-    nome,
-    status,
-    qnt_equip,
-  });
-
-  try {
-    // Salvar o usuário no MongoDB
-    const novoEquip = new Equip({ nome, email, senha });
-    await novoEquip.save();
-    res.send('Cadastro realizado com sucesso!');
-  } catch (err) {
-    res.status(500).send('Erro ao cadastrar o produto');
-  }
-});
-
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'));
 //portas
-app.use('/routes', routes)
-const porta = 7056
-app.listen(porta, () => {
-    console.log('Passando pela porta')
+
+app.get('/',(req,res)=>{
+  res.render('./index')
+  })
+
+app.use('/equip', equip)
+
+const PORT = 8081  
+app.listen(PORT, () => {
+    console.log('Passando pela porta!')
 })

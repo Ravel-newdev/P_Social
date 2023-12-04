@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const Equip = new mongoose.Schema({
+const Equip = new Schema({
 
     nome:{
         type: String,
@@ -11,7 +11,7 @@ const Equip = new mongoose.Schema({
         type: Number,
         required: true
     },
-    status_equip:{
+    status:{
        type: String,
        default: "A"
     },
@@ -19,7 +19,7 @@ const Equip = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    data_upt:{
+    data_update:{
         type: Date,
         default: Date.now
     },
