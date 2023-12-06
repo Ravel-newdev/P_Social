@@ -2,7 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const Equip = new Schema({
-
+    codigo:{
+        type: Number,
+        required:true,
+        unique: true
+       },
     nome:{
         type: String,
         required: true
