@@ -1,10 +1,14 @@
 <div class="insert_equip">
-<form action="/equip/login/choice/add_equip" method="post">
+<form action="/equip/add_equip" method="post">
     <label for="nome">Nome do equipamento</label>
     <input type="text" name="nome" id="nome" placeholder="nome">
 
     <label for="qnt">Quantidade a ser cadastrada: </label>
     <input type="number" name="qnt_equip" id="qnt_equip">
+    <select name="status" id="status">
+        <option value="A">Ativo</option>
+        <option value="I">Inativo</option>
+    </select>
     <button type="submit" id="btn" class="btn">Criar produto</button>
 </form>
 </div>

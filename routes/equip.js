@@ -1,28 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-require('../model/New_Equipamento')
-const Equip = mongoose.model("Equipamentos")
+require('../models/Equip')
+const Equips = mongoose.model("equip")
 
-router.get('/login', (req,res) => {
-    res.render('adm/login')
+router.get('/add_equip', (req,res) =>{
+    res.render('equip/add_equip')
 })
-router.get('/about', (req,res) => {
-    res.render('adm/index')
-})
-router.get('/login/choice', (req,res) => {
-    res.render('adm/choice')
-})
-router.get('/login/choice/add_equip', (req,res) =>{
-    res.render('adm/add_equip')
-})
-router.post('/login/choice/add_equip', (req, res)=>{
- const newEquip = {
+router.post('/add_equip', (req, res)=>{
+ const newEquips = {
     nome: req.body.nome,
-    qnt_equip: req.body.qnt_equip
+    qnt_estoque: req.body.qnt_equip,
+    status: req.body.status
  }
 
- new Equip(newEquip).save().then(() =>{
+ new Equips(newEquips).save().then(() =>{
     req.flash('success_msg','Salvo com sucesso!')
     res.redirect('/')
 }).catch((err) => {

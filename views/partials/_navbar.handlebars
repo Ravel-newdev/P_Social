@@ -1,9 +1,115 @@
-<link rel="stylesheet" href="style.css">
-<nav style="background-color: rgb(195, 0, 255); display:flex; flex-direction:row; align-items:center">
-    <h1 style="margin-left: 10px;">CLEE</h1>
-    <ul style="display:flex; flex-direction: row; width:200px; text-decoration:none; margin-left: 1000px">
-        <LI style="padding-right: 30px;"><a href="/adm/login">Login</a></LI>
-        <li style="padding-right: 30px;">sobre</li>
-        <li style="padding-right: 30px;">locações</li>
-    </ul>
-</nav>
+<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+        .dropdown .dropbtn {
+            font-size: 16px;  
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        .navbar a:hover, .dropdown:hover .dropbtn {
+            background-color: red;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+
+<div class="navbar">
+    <a href="/">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Usuários
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="">Visualizar Usuário</a>
+                <a href="#service2">Criar Usuário</a>
+                <a href="#service3">Atualizar Usuário</a>
+            </div>
+        </div>
+          <div class="dropdown">
+            <button class="dropbtn">Salas
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/salas/view">Visualizar Salas</a>
+                <a href="/salas/create">Criar Salas</a>
+                <a href="#service3">Atualizar Salas</a>
+            </div>
+        </div>
+          <div class="dropdown">
+            <button class="dropbtn">Equip
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#service1">Visualizar Equipamentos</a>
+                <a href="/equip/add_equip">Criar Equipamentos</a>
+                <a href="#service3">Atualizar Equipamentos</a>
+            </div>
+        </div>
+          <div class="dropdown">
+            <button class="dropbtn">Reservas
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#service1">Visualizar Reservas</a>
+                <a href="#service2">Criar Reservas</a>
+                <a href="#service3">Atualizar Reservas</a>
+            </div>
+        </div>
+
+    
+    </div>
+
+   

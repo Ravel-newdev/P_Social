@@ -7,27 +7,27 @@ const Equip = new Schema({
         type: String,
         required: true
     },
-    qnt_equip:{
+    qnt_estoque:{
         type: Number,
         required: true
     },
     status:{
        type: String,
-       default: "A"
+       required:true
     },
     data_cad:{
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     data_update:{
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     D_E_L_E_T:{
        type: String,
        default: ""
     }
 });
- const Equipamento = mongoose.model("Equipamentos", Equip)
+ const Equips = mongoose.model("equip", Equip)
 
- module.exports = Equipamento
+ module.exports = Equips
