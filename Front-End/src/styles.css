@@ -1,4 +1,4 @@
-/* Paleta de cores: 
+/* Paleta de cores:
 azul ciano: #5ce1e6
 lilás: #8c52ff
 */
@@ -9,4 +9,9 @@ lilás: #8c52ff
   list-style: none;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
+}
+
+html, body{
+  width: 100%;
+  min-height: 100vh;
 }

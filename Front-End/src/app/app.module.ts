@@ -9,6 +9,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { HomeComponent } from './Components/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './modules/user/pages/dashboard/dashboard.component';
+import { RelationRoomsComponent } from './modules/user/pages/relation-rooms/relation-rooms.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,17 @@ import { FooterComponent } from './shared/footer/footer.component';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DashboardComponent,
+    RelationRoomsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

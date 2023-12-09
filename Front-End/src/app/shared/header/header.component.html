@@ -2,7 +2,23 @@
   <div class="logo">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/768px-LEGO_logo.svg.png" alt="LOGO CLEE">
   </div>
-  <div class="sidebar">
-    <i class="fa-solid fa-bars"></i>
-  </div>
+  <nav>
+    <ul class="nav-list">
+      <li class="nav-item" routerLink="./"><span>Home</span></li>
+      <li class="nav-item">
+        <span>Salas <i class="fa-solid fa-caret-down"></i></span>
+          <ul class="dropdown">
+            <li routerLink="./create-rooms">Adicionar Sala</li>
+            <li>Ver Salas</li>
+          </ul>
+      </li>
+      <li class="nav-item">
+        <span>Equipamentos <i class="fa-solid fa-caret-down"></i></span>
+          <ul class="dropdown">
+            <li>Adicionar Equipamentos</li>
+            <li>Ver Equipamentos</li>
+          </ul>
+      </li>
+    </ul>
+  </nav>
 </header>

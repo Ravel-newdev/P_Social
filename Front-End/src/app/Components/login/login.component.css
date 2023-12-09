@@ -1,12 +1,16 @@
 main {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: url('/assets/img/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
   }
-  
+
   .container {
     width: 600px;
     height: auto;
@@ -16,24 +20,48 @@ main {
     padding: 15px 30px 40px 30px;
     box-shadow: 0 1px 5px #00000067;
     position: relative;
-    margin-top: 70px;
+    background-color: #fff;
+    border-radius: 20px;
   }
-  
+
   form{
     width: 70%;
   }
-  
+
   .header-title{
     padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
   }
-  
+
+  .header-title i{
+    font-size: 1.5em;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7244ce;
+    border-radius: 50%;
+    padding: 10px;
+  }
+
+  .header-title h1{
+    color: #7244ce;
+  }
+
   .field{
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin: 2rem 0;
   }
-  
+
+
   .pass-field{
     width: 100%;
     display: flex;
@@ -43,20 +71,20 @@ main {
     border-radius: 4px;
     transition: .3s ease-in;
   }
-  
+
   .field .pass-field input{
     width: calc(100% - 40px);
     border: 1.5px solid transparent;
   }
-  
+
   .field .pass-field input:focus{
     outline: none;
   }
-  
+
   .field .pass-field:focus-within{
     border: 1.5px solid #8c52ff;
   }
-  
+
   .pass-field .showIcon{
     cursor: pointer;
     width: 40px;
@@ -65,13 +93,13 @@ main {
     justify-content: center;
     align-items: center;
   }
-  
+
   .field label{
     font-weight: bold;
     color: #232323;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
-  
+
   .field input{
     height: 40px;
     padding: 0 10px;
@@ -83,11 +111,11 @@ main {
     outline: none;
     transition: .3s ease-in;
   }
-  
+
   .field input:focus{
     border: 1.5px solid #8c52ff;
   }
-  
+
   .error-message{
     width: 100%;
     display: flex;
@@ -95,7 +123,7 @@ main {
     align-items: center;
     position: relative;
   }
-  
+
   .error-message span{
     margin: 0;
     text-transform: capitalize;
@@ -104,44 +132,44 @@ main {
     position: absolute;
     top: 0;
   }
-  
+
   .error{
     border: 1px solid red;
   }
-  
+
   .error::placeholder{
     color: red;
   }
-  
+
   .checkbox{
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  
+
   .checkbox label{
     margin: 0;
   }
-  
+
   .forgot-password a{
     color: rgb(0, 119, 255);
   }
-  
+
   .forgot-password a:hover{
     text-decoration: underline;
   }
-  
+
   .checkbox input{
     accent-color: rgb(91,0,218);
   }
-  
+
   .btn{
     display: flex;
     justify-content: center;
     align-items: center;
     outline: none;
   }
-  
+
   .btn-submit{
     width: 150px;
     height: 40px;
@@ -166,7 +194,7 @@ main {
     font-size: 1.2rem;
     margin: 1.5rem 0;
   }
-  
+
   .header-help{
     display: flex;
     flex-direction: row;
@@ -174,19 +202,19 @@ main {
     gap: 5px;
     margin: 16px 0;
   }
-  
+
   .header-help span{
     font-size: .9rem;
     font-weight: bold;
     color: #818181a8;
   }
-  
+
   .line{
     width: 120px;
     height: 1px;
     background-color: #81818181;
   }
-  
+
   .help button{
     padding: .5rem 1rem;
     font-size: 1rem;
@@ -199,7 +227,7 @@ main {
     transition: .3s ease-in-out;
     cursor: pointer;
   }
-  
+
   .help button:hover{
     background-color: #7244ce;
     color: #fff;
@@ -207,7 +235,7 @@ main {
   .detail{
     display: none;
   }
-  
+
   .icon-out{
     position: absolute;
     left: 30px;
@@ -221,10 +249,9 @@ main {
     cursor: pointer;
     border-radius: 50%;
   }
-  
+
   .icon-out:hover{
     background-color: rgba(224, 224, 224, 0.548);
   }
-  
 
-  
+

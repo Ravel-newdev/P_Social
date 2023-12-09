@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: any;
-  formSubmitted: boolean = false;
   showPass: boolean = false;
   constructor(
     private loginBuilder: FormBuilder,
@@ -24,36 +23,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // onSubmit() {
-  //   this.formSubmitted = true;
+  onLogin(){
 
-  //   if (!this.loginForm.valid) {
-  //     alert('form invalido')
-  //   } else {
-
-  //     const   loginData = this.loginForm.value
-
-  //     if(this.isTeacherEmail(loginData.email)){
-  //       this.authTeacher.loginTeacher(loginData).subscribe(
-  //         (res) => {
-  //           this.router.navigate(['teacher', 'overview']);
-  //         },
-  //         (err: Error) => {
-  //           alert(err.message);
-  //         }
-  //       );
-  //     } else{
-  //       this.authUser.login(loginData).subscribe(
-  //         (res) => {
-  //           this.router.navigate(['home']);
-  //         },
-  //         (err: Error) => {
-  //           alert(err.message);
-  //         }
-  //       );
-  //     }
-  //   }
-  // }
+  }
 
   passShow(){
     this.showPass = !this.showPass;
