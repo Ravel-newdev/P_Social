@@ -5,138 +5,107 @@ require('../models/Salas')
 const Salas = mongoose.model('salas')
 
 
-router.get('/view', (req,res) =>{
+router.get('/view', async(req,res) =>{
 Salas.find({D_E_L_E_T:''}).lean().then((salass)=>{
-res.render('salas/listar_sala',{salass:salass})
+    res.status(200).json(salass)
 }).catch((err)=>{
-req.flash('error_msg','Não foi possivel listar as salas! ERROR: '+err)
-res.redirect('/')
+    res.status(404).json({msg: `Not found. ERROR: ${err}`})
 })
 })
 
 router.get('/view_delete', (req,res) =>{
     Salas.find({D_E_L_E_T:'*'}).lean().then((salass)=>{
-    res.render('salas/deletados',{salass:salass})
+        res.status(200).json(salass)
     }).catch((err)=>{
-    req.flash('error_msg','Não foi possivel listar as salas! ERROR: '+err)
-    res.redirect('/')
+        res.status(404).json({msg: `Not found. ERROR: ${err}`})
     })
     })
     
 
-router.get('/create', (req,res) => {
-    Salas.findOne().sort({_id: -1}).lean().then((u_salass)=>{
-    res.render('salas/criar_sala' , {u_salass:u_salass})
-    })
-})
 router.post('/create' , (req,res)=>{
 
     //Validação primeira, verificando se campos estão ou não vazios
+    let codigo = 0
 
-    var erros = [] 
+    const {nome,status} = req.body
 
-    if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null){
-        erros.push({texto: 'Digite o nome da sala.'})
-   }
-   if(req.body.status == 0){
-    erros.push({texto:"Selecione um status para a sala antes de prosseguir."})
+    if(!nome){
+        res.status(422).json({msg: "O nome é obrigatório"})
    }
 
-   if(erros.length > 0){
-    Salas.findOne().sort({_id:-1}).lean().then((u_salass)=>{
-        res.render('salas/criar_sala', {erros:erros, u_salass:u_salass})   
-    }).catch((err)=>{
-     req.flash('error_msg',"Houve um error ao carregar o formulário!, Error: "+err)
-     res.redirect('/admin')
-    })   
-     
+   if(status == 0 || !status){
+    res.status(422).json({msg: "Selecione um status antes de prosseguir!"})
    }
+
 else{
     //Validação secundária, compara o valor recebido com o existente ao banco de dados para evitar duplicação dos dados.
     
-    Salas.findOne({nome:req.body.nome.toUpperCase(), D_E_L_E_T:''}).lean().then((nome)=>{
-     if(nome){
-       req.flash('error_msg', 'Nome já está registrado no banco.')
-       res.redirect('/salas/create')
+    Salas.findOne({nome:nome.toUpperCase(), D_E_L_E_T:''}).lean().then((name)=>{
+     if(name){
+         res.status(404).json({msg:'Nome já existe.'})
      }
 
      else{
-        const newSalas = {
-            codigo: (+req.body.codigo + +1),
-            nome: req.body.nome.toUpperCase(),
-            status: req.body.status
+        Salas.findOne().sort({_id: -1}).lean().then((u_salass)=>{
+         u_salass ? codigo = u_salass.codigo : codigo = 0
+         const newSalas = {
+            codigo: +codigo + +1,
+            nome: nome.toUpperCase(),
+            status: status
          }
 
         new Salas(newSalas).save().then(() =>{
-            req.flash('success_msg','Salvo com sucesso!')
-            res.redirect('/')
+            res.status(200).json({msg:'Salvo com sucesso'})
         }).catch((err) => {
-           req.flash('error_msg','Houve um error ao salvar. ERROR: '+err)
-           res.redirect('/')
+           res.status(404).json({msg:'Error ao salvar.'+err})
         })
+    }).catch((err)=>{
+        res.status(404).json({msg:'Error na consulta.'})
+    })
+
      }
     }).catch((err)=>{
-        req.flash('error_msg','Houve um error ao validar os dados. ERROR: '+err)
-        res.redirect('/')
+        res.status(404).json({msg:'Houve um error ao validar os dados.'})
     })
     }
 })
 
 
-router.get('/update/:id', (req,res) => {
-        Salas.findOne({_id:req.params.id}).lean().then((salass)=>{
-            res.render('salas/atualizar_sala', {salass:salass})
-    
-    })
-})
 
-router.post('/update', (req,res)=>{
-    var erros = [] 
-
-    if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null){
-        erros.push({texto: 'Digite o nome da sala.'})
-   }
-   if(req.body.status == 0){
-    erros.push({texto:"Selecione um status para a sala antes de prosseguir."})
+router.put('/update/:id', (req,res)=>{
+    const {nome,status} = req.body
+    if(!nome){
+        res.status(422).json({msg: "O nome é obrigatório"})
    }
 
-   if(erros.length > 0){
-        Salas.findOne({_id:req.body.id}).lean().then((salass) =>{
-            res.render('salas/atualizar_sala', {erros:erros, salass:salass})   
-         }).catch((err)=>{
-          req.flash('error_msg', 'Não foi possivel encontrar a postagem! ERROR: '+err)
-          res.redirect('/salas/view')
-         })   
-}
+   if(status == 0 || !status){
+    res.status(422).json({msg: "Selecione um status antes de prosseguir!"})
+   }
 
     else{
-        Salas.findOne({_id: {$ne: `${req.body.id}`}, nome: req.body.nome.toUpperCase(), D_E_L_E_T:''}).lean().then((nome)=>{
-         if(nome){       
-                    req.flash('error_msg', 'Nome já está registrado no banco.')
-                    res.redirect(`/salas/view`)
+        Salas.findOne({_id: {$ne: `${req.params.id}`}, nome: nome.toUpperCase(), D_E_L_E_T:''}).lean().then((name)=>{
+         if(name){       
+                  res.status(404).json({msg:'Nome já está registrado no banco.'})
             
                     }
 
      else{
-        Salas.findOne({_id: req.body.id}).then((salass)=>{
+        Salas.findOne({_id: req.params.id}).then((salass)=>{
 
-            if (salass.nome !== req.body.nome || salass.status !== req.body.status) {
+            if (salass.nome !== nome || salass.status !== status) {
                             // Faça as atualizações apenas se houver diferenças
 
-                       /*const filter = { _id: req.body.id };
-                            const update = { $set: { nome: req.body.nome.toUpperCase(), status: req.body.status
+                       const filter = { _id: req.params.id };
+                            const update = { $set: { nome: nome.toUpperCase(), status: status
                             , date_update: Date.now()}};
                             
-                            Salas.findOneAndUpdate(filter, update, { new: true }).then(() =>{
-                                  req.flash('success_msg', 'Sala atualizada com sucesso!')
-                                  res.redirect('/salas/view')
+                            Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
+                                 res.status(200).json({msg:'Sala atualizada com sucesso!'})
                                 }).catch((err) => {
-                                    req.flash('error_msg','Ocorreu um erro durante o processo de atualização das salas. ERROR: '+err)
-                                    res.redirect('/salas/view')
-                                })*/
-
-                                salass.nome = req.body.nome.toUpperCase()
-                                salass.status =  req.body.status
+                                 res.status(404).json({msg:'Error ao atualizar sala!'})
+                                })
+/*                                salass.nome =  nome.toUpperCase()
+                                salass.status =  status
                                 salass.date_update = Date.now()
     
                                 salass.save().then(()=>{
@@ -146,43 +115,41 @@ router.post('/update', (req,res)=>{
                             }).catch((err)=>{
                                 req.flash('error_msg','Não foi possivel atualizar a sala'+err)
                             })
-
+                        */
 
                                ;
                     } 
                     
                     else {
                             // Nenhum dado foi alterado, redirecione com uma mensagem
-                            req.flash('error_msg', 'Nenhuma alteração feita nos dados!');
-                            res.redirect('/salas/update/'+salass._id);
+                            res.status(404).json({msg:'Nenhuma alteração feita nos dados!'})
                         }
            
             }).catch((err)=>{
-              req.flash('error_msg','Erro ao atualizar sala. ERROR: '+err)
-              res.redirect('/')
+              res.status(404).json({msg:'Error ao atualizar os dados. ERROR: '+err})
             })
      }
 
 }).catch((err)=>{
-        req.flash('error_msg','Houve um error ao validar os dados. ERROR: '+err)
-        res.redirect('/')
+       res.status(404).json({msg:'Sala não encontrada.'})
     })
     }
 })
 
 
-router.post('/delete/:id', (req,res)=>{
-    Salas.findOne({_id:req.params.id}).then((salass)=>{
-        salass.D_E_L_E_T = '*'
-        salass.status = 'D'
-        salass.date_update = Date.now()
-        salass.save().then(()=>{
-           req.flash('success_msg','Sala apagada com sucesso!')
-           res.redirect('/salas/view')
+router.put('/delete/:id', (req,res)=>{
+    Salas.findOne({_id:req.params.id}).then(()=>{
+        const filter = { _id: req.params.id };
+        const update = { $set: { D_E_L_E_T: '*',status:'D'
+        , date_update: Date.now()}};
+
+        Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
+            res.status(200).json({msg:'Sala deletada com sucesso!'})
+           }).catch((err)=>{
+            res.status(404).json({msg:'Error ao deletar sala. ERROR: '+err})
+           })
    }).catch((err)=>{
-       req.flash('error_msg','Não foi possivel apagar a sala. ERROR: '+err)
-       res.redirect('/salas/view')
-   })
+    res.status(404).json({msg:'Sala não encontrada.'})
    })
 })
 
