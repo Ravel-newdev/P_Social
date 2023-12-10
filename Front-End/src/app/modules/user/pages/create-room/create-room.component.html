@@ -1,1 +1,31 @@
-<p>create-room works!</p>
+<div class="container">
+  <header>
+    <h1>Cadastro de Salas</h1>
+  </header>
+  <form (ngSubmit)="createRoom()" [formGroup]="roomForm" #formDir="ngForm">
+    <div class="input-field">
+      <label for="name_room">Nome da Sala</label>
+      <input type="text" name="name_room" formControlName="name_room">
+    </div>
+    <div class="input-field">
+      <label for="status_room">Status da Sala</label>
+      <select name="status_room" class="room-status" formControlName="status_room">
+        <option value="">Selecione</option>
+        <option value="Livre">Livre</option>
+        <option value="Ocupada">Ocupada</option>
+      </select>
+    </div>
+    <button type="submit">Adicionar Sala</button>
+  </form>
+</div>
+
+  <div class="overlay" [ngClass]="{'active': this.popupService.messagePopup}">
+    <div class="popup">
+      <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
+        <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
+      </div>
+      <p>{{this.popupService.messagePopup}}</p>
+      <button (click)="this.popupService.clear()">Fechar</button>
+    </div>
+  </div>
+
