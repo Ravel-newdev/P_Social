@@ -21,12 +21,17 @@ app.use(session({
 }))
 
 app.use(flash())
-app.engine('handlebars', handlebars.engine({defaultLayout:'main'}));
+app.engine('handlebars', handlebars.engine({helpers: {
+  eq: function (a, b) {
+    return a === b;
+  }
+},defaultLayout:'main'}));
 app.set('view engine', 'handlebars');
 
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost/CLEE_T').then(() => {
-  console.log('EITA. Se conectou com sucesso!')
+//mongoose.connect('mongodb+srv://cleeOwner:64jQTn99mIsFEl59@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority').then(() => { // Produção
+  mongoose.connect('mongodb://localhost/CLEE_T').then(() => { //Prototipo
+  console.log('Conectado com sucesso!')
 }).catch((err) => {
  console.log('Falha ao se conectar', err)
 })
@@ -57,5 +62,5 @@ app.use('/adm', adm)
 app.use('/salas', salas)
 const PORT = 8081  
 app.listen(PORT, () => {
-    console.log('Passando pela porta!')
+    console.log('Servidor rodando na porta 8081')
 })

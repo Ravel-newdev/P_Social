@@ -60,26 +60,32 @@
             text-align: center;
             margin-bottom: 20px;
         }
+
     </style>
 <h3>Cadastro de Salas</h3>
-<form action="/salas/create" method="post">
-{{#if u_salass}}
 
-<input type="hidden" value="{{u_salass.codigo}}" name="codigo" id="codigo">
-{{else}}
-<input type="hidden" value="0" name="codigo" id="codigo">
-{{/if}}
-
+<form action="/salas/update" method="post">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="hidden" value="{{salass._id}}" name="id">
+        <input type="text" id="nome" name="nome" value="{{salass.nome}}">
 
         <label for="status">Status:</label>
+        {{#if (eq salass.status 'A')}}
         <select name="status" id="status">
-            <option value="0">Selecione</option>
             <option value="A">Ativo</option>
             <option value="I">Inativo</option>
+            <option value="0">Selecione</option>
+            
         </select>
 
+        {{else}}
+
+         <select name="status" id="status">
+            <option value="I">Inativo</option>
+            <option value="A">Ativo</option>
+            <option value="0">Selecione</option>
+        </select>
+       {{/if}}
         <button type="submit">Enviar</button>
         {{#each erros}}
         <div>
@@ -87,3 +93,5 @@
         </div>
         {{/each}}
     </form>
+
+ 
