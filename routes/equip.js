@@ -4,45 +4,71 @@ const mongoose = require('mongoose')
 require('../models/Equip')
 const Equips = mongoose.model("equip")
 
-router.get('/add_equip', (req,res) =>{
-    res.render('equip/add_equip')
+
+//cadastrando os equipamentos
+
+router.post('/add_equip', async (req,res)=>{
+
+   const {code,name,qnt,status} = req.body
+
+   if(!code){
+      res.status(422).json({msg: "O código é obrigatório"})
+   }
+   if(!name){
+      res.status(422).json({msg: "O nome é obrigatório"})
+   }
+   if(!qnt){
+      res.status(422).json({msg: "A quantidade é obrigatória"})
+   }
+   if(!status){
+      res.status(422).json({msg: "O status é obrigatório"})
+   }
+
+   const EquipExists = await Equips.findOne({name: name})
+
+   if(EquipExists){
+      res.status(422).json({msg: "Equipamento já existe"})
+   }
+
+   const equip = new Equips({
+      name,
+      code,
+      qnt,
+      status
+   })
+
+   equip.save()
+
+   res.status(200).json({msg: "equipamento salvo com sucesso"})
 })
-router.post('/add_equip', (req, res)=>{
-   var erros = [] 
 
-   if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null ||
-      !req.body.qnt_estoque || typeof req.body.qnt_estoque == undefined || req.body.qnt_estoque == null){
-       erros.push({texto: 'Digite o nome do equipamento.'})
-  }
-  if(req.body.status == 0){
-   erros.push({texto:"Por favor, selecione um status antes de prosseguir."})
-  }
+   //listando os equipamentos
 
-  if(erros.length > 0){
-      Equips.find().lean().then((equipaments)=>{
-       res.render('equip/add_equip', {erros:erros , equipaments:equipaments})   
-   }).catch((err)=>{
-    req.flash('error_msg',"Houve um error ao carregar o formulário!, Error: "+err)
-    res.redirect('/admin')
-   })   
-    
-  }
-else{
-
- const newEquips = {
-    nome: req.body.nome,
-    qnt_estoque: req.body.qnt_equip,
-    status: req.body.status
- }
-
- new Equips(newEquips).save().then(() =>{
-    req.flash('success_msg','Salvo com sucesso!')
-    res.redirect('/')
-}).catch((err) => {
-   req.flash('error_msg','Houve um error ao salvar. ERROR: '+err)
-   res.redirect('/')
+   router.get('/listEquip', async(req,res)=>{
+      Equips.find().then((equipamentos)=>{
+         res.status(200).json(equipamentos)
+      }).catch((err)=>{
+         res.status(404).json({msg: "Not found"})
+      })
 })
-}
-})
+
+//atualizando os equipamentos
+router.put('/attEquip/:id',async (req,res)=>{
+
+      const Equip = await Equips.findByIdAndUpdate(req.params.id,{
+          name: req.body.name,
+          code: req.body.code,
+          qnt: req.body.qnt,
+          status: req.body.status
+      })
+      return res.send(Equip)
+  })
+
+  //deletando os equipamentos
+  router.delete('/deleteEquip/:id', async(req,res)=>{
+
+   const Equip = await Equips.findByIdAndDelete(req.params.id)
+   return res.send(Equip)
+  })
 
 module.exports = router
