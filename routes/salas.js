@@ -13,7 +13,7 @@ Salas.find({D_E_L_E_T:''}).lean().then((salass)=>{
 })
 })
 
-router.get('/view_delete', (req,res) =>{
+router.get('/view_delete', async(req,res) =>{
     Salas.find({D_E_L_E_T:'*'}).lean().then((salass)=>{
         res.status(200).json(salass)
     }).catch((err)=>{
@@ -22,7 +22,7 @@ router.get('/view_delete', (req,res) =>{
     })
     
 
-router.post('/create' , (req,res)=>{
+router.post('/create' , async(req,res)=>{
 
     //Validação primeira, verificando se campos estão ou não vazios
     let codigo = 0
@@ -72,7 +72,7 @@ else{
 
 
 
-router.put('/update/:id', (req,res)=>{
+router.put('/update/:id', async(req,res)=>{
     const {nome,status} = req.body
     if(!nome){
         res.status(422).json({msg: "O nome é obrigatório"})
@@ -83,14 +83,14 @@ router.put('/update/:id', (req,res)=>{
    }
 
     else{
-        Salas.findOne({_id: {$ne: `${req.params.id}`}, nome: nome.toUpperCase(), D_E_L_E_T:''}).lean().then((name)=>{
+       await Salas.findOne({_id: {$ne: `${req.params.id}`}, nome: nome.toUpperCase(), D_E_L_E_T:''}).lean().then((name)=>{
          if(name){       
                   res.status(404).json({msg:'Nome já está registrado no banco.'})
             
                     }
 
      else{
-        Salas.findOne({_id: req.params.id}).then((salass)=>{
+       Salas.findOne({_id: req.params.id}).then((salass)=>{
 
             if (salass.nome !== nome || salass.status !== status) {
                             // Faça as atualizações apenas se houver diferenças
@@ -137,13 +137,13 @@ router.put('/update/:id', (req,res)=>{
 })
 
 
-router.put('/delete/:id', (req,res)=>{
+router.put('/delete/:id', async(req,res)=>{
     Salas.findOne({_id:req.params.id}).then(()=>{
         const filter = { _id: req.params.id };
         const update = { $set: { D_E_L_E_T: '*',status:'D'
         , date_update: Date.now()}};
 
-        Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
+       Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
             res.status(200).json({msg:'Sala deletada com sucesso!'})
            }).catch((err)=>{
             res.status(404).json({msg:'Error ao deletar sala. ERROR: '+err})
