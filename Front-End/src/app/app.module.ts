@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import {HttpClientModule} from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { HomeComponent } from './Components/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +16,6 @@ import { RelationRoomsComponent } from './modules/user/pages/relation-rooms/rela
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     HeaderComponent,
     FooterComponent,
     DashboardComponent,
@@ -29,7 +27,8 @@ import { RelationRoomsComponent } from './modules/user/pages/relation-rooms/rela
     HttpClientModule,
     NgxPaginationModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

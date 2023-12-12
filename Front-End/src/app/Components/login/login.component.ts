@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -13,35 +14,42 @@ export class LoginComponent implements OnInit {
   showPass: boolean = false;
   constructor(
     private loginBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = loginBuilder.group({
-      email: ['', [Validators.required /*  this.emailValidator */]],
+      user_name: ['', [Validators.required /*  this.emailValidator */]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
   ngOnInit(): void {
   }
 
-  onLogin(){
+  onLogin(): void{
+    const { user_name, password } = this.loginForm.value;
 
+    this.authService.login({user_name, senha: password}).subscribe(
+      response => {
+        console.log('Usuário logado com sucesso!', response);
+        this.router.navigate(['/user']);
+
+      },
+      error =>{
+        console.error('Erro ao fazer login!', error);
+      }
+    )
   }
 
   passShow(){
     this.showPass = !this.showPass;
   }
 
-  get email() {
-    return this.loginForm.get('email')!;
+  get user_name() {
+    return this.loginForm.get('user_name')!;
   }
 
   get password() {
     return this.loginForm.get('password')!;
   }
 
-  isTeacherEmail(email: string): boolean{
-    const teacherEmailRegex = /@professor\.com$/i;
-
-    return teacherEmailRegex.test(email)
-  }
 }

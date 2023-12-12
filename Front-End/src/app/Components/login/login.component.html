@@ -6,15 +6,14 @@
       </div>
       <form (submit)="onLogin()"  [formGroup]="loginForm" #formDir="ngForm">
         <div class="field">
-          <label>Email</label>
+          <label>Usuário</label>
           <input
             type="email"
-            placeholder="teste@email.com"
-            formControlName="email"
+            formControlName="user_name"
             required
-            [ngClass]="{ error: formDir.submitted && email.invalid }"
+            [ngClass]="{ error: formDir.submitted && user_name.invalid }"
           />
-          <ng-container *ngIf=" formDir.submitted && email.invalid">
+          <ng-container *ngIf=" formDir.submitted && user_name.invalid">
             <div class="error-message">
               <span>email invalido</span>
             </div>
