@@ -39,14 +39,14 @@ router.post('/create' , async(req,res)=>{
 
 else{
     //Validação secundária, compara o valor recebido com o existente ao banco de dados para evitar duplicação dos dados.
-    
-    Salas.findOne({nome:nome.toUpperCase(), D_E_L_E_T:''}).lean().then((name)=>{
+
+   await Salas.findOne({nome:nome.toUpperCase(), D_E_L_E_T:''}).lean().then((name)=>{
      if(name){
          res.status(404).json({msg:'Nome já existe.'})
      }
 
      else{
-        Salas.findOne().sort({_id: -1}).lean().then((u_salass)=>{
+     Salas.findOne().sort({_id: -1}).lean().then((u_salass)=>{
          u_salass ? codigo = u_salass.codigo : codigo = 0
          const newSalas = {
             codigo: +codigo + +1,
@@ -73,6 +73,8 @@ else{
 
 
 router.put('/update/:id', async(req,res)=>{
+
+    
     const {nome,status} = req.body
     if(!nome){
         res.status(422).json({msg: "O nome é obrigatório"})
@@ -90,16 +92,16 @@ router.put('/update/:id', async(req,res)=>{
                     }
 
      else{
-       Salas.findOne({_id: req.params.id}).then((salass)=>{
+         Salas.findOne({_id: req.params.id}).then(async(salass)=>{
 
-            if (salass.nome !== nome || salass.status !== status) {
+            if (salass.nome != nome || salass.status != status) {
                             // Faça as atualizações apenas se houver diferenças
 
                        const filter = { _id: req.params.id };
                             const update = { $set: { nome: nome.toUpperCase(), status: status
                             , date_update: Date.now()}};
                             
-                            Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
+                           await Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
                                  res.status(200).json({msg:'Sala atualizada com sucesso!'})
                                 }).catch((err) => {
                                  res.status(404).json({msg:'Error ao atualizar sala!'})
@@ -138,12 +140,12 @@ router.put('/update/:id', async(req,res)=>{
 
 
 router.put('/delete/:id', async(req,res)=>{
-    Salas.findOne({_id:req.params.id}).then(()=>{
+   await Salas.findOne({_id:req.params.id}).then(async()=>{
         const filter = { _id: req.params.id };
         const update = { $set: { D_E_L_E_T: '*',status:'D'
         , date_update: Date.now()}};
 
-       Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
+      await Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
             res.status(200).json({msg:'Sala deletada com sucesso!'})
            }).catch((err)=>{
             res.status(404).json({msg:'Error ao deletar sala. ERROR: '+err})
@@ -152,5 +154,29 @@ router.put('/delete/:id', async(req,res)=>{
     res.status(404).json({msg:'Sala não encontrada.'})
    })
 })
+
+
+//DISCLAMER: O DELETE TOTAL NÃO SERÁ USADO EM NENHUM MOMENTO PELO USUÁRIO 
+//O ADMINISTRADOR DO SITE. ELE APENAS SERÁ USADOS PELOS DEVS PARA LIMPAR O BANCO DE DADOS.
+
+/*router.delete('/delete_total/:id', async(req,res)=>{
+    await Salas.deleteOne({_id: req.params.id}).then(()=>{
+      res.status(200).json({msg:'Deletado totalmente.'})
+      }).catch((err)=>{
+      res.status(404).json({msg:'Falha ao deletar'})
+      
+     })
+  })
+
+  router.delete('/delete_everything',async(req,res)=>{
+    await Salas.deleteMany({}).then(()=>{
+     res.status(200).json({msg:'Deletado com sucesso!'})
+    }).catch((err)=>{
+        res.status(404).json({msg:'Não foi possivel deletar'})
+    })
+})
+
+*/
+
 
 module.exports = router

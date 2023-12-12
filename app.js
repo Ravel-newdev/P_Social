@@ -7,8 +7,8 @@ const bcrypt = require('bcrypt')
 jwt = require('jsonwebtoken')
 
 const equip = require('./routes/equip')
-// const adm = require('./routes/adm.js')
 const salas = require('./routes/salas')
+const reserva_salas = require('./routes/reserva_salas')
 
 
 mongoose.Promise = global.Promise
@@ -154,7 +154,7 @@ app.post("/auth/login",async(req,res)=>{
       })
       
       app.use('/equip', equip)
-      // app.use('/adm', adm)
+      app.use('/reserva_salas',reserva_salas)
       app.use('/salas', salas)
 
 const dbUser = process.env.DB_USER
@@ -162,7 +162,7 @@ const dbPassword = process.env.DB_PASS
 const port = process.env.DB_PORT
 
 mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
-
+    //mongoose.connect(`mongodb://localhost/CLEE_T`).then(()=>{
     app.listen(port)
     console.log('connect successful')
 
