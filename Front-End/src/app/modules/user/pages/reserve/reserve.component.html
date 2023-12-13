@@ -1,0 +1,58 @@
+<div class="container">
+    <header>
+        <h1>Faça a sua reserva</h1>
+        <div class="check-field">
+            <h3>O que você quer reservar?</h3>
+            <div class="radios">
+                <div class="radio">
+                    <input type="radio" name="option_reserve" id="sala" (click)="formSala()">
+                    <span>Sala</span>
+                </div>
+                <div class="radio">
+                    <input type="radio" name="option_reserve" id="equipamento" (click)="formEquipamentos()">
+                    <span>Equipamento</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+            <!-- FORMULÁRIO DA SALA -->
+            <ng-container *ngIf="showSala">
+                <div class="input-field">
+                    <label for="nome_sala">Sala</label>
+                    <input type="text">
+                </div>
+                <div class="input-field">
+                    <label for="nome_sala">Selecione o dia</label>
+                    <input type="text">
+                </div>
+            </ng-container>
+
+            <!-- FORMULÁRIO DO EQUIPAMENTO -->
+            <ng-container *ngIf="showEquipamentos" >
+                <form class="formEquipamentos">
+              
+                    <!-- Campos dos Módulos -->
+                    <div *ngFor="let modulo of curso.modulos; let i = index" class="modulo">
+                      <label for="nomeModulo{{i}}">Nome do Equipamento:</label>
+                      <input type="text" id="nomeModulo{{i}}" name="nomeModulo{{i}}" [(ngModel)]="modulo.nome" required>
+              
+                      <!-- Campos das Aulas -->
+                      <div *ngFor="let aula of modulo.aulas; let j = index" class="aula">
+                        <label for="nomeAula{{i}}-{{j}}">Quantidade:</label>
+                        <input type="text" id="nomeAula{{i}}-{{j}}" name="nomeAula{{i}}-{{j}}" [(ngModel)]="aula.nome" required>    
+                      </div>
+              
+                      <div class="actions-btns">
+                          <button (click)="removerModulo(i)" class="btn btn-danger">Remover Equipamento</button> <br>
+                      </div>
+                    </div>
+              
+                    <button type="button" (click)="adicionarModulo()">Adicionar Equipamento</button>
+                    <button type="submit">Concluir reserva</button>
+                  </form>
+            </ng-container>
+    </main>
+</div>
