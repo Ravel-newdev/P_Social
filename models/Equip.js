@@ -2,16 +2,16 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const Equip = new Schema({
-    code:{
+    codigo:{
         type: Number,
         required:true,
         unique: true
        },
-    name:{
+    nome:{
         type: String,
         required: true
     },
-    qnt:{
+    qnt_estoque:{
         type: Number,
         required: true
     },
@@ -19,11 +19,11 @@ const Equip = new Schema({
        type: String,
        required:true
     },
-    data_cad:{
+    date_create:{
         type: Date,
         default: Date.now()
     },
-    data_update:{
+    date_update:{
         type: Date,
         default: Date.now()
     },

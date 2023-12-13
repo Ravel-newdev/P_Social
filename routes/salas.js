@@ -94,7 +94,7 @@ router.put('/update/:id', async(req,res)=>{
      else{
          Salas.findOne({_id: req.params.id}).then(async(salass)=>{
 
-            if (salass.nome != nome || salass.status != status) {
+            if (salass.nome != nome.toUpperCase() || salass.status != status) {
                             // Faça as atualizações apenas se houver diferenças
 
                        const filter = { _id: req.params.id };
