@@ -1,9 +1,10 @@
 header{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0 100px;
   align-items: center;
   height: 90px;
-  background-color: #232323;
+  background-color: #615CF2;
   color: #fff;
   width: 100%;
   position: fixed;
@@ -12,14 +13,15 @@ header{
 }
 
 .logo{
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
 }
 
 .logo img{
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  object-fit: cove10;
 }
 
 /* NAV BAR */
@@ -45,7 +47,7 @@ header{
 }
 
 .nav-item:hover {
-  color: #6b40c2;
+  color: #6B71F2;
 }
 
 .nav-item:hover .dropdown{
