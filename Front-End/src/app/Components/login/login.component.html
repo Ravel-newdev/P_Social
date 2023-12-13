@@ -8,12 +8,12 @@
         <div class="field">
           <label>Usuário</label>
           <input
-            type="email"
-            formControlName="user_name"
+            type="text"
+            formControlName="name"
             required
-            [ngClass]="{ error: formDir.submitted && user_name.invalid }"
+            [ngClass]="{ error: formDir.submitted && name.invalid }"
           />
-          <ng-container *ngIf=" formDir.submitted && user_name.invalid">
+          <ng-container *ngIf=" formDir.submitted && name.invalid">
             <div class="error-message">
               <span>email invalido</span>
             </div>

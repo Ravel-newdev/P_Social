@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {
     this.loginForm = loginBuilder.group({
-      user_name: ['', [Validators.required /*  this.emailValidator */]],
+      name: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
@@ -26,9 +26,9 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(): void{
-    const { user_name, password } = this.loginForm.value;
+    const { name, password } = this.loginForm.value;
 
-    this.authService.login({user_name, senha: password}).subscribe(
+    this.authService.login({name, password: password}).subscribe(
       response => {
         console.log('Usuário logado com sucesso!', response);
         this.router.navigate(['/user']);
@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
     this.showPass = !this.showPass;
   }
 
-  get user_name() {
-    return this.loginForm.get('user_name')!;
+  get name() {
+    return this.loginForm.get('name')!;
   }
 
   get password() {
