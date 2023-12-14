@@ -5,11 +5,14 @@ const app = express()
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 jwt = require('jsonwebtoken')
+const cors = require('cors')
+const {checkToken, checkRefreshToken} = require('./middleware/checkToken')
 
 const equip = require('./routes/equip')
 const salas = require('./routes/salas')
 const reserva_salas = require('./routes/reserva_salas')
 
+app.use(cors());
 
 mongoose.Promise = global.Promise
 
@@ -38,26 +41,6 @@ app.get("/user/:id",checkToken,async(req,res)=>{
           
 
 })
-
-function checkToken(req,res,next){
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(" ")[1]
-
-
-  if(!token){
-      return res.status(401).json({msg: "acesso negado"})
-  }
-
-  try{
-      const secret = process.env.SECRET
-      jwt.verify(token,secret)
-
-      next()
-
-  }catch(err){
-      res.status(400).json({msg: "Token inválido"})
-  }
-}
 
 
 //register
@@ -107,7 +90,7 @@ app.post('/auth/register',async(req,res)=>{
 
 app.post("/auth/login",async(req,res)=>{
 
-    const {name,password,id} = req.body
+    const {name,password} = req.body
 
 
     if(!name){
@@ -138,12 +121,15 @@ app.post("/auth/login",async(req,res)=>{
          const secret = process.env.SECRET
 
          const token = jwt.sign({
-            id: user._id,
+           refreshToken
 
-          },secret,
+          },secret,{
+            expiresIn: '20s'
+          }
           )
+          const refreshToken = jwt.sign({  name,password }, secret,{expiresIn: '1800s'})
           
-          res.status(200).json({msg: "autenticação realizada com sucesso", token})
+          res.status(200).json({msg: "autenticação realizada com sucesso", token, refreshToken})
           
           
         }catch(err){
@@ -152,6 +138,56 @@ app.post("/auth/login",async(req,res)=>{
         }
         
       })
+
+      app.post("/refresh",checkRefreshToken,async(req,res)=>{
+
+        const {name,password} = req.body
+    
+    
+        if(!name){
+            return res.status(422).json("O nome é obrigatório")
+        }
+        if(!password){
+            return res.status(422).json("A senha é obrigatória")
+        }
+    
+        //check if user exists
+        const user= await User.findOne({name: name})
+    
+         if(!user){
+             return res.status(422).json({msg:"usuário não existe"})
+              
+         }
+    
+         //check password match
+         const checkPassword = await bcrypt.compare(password,user.password)
+    
+         if(!checkPassword){
+    
+            return res.status(404).json("Senha inválida")
+    
+         }
+         
+         try{
+             const secret = process.env.SECRET
+    
+             const token = jwt.sign({
+                id: user._id,
+    
+              },secret,{
+                expiresIn: '1800s'
+              }
+              )
+              
+              res.status(200).json({msg: "autenticação realizada com sucesso", token})
+              
+              
+            }catch(err){
+              console.log(err)
+              res.status(500).json({msg: "erro no server tente novamente mais tarde"})
+            }
+            
+          })
       
       app.use('/equip', equip)
       app.use('/reserva_salas',reserva_salas)
@@ -161,8 +197,15 @@ const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASS
 const port = process.env.DB_PORT
 
-//mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
-    mongoose.connect(`mongodb://localhost/CLEE_T`).then(()=>{
+// const corsOptions = {
+//     origin: 'http://localhost:4200',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+// };
+
+
+
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
     app.listen(port)
     console.log('connect successful')
 
