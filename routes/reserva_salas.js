@@ -6,8 +6,10 @@ const R_Salas = mongoose.model('reserva_salas')
 require('../models/Salas')
 const Salas = mongoose.model('salas')
 
+const checkToken = require('../middleware/checkToken')
+
 //ver todas as reservas não deletadas
-router.get('/view', async(req,res) =>{
+router.get('/view',checkToken, async(req,res) =>{
     R_Salas.find({D_E_L_E_T:''}).lean().then((r_salass)=>{
         res.status(200).json(r_salass)
     }).catch((err)=>{
@@ -16,7 +18,7 @@ router.get('/view', async(req,res) =>{
     })
     
     //ver as reservas deletadas
-    router.get('/view_delete', async(req,res) =>{
+    router.get('/view_delete',checkToken, async(req,res) =>{
         R_Salas.find({D_E_L_E_T:'*'}).lean().then((r_salass)=>{
             res.status(200).json(r_salass)
         }).catch((err)=>{
@@ -26,7 +28,7 @@ router.get('/view', async(req,res) =>{
 
         //Registro da reserva de salas
         
-    router.post('/create' , async(req,res)=>{
+    router.post('/create' ,checkToken, async(req,res)=>{
 
             //Validação primária, verificando se campos estão ou não vazios
             let codigo = 0
@@ -123,7 +125,7 @@ router.get('/view', async(req,res) =>{
         })
 
         //Atualização dos dados da reserva de salas
-        router.put('/update/:id', async(req,res)=>{
+        router.put('/update/:id', checkToken,async(req,res)=>{
                 const {cod_user,cod_sala,desc,data_reserva,data_entrega,hora_reserva,hora_entrega} = req.body
                 if(!cod_user){
                     res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
@@ -233,7 +235,7 @@ router.get('/view', async(req,res) =>{
            
         })
 
-        router.put('/delete/:id', async(req,res)=>{
+        router.put('/delete/:id',checkToken, async(req,res)=>{
             await R_Salas.findOne({_id:req.params.id}).then(async()=>{
                 const filter = { _id: req.params.id };
                 const update = { $set: { D_E_L_E_T: '*', date_update: Date.now()}};
