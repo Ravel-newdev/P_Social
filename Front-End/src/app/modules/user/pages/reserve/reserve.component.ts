@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./reserve.component.css']
 })
 export class ReserveComponent {
-  showSala: boolean = false
+  showSala: boolean = true
   showEquipamentos: boolean = false
 
   formSala(){
@@ -38,13 +38,6 @@ export class ReserveComponent {
 
   removerModulo(index: number) {
     this.curso.modulos.splice(index, 1);
-  }
-
-  adicionarAula() {
-    const ultimoModulo = this.curso.modulos[this.curso.modulos.length - 1];
-    if (ultimoModulo) {
-      ultimoModulo.aulas.push({ nome: '', titulo: '', descricao: '', linkVideo: '' });
-    }
   }
 
 

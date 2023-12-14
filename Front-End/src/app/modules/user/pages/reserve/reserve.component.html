@@ -1,58 +1,72 @@
 <div class="container">
     <header>
-        <h1>Faça a sua reserva</h1>
         <div class="check-field">
             <h3>O que você quer reservar?</h3>
             <div class="radios">
-                <div class="radio">
+                <label for="sala">
                     <input type="radio" name="option_reserve" id="sala" (click)="formSala()">
                     <span>Sala</span>
-                </div>
-                <div class="radio">
+                </label>
+                <label for="equipamento">
                     <input type="radio" name="option_reserve" id="equipamento" (click)="formEquipamentos()">
                     <span>Equipamento</span>
-                </div>
+                </label>
             </div>
         </div>
     </header>
 
     <main>
+        <div class="reservation-form">
 
-            <!-- FORMULÁRIO DA SALA -->
             <ng-container *ngIf="showSala">
-                <div class="input-field">
-                    <label for="nome_sala">Sala</label>
-                    <input type="text">
-                </div>
-                <div class="input-field">
-                    <label for="nome_sala">Selecione o dia</label>
-                    <input type="text">
-                </div>
-            </ng-container>
+                <form>
 
-            <!-- FORMULÁRIO DO EQUIPAMENTO -->
-            <ng-container *ngIf="showEquipamentos" >
-                <form class="formEquipamentos">
-              
-                    <!-- Campos dos Módulos -->
-                    <div *ngFor="let modulo of curso.modulos; let i = index" class="modulo">
-                      <label for="nomeModulo{{i}}">Nome do Equipamento:</label>
-                      <input type="text" id="nomeModulo{{i}}" name="nomeModulo{{i}}" [(ngModel)]="modulo.nome" required>
-              
-                      <!-- Campos das Aulas -->
-                      <div *ngFor="let aula of modulo.aulas; let j = index" class="aula">
-                        <label for="nomeAula{{i}}-{{j}}">Quantidade:</label>
-                        <input type="text" id="nomeAula{{i}}-{{j}}" name="nomeAula{{i}}-{{j}}" [(ngModel)]="aula.nome" required>    
-                      </div>
-              
-                      <div class="actions-btns">
-                          <button (click)="removerModulo(i)" class="btn btn-danger">Remover Equipamento</button> <br>
-                      </div>
+                    <div class="form-content" id="formSala">
+                        <div class="input-field">
+                            <label for="nome_sala">Nome da Sala</label>
+                            <input type="text" id="nome_sala" name="nome_sala" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="selecione_dia_sala">Selecione o dia</label>
+                            <select type="text" id="selecione_dia_sala" name="selecione_dia_sala" required>
+                                <option value=""> Selecione</option>
+                                <option value=""> 10/03/23</option>
+                                <option value=""> 11/03/23</option>
+                                <option value=""> 12/03/23</option>
+                                <option value=""> 13/03/23</option>
+                            </select>
+                        </div>
                     </div>
-              
-                    <button type="button" (click)="adicionarModulo()">Adicionar Equipamento</button>
-                    <button type="submit">Concluir reserva</button>
-                  </form>
-            </ng-container>
+                    <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
+                </form>
+        </ng-container>
+
+        <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
+            <form class="div">
+            <!-- Campos do Curso -->
+            <div *ngFor="let modulo of curso.modulos; let i = index" class="modulo">
+            <label for="nomeCurso">Equipamento:</label>
+            <input type="text" id="nomeCurso" name="nomeCurso" [(ngModel)]="curso.nome" required>
+
+
+            <!-- Campos dos Módulos -->
+            <label for="nomeModulo{{i}}">Quantidade:</label>
+            <input type="text" id="nomeModulo{{i}}" name="nomeModulo{{i}}" [(ngModel)]="modulo.nome" required>
+
+
+            <div class="actions-btns">
+                <button (click)="removerModulo(i)" class="btn btn-danger">Remover Equipamento</button> <br>
+            </div>
+        </div>
+
+
+            <div class="btns">
+                <button type="button" (click)="adicionarModulo()">Adicionar Equipamento</button>
+                <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
+            </div>
+
+        </form>  
+        </ng-container>
+        </div>
     </main>
 </div>
