@@ -5,9 +5,6 @@ const app = express()
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 jwt = require('jsonwebtoken')
-const cors = require('cors')
-const checkToken = require('./middleware/checkToken')
-const checkRefreshToken = require('./middleware/refreshToken')
 
 const equip = require('./routes/equip')
 const salas = require('./routes/salas')
@@ -91,7 +88,7 @@ app.post('/auth/register',async(req,res)=>{
 
 app.post("/auth/login",async(req,res)=>{
 
-    const {name,password,id} = req.body
+    const {name,password} = req.body
 
 
     if(!name){
