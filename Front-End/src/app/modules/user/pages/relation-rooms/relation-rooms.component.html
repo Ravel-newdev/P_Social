@@ -1,19 +1,62 @@
 <section class="container">
+  <div class="header-title">
+    <h2>Filtrar por:</h2>
+  </div>
   <div class="filter">
-    <div class="header-title">
-      <h1>Filtrar por</h1>
-      <i class="linha"></i>
-    </div>
-    <div class="lists">
-      <label for="salas">Lista de salas</label>
-      <input type="radio" class="radio" name="lista" id="salas" />
-      <label for="equip">Lista de equipamentos</label>
-      <input type="radio" class="radio" name="lista" id="equip" />
-    </div>
-    <div class="options"></div>
-    <div class="buttons">
-      <button type="button" class="btn-aply">Aplicar</button>
-      <button type="button" class="btn-cancel">Cancelar</button>
+
+    <div class="filter-options">
+      <!-- Adicione opções de filtro aqui (ex: datas, salas, equipamentos) -->
+      <div class="filter-option">
+        <label for="date">Data: </label>
+        <input type="date" id="date" name="date">
+      </div>
+
+      <div class="select-wrapper">
+        <label for="room">Sala:</label>
+        <select id="room" name="room" (click)="ShowAngle()">
+          <option value="room1">Sala 1</option>
+          <option value="room2">Sala 2</option>
+        </select>
+        <i *ngIf="!this.angle"  class="fas fa-angle-down select-arrow"></i>
+        <i *ngIf="this.angle" class="fas fa-angle-up select-arrow"></i>
+
+      </div>
     </div>
   </div>
+
+      <div class="buttons">
+        <button type="button" class="btn-cancel">Cancelar</button>
+        <button type="button" class="btn-apply">Aplicar</button>
+      </div>
+
+      <i class="linha"></i>
 </section>
+<div class="reserve-list">
+  <div class="row">
+    <div class="card" >
+      <div class="card-body">
+        <h5 class="card-title">Uma sala ai</h5>
+        <p class="card-text">
+          Data da reserva: 12/12/2023 <!-- <input type="date" name="" id=""> -->
+        </p>
+        <a href="#" class="btn btn-primary btn">Visualizar</a>
+    </div>
+  </div>
+    <div class="card" >
+      <div class="card-body">
+        <h5 class="card-title">Uma sala ai</h5>
+        <p class="card-text">
+          Data da reserva: 12/12/2023 <!-- <input type="date" name="" id=""> -->
+        </p>
+        <a href="#" class="btn btn-primary btn">Visualizar</a>
+    </div>
+  </div>
+  </div>
+  <ul class="pagination">
+    <li class="page-item"  ><a class="page-link">Previous</a></li>
+    <li class="page-item" ><a class="page-link">1</a></li>
+    <li class="page-item" ><a class="page-link">2</a></li>
+    <li class="page-item"><a class="page-link">Próximo</a></li>
+  </ul>
+</div>
+

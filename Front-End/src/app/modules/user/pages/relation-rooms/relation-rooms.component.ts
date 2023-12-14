@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./relation-rooms.component.css']
 })
 export class RelationRoomsComponent {
+angle: boolean = false;
+selectedRoom: string | undefined;
 
+constructor(){}
+
+ShowAngle(){
+  this.angle = !this.angle;
+}
 }
