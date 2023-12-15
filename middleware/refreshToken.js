@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 function checkRefreshToken(req, res,next) {
-    const refreshToken = req.body;
+    const {refreshToken} = req.body;
   
     if (!refreshToken) {
       return res.status(401).json({ msg: "acesso negado" });
@@ -9,10 +9,7 @@ function checkRefreshToken(req, res,next) {
   
     try {
       const secret = process.env.SECRET;
-      jwt.verify(refreshToken, secret, (err, user) => {
-        console.log(err);
-        if (err) return res.sendStatus(403);
-      });
+      jwt.verify(refreshToken, secret);
   
       next();
     } catch (err) {
