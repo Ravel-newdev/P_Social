@@ -3,9 +3,9 @@ const router = express.Router()
 const mongoose = require('mongoose')
 require('../models/Salas')
 const Salas = mongoose.model('salas')
+const checkToken = require('../middleware/checkToken')
 
-
-router.get('/view', async(req,res) =>{
+router.get('/view', checkToken ,async(req,res) =>{
 Salas.find({D_E_L_E_T:''}).lean().then((salass)=>{
     res.status(200).json(salass)
 }).catch((err)=>{
@@ -13,7 +13,7 @@ Salas.find({D_E_L_E_T:''}).lean().then((salass)=>{
 })
 })
 
-router.get('/view_delete', async(req,res) =>{
+router.get('/view_delete',checkToken ,async(req,res) =>{
     Salas.find({D_E_L_E_T:'*'}).lean().then((salass)=>{
         res.status(200).json(salass)
     }).catch((err)=>{
@@ -22,7 +22,7 @@ router.get('/view_delete', async(req,res) =>{
     })
     
 
-router.post('/create' , async(req,res)=>{
+router.post('/create' ,checkToken ,async(req,res)=>{
 
     //Validação primeira, verificando se campos estão ou não vazios
     let codigo = 0
@@ -72,7 +72,7 @@ else{
 
 
 
-router.put('/update/:id', async(req,res)=>{
+router.put('/update/:id', checkToken,async(req,res)=>{
 
     
     const {nome,status} = req.body
@@ -139,7 +139,7 @@ router.put('/update/:id', async(req,res)=>{
 })
 
 
-router.put('/delete/:id', async(req,res)=>{
+router.put('/delete/:id',checkToken ,async(req,res)=>{
    await Salas.findOne({_id:req.params.id}).then(async()=>{
         const filter = { _id: req.params.id };
         const update = { $set: { D_E_L_E_T: '*',status:'D'
@@ -159,7 +159,7 @@ router.put('/delete/:id', async(req,res)=>{
 //DISCLAMER: O DELETE TOTAL NÃO SERÁ USADO EM NENHUM MOMENTO PELO USUÁRIO 
 //O ADMINISTRADOR DO SITE. ELE APENAS SERÁ USADOS PELOS DEVS PARA LIMPAR O BANCO DE DADOS.
 
-/*router.delete('/delete_total/:id', async(req,res)=>{
+/*router.delete('/delete_total/:id',checkToken ,async(req,res)=>{
     await Salas.deleteOne({_id: req.params.id}).then(()=>{
       res.status(200).json({msg:'Deletado totalmente.'})
       }).catch((err)=>{
@@ -168,7 +168,7 @@ router.put('/delete/:id', async(req,res)=>{
      })
   })
 
-  router.delete('/delete_everything',async(req,res)=>{
+  router.delete('/delete_everything',checkToken,async(req,res)=>{
     await Salas.deleteMany({}).then(()=>{
      res.status(200).json({msg:'Deletado com sucesso!'})
     }).catch((err)=>{

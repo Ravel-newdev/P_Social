@@ -8,8 +8,7 @@ const Reserva_Equip = new Schema({
     unique: true
    },
    cod_user:{
-    type: Schema.Types.ObjectId,
-    ref:'user',
+    type: String,
     required:true
    },
    cod_equip:{
@@ -28,20 +27,12 @@ const Reserva_Equip = new Schema({
    }
    ,
    date_reserv:{
-    type:Date,
+    type:String,
     required: true
    },
    date_entrega:{
-    type:Date,
+    type:String,
     required: true
-   },
-   date_create:{
-    type:Date,
-    default:Date.now()
-   },
-   date_update:{
-    type:Date,
-    default:Date.now()
    },
    hora_reserva:{
     type:String,
@@ -51,11 +42,19 @@ const Reserva_Equip = new Schema({
     type:String,
     required:true
    },
+     date_create:{
+      type:Date,
+      default:Date.now()
+     },
+     date_update:{
+      type:Date,
+      default:Date.now()
+     },
    D_E_L_E_T:{
     type:String,
     default:''
    }
 })
 
-const Reserva_Equips = mongoose.model('reserva_salas', Reserva_Equip)
+const Reserva_Equips = mongoose.model('reserva_equip', Reserva_Equip)
 module.exports = Reserva_Equips

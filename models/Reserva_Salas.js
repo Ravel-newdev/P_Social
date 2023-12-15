@@ -8,8 +8,7 @@ const Reserva_Salas = new Schema({
     unique: true
    },
    cod_user:{
-    type: Schema.Types.ObjectId,
-    ref:'user',
+    type: String,
     required:true
    },
    cod_sala:{

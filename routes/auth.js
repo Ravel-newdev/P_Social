@@ -59,7 +59,7 @@ router.post("/login",async(req,res)=>{
       })
 
       //register
-router.post('/auth/register',async(req,res)=>{
+router.post('/register',async(req,res)=>{
 
     const {name,password,confirmPassword} = req.body
 
