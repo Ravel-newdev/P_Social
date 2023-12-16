@@ -17,55 +17,108 @@
 
     <main>
         <div class="reservation-form">
+          <!--  RESERVA DAS SALAS -->
+          <ng-container *ngIf="showSala">
+            <form [formGroup]="reservaForm" class="form-container">
+              <div class="form-content" id="formSala">
+                <div class="input-field">
+                  <label for="nomeSala">Nome da Sala</label>
+                  <input type="text" id="nomeSala" formControlName="nomeSala" required>
+                </div>
+                <div class="input-field">
+                  <label for="diaReserva">Selecione o dia da reserva</label>
+                  <input type="date" id="diaReserva" formControlName="diaReserva" [min]="dataAtual" (change)="toggleHoraReserva($event)">
 
-            <ng-container *ngIf="showSala">
-                <form>
+                </div>
+                <!-- QUANDO ELE SELECIONAR A DATA -->
+                <div class="input-field" *ngIf="showHoraReserva">
+                  <label for="horarioReserva">Selecione o horário da reserva</label>
+                  <input type="time" id="horarioReserva" formControlName="horarioReserva"
+                         [min]="horaMinima" [max]="horaMaxima" step="300">
+                </div>
 
-                    <div class="form-content" id="formSala">
-                        <div class="input-field">
-                            <label for="nome_sala">Nome da Sala</label>
-                            <input type="text" id="nome_sala" name="nome_sala" required>
-                        </div>
-                        <div class="input-field">
-                            <label for="selecione_dia_sala">Selecione o dia</label>
-                            <select type="text" id="selecione_dia_sala" name="selecione_dia_sala" required>
-                                <option value=""> Selecione</option>
-                                <option value=""> 10/03/23</option>
-                                <option value=""> 11/03/23</option>
-                                <option value=""> 12/03/23</option>
-                                <option value=""> 13/03/23</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
-                </form>
-        </ng-container>
+                <div class="input-field">
+                  <label for="diaEntrega">Selecione o dia da entrega</label>
+                  <input type="date" id="diaEntrega" formControlName="diaEntrega" [min]="dataAtual" (change)="toggleHoraEntrega($event)">
+                  <div class="input-field" *ngIf="showHoraEntrega">
+                    <label for="horarioEntrega">Selecione o horário de entrega</label>
+                    <input type="time" id="horarioEntrega" formControlName="horarioEntrega"
+                         [min]="horaMinima" [max]="horaMaxima" step="300">
+                  </div>
+                </div>
+                <div class="input-field textarea-field">
+                  <label for="motivoReserva">Motivo da reserva</label>
+                  <textarea id="motivoReserva" formControlName="motivoReserva" cols="30" rows="7 "></textarea>
+                </div>
+              </div>
+              <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
+            </form>
+            <div class="overlay" [ngClass]="{'active': this.popupService.messagePopup}">
+              <div class="popup">
+                <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
+                  <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
+                </div>
+                <p>{{this.popupService.messagePopup}}</p>
+                <button (click)="this.popupService.clear()">Fechar</button>
+              </div>
+            </div>
+          </ng-container>
+
+
+        <!-- RESERVA DOS EQUIPAMENTOS -->
 
         <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
-            <form class="div">
-            <!-- Campos do Curso -->
-            <div *ngFor="let modulo of curso.modulos; let i = index" class="modulo">
-            <label for="nomeCurso">Equipamento:</label>
-            <input type="text" id="nomeCurso" name="nomeCurso" [(ngModel)]="curso.nome" required>
+          <form class="div">
+            <div *ngFor="let equipamento of equipamentos; let i = index" class="form-container">
+              <div class="field">
+                <label for="nomeEquipamento{{i}}">Equipamento:</label>
+                <input type="text" id="nomeEquipamento{{i}}" name="nomeEquipamento{{i}}" [(ngModel)]="equipamento.nomeEquipamento" required>
+              </div>
 
+              <div class="field">
+                <label for="quantidade{{i}}">Quantidade:</label>
+                <input type="number" id="quantidade{{i}}" name="quantidade{{i}}" [(ngModel)]="equipamento.quantidade" required>
+              </div>
 
-            <!-- Campos dos Módulos -->
-            <label for="nomeModulo{{i}}">Quantidade:</label>
-            <input type="text" id="nomeModulo{{i}}" name="nomeModulo{{i}}" [(ngModel)]="modulo.nome" required>
+              <div class="field">
+                <label for="dataReserva{{i}}">Data de Reserva:</label>
+                <input type="date" id="dataReserva{{i}}" name="dataReserva{{i}}" [(ngModel)]="equipamento.dataEntrega" required>
+              </div>
 
+              <div class="field">
+                <label for="horarioReserva{{i}}">Horário de Reserva:</label>
+                <input type="time" id="horarioReserva{{i}}" name="horarioReserva{{i}}" [(ngModel)]="equipamento.horarioEntrega" required>
+              </div>
 
-            <div class="actions-btns">
-                <button (click)="removerModulo(i)" class="btn btn-danger">Remover Equipamento</button> <br>
+              <div class="field">
+                <label for="dataEntrega{{i}}">Data de Entrega:</label>
+                <input type="date" id="dataEntrega{{i}}" name="dataEntrega{{i}}" [(ngModel)]="equipamento.dataEntrega" required>
+              </div>
+
+              <div class="field">
+                <label for="horarioEntrega{{i}}">Horário de Entrega:</label>
+                <input type="time" id="horarioEntrega{{i}}" name="horarioEntrega{{i}}" [(ngModel)]="equipamento.horarioEntrega" required>
+              </div>
+
+              <div class="actions-btns">
+                <button (click)="removerEquipamento(i)" class="btn btn-danger">Remover Equipamento</button> <br>
+              </div>
             </div>
-        </div>
-
 
             <div class="btns">
-                <button type="button" (click)="adicionarModulo()">Adicionar Equipamento</button>
-                <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
+              <button type="button" (click)="adicionarEquipamento()">Adicionar Equipamento</button>
+              <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
             </div>
-
-        </form>  
+          </form>
+          <div class="overlay" [ngClass]="{'active': this.popupService.messagePopup}">
+            <div class="popup">
+              <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
+                <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
+              </div>
+              <p>{{this.popupService.messagePopup}}</p>
+              <button (click)="this.popupService.clear()">Fechar</button>
+            </div>
+          </div>
         </ng-container>
         </div>
     </main>

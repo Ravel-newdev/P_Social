@@ -15,7 +15,8 @@ import { ReserveComponent } from './pages/reserve/reserve.component';
   imports: [
     CommonModule,
     UserRoutingModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class UserModule { }

@@ -32,7 +32,6 @@ export class CreateRoomComponent implements OnInit {
         this.success = false
         this.popupService.addMessage('Preencha todos os campos para concluir o cadastro!')
       }
-
     }
   }
 
