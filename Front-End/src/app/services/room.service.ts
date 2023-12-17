@@ -11,9 +11,10 @@ export class RoomService {
   private apiUrl = environment.baseApiURL;
   constructor(private http: HttpClient) {}
 
-  getSalas(){
-
+  getSalas(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/salas/view`);
   }
+
 
   cadastrarSala(sala: salas): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/salas/create`, sala)
