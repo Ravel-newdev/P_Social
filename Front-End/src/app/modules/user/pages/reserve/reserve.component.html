@@ -16,10 +16,10 @@
     </header>
 
     <main>
-        <div class="reservation-form">
+        <div class="reservation-form" *ngIf="showSala || showEquipamentos">
           <!--  RESERVA DAS SALAS -->
           <ng-container *ngIf="showSala">
-            <form [formGroup]="reservaForm" class="form-container">
+            <form (ngSubmit)="createReserveRoom()" [formGroup]="reservaRoomForm" class="form-container">
               <div class="form-content" id="formSala">
                 <div class="input-field">
                   <label for="nomeSala">Nome da Sala</label>
@@ -64,11 +64,10 @@
             </div>
           </ng-container>
 
-
         <!-- RESERVA DOS EQUIPAMENTOS -->
 
         <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
-          <form class="div">
+          <form (ngSubmit)="createReserveEquipamento()">
             <div *ngFor="let equipamento of equipamentos; let i = index" class="form-container">
               <div class="field">
                 <label for="nomeEquipamento{{i}}">Equipamento:</label>
@@ -110,16 +109,17 @@
               <button type="submit" id="concluirReserva" class="btn btn-success">Concluir Reserva</button>
             </div>
           </form>
-          <div class="overlay" [ngClass]="{'active': this.popupService.messagePopup}">
-            <div class="popup">
-              <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
-                <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
-              </div>
-              <p>{{this.popupService.messagePopup}}</p>
-              <button (click)="this.popupService.clear()">Fechar</button>
-            </div>
-          </div>
         </ng-container>
         </div>
     </main>
+</div>
+
+<div class="overlay" [ngClass]="{'active': this.popupService.messagePopup}">
+  <div class="popup">
+    <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
+      <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
+    </div>
+    <p>{{this.popupService.messagePopup}}</p>
+    <button (click)="this.popupService.clear()">Fechar</button>
+  </div>
 </div>
