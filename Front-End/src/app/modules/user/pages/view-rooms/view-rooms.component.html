@@ -1,0 +1,39 @@
+<div class="view-rooms">
+  <h1
+    class="display-4 d-flex align-items-center justify-content-center mx-auto">
+    Salas
+  </h1>
+  <div class="container">
+    <div class="col-md-4 mb-3" *ngFor="let sala of salas">
+      <div class="card">
+        <div class="card-header">
+          <p class="card-text">{{sala.nome}}</p>
+        </div>
+        <div class="card-body">
+          <span>Status:</span>
+          <p>{{sala.status}}</p>
+        </div>
+        <div class="card-footer">
+          <div class="input-group">
+            <button class="btn btn-primary">Reservar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div
+  class="container-fluid mt-5 d-flex align-items-center justify-content-center mx-auto"
+>
+  <div class="paginator">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </div>
+</div>
