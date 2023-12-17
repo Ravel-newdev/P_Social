@@ -144,12 +144,14 @@ router.put('/update/:id',checkToken ,async(req,res)=>{
                       }
          
           }).catch((err)=>{
-            res.status(404).json({msg:'Error ao atualizar os dados. ERROR: '+err})
+            res.status(404).json({msg:'Error ao atualizar os dados.'})
+            console.log(err)
           })
    }
 
 }).catch((err)=>{
      res.status(404).json({msg:'Equipamento não encontrada.'})
+     console.log(err)
   })
   }
 })

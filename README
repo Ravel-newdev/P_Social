@@ -1,4 +1,4 @@
-==================================  ENDPOINTS ======================================
+========================================== ENDPOINTS ==========================================
 
 - Rota padrão:
 https://api-clee.onrender.com/
@@ -6,14 +6,17 @@ method: GET
 
 - Rota de login: 
 https://api-clee.onrender.com/auth/login
+method: POST
 
 - Rota para refresh token:
 https://api-clee.onrender.com/refresh
+method: POST
 
 - Rota admnistrador:
 https://api-clee.onrender.com/{id do usuário}
 method: GET
 
+========================================== EQUIPAMENTOS ==========================================
 - Rota para criar equipamento:
 https://api-clee.onrender.com/equip/add_equip
 method: POST
@@ -29,3 +32,69 @@ method: PUT
 - Rota para deletar equipamento:
 https://api-clee.onrender.com/equip/deleteEquip/ {id do equipamento}
 method: DELETE
+
+========================================== SALAS ==========================================
+
+- Rota para ver as salas não deletadas:
+https://api-clee.onrender.com/salas/view
+method: GET
+
+- Rota para ver salas deletadas: 
+https://api-clee.onrender.com/salas/view_delete
+method: GET
+
+-Rota para criar sala: 
+https://api-clee.onrender.com/salas/create
+method: POST
+
+-Rota para atualizar sala:
+https://api-clee.onrender.com/salas/update/{id da sala}
+method: PUT
+
+-Rota para deletar a sala:
+https://api-clee.onrender.com/salas/delete/{id da sala}
+method: PUT
+
+====================================== RESERVA DE SALAS ======================================
+
+- Rota para ver as reservas de sala não deletadas:
+https://api-clee.onrender.com/reserva_salas/view
+method: GET
+
+- Rota para ver as reserva de salas deletadas
+https://api-clee.onrender.com/reserva_salas/view_delete
+method: GET
+
+- Registro de reserva de salas:
+https://api-clee.onrender.com/reserva_salas/create
+method: POST
+
+- Rota para atualizar reserva de salas:
+https://api-clee.onrender.com/reserva_salas/update/ {id da reserva da sala}
+method: PUT
+
+- Deletar reserva de salas:
+https://api-clee.onrender.com/reserva_salas/delete/ {id da reserva da sala}
+method: PUT
+
+==================================== RESERVA DE EQUIPAMENTOS ====================================
+
+- Rota para ver reserva de equipamentos não deletadas
+https://api-clee.onrender.com/reserva_equip/view
+method: GET
+
+- Rota para ver reserva de equipamentos deletadas:
+https://api-clee.onrender.com/view_delete
+method: GET
+
+- Rota para criar reserva de equipamentos:
+https://api-clee.onrender.com/create
+method: POST
+
+- Rota para atualizar a reserva de equipamentos:
+https://api-clee.onrender.com/update/{id da reserva de equipamento}
+method: PUT
+
+- Rota para deletar a reserva de equipamentos:
+https://api-clee.onrender.com/delete/ {id da reserva de equipamento}
+method: PUT
