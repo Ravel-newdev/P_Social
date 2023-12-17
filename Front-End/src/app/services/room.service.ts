@@ -13,8 +13,8 @@ export class RoomService {
 
   getSalas(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/salas/view`);
-  }
 
+  }
 
   cadastrarSala(sala: salas): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/salas/create`, sala)
