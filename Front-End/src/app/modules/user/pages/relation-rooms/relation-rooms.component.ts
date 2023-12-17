@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { reserva_equip } from 'src/app/models/reserva_equips';
 import { reservas_salas } from 'src/app/models/reserva_salas';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-relation-rooms',
@@ -13,7 +14,7 @@ export class RelationRoomsComponent {
   currentPage: number = 1;
   itemsPerPage: number = 3;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   equip: reserva_equip[] = [
     {

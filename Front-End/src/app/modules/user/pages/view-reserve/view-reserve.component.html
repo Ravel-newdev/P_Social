@@ -1,0 +1,37 @@
+<section class="container" *ngFor="let sala of salas">
+  <div class="container-title">
+    <h1>{{ sala.cod_sala }}</h1>
+  </div>
+  <div class="container-body">
+    <div class="container-text">
+      Quem reservou:
+      <input type="text" class="text" id="text" [(ngModel)]="sala.cod_user" disabled="disabled"/>
+    </div>
+    <div class="container-desc">
+      <label for="descricao">Descrição da reserva:</label
+      ><textarea id="descricao" disabled="disabled">{{ sala.desc }}</textarea>
+    </div>
+    <div class="container-datetime">
+      Estimativa de entrega:  
+      <input
+        type="datetime"
+        id="deliveryDate"
+        name="deliveryDate"
+        [(ngModel)]="sala.data_entrega"
+        disabled="disabled"
+      />
+      às
+      <input
+        type="time"
+        id="deliveryTime"
+        name="deliveryTime"
+        [(ngModel)]="sala.hora_entrega"
+        disabled="disabled"
+      />
+    </div>
+  </div>
+  <div class="button">
+    <a class="btn btn-primary" [routerLink]="['./view-reserve', sala.cod_sala]"
+      >Editar</a>
+  </div>
+</section>

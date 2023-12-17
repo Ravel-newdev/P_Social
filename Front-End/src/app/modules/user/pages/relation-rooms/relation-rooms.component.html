@@ -35,7 +35,7 @@
       <h5 class="card-title">{{ sala.cod_sala }}</h5>
       <p class="">Quem reservou: {{ sala.cod_user }}</p>
       <p class="card-text">Descrição: {{ sala.desc }}</p>
-      <a routerLink="#" class="btn btn-primary">Visualizar</a>
+      <a routerLink="./view-reserve" class="btn btn-primary">Visualizar</a>
     </div>
   </div>
 </div>
@@ -45,11 +45,10 @@
       <h5 class="card-title">{{ sala.cod_equip }}</h5>
       <p class="">Quem reservou: {{ sala.cod_user }}</p>
       <p class="card-text">Descrição: {{ sala.desc }}</p>
-      <a routerLink="#" class="btn btn-primary">Visualizar</a>
+      <a class="btn btn-primary" routerLink="./view-reserve" >Visualizar</a>
     </div>
   </div>
 </div>
-
 <div class="paginator">
   <ul class="pagination">
     <li class="page-item" *ngIf="currentPage > 1" (click)="previousPage()"><a class="page-link">Previous</a></li>
