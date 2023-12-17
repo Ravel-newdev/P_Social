@@ -2,10 +2,10 @@
   width: 100%;
   max-height: 90%;
   padding: 20px;
-  margin-left: 0;
-  margin-bottom: 10px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 select {
@@ -20,11 +20,14 @@ select {
   outline: none;
   appearance: none;
   width: 150px;
+  transition: all .3s ease-in-out;
+}
+select:focus{
+  border: 1px solid #8c52ff;
 }
 select option{
   outline: none;
 }
-
 
 .select-arrow {
   position: absolute;
@@ -38,6 +41,7 @@ select option{
   display: flex;
   gap: 30px;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   height: 5rem;
 }
@@ -54,8 +58,21 @@ h2{
   font-size: 20px;
 }
 
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #8c52ff80;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: all .3s ease-in-out;
+}
+input[type="date"]:focus{
+  border: 1px solid #8c52ff;
+}
 .filter-options {
   display: flex;
+  flex-wrap: wrap; 
+  gap: 20px;
 }
 
 .filter-option {
@@ -67,50 +84,25 @@ h2{
   gap: 5px;
 }
 
-.buttons {
+.search{
   display: flex;
-  padding-bottom: 10px;
+  justify-content: center;
+  align-items : center;
+  gap: 10px;
+  margin: 0 20px 10px 10px;
 }
-input[type = "date"]{
-  border-radius: 6px;
-  border: 0.5px solid #8c52ff;
-  padding: 5px 8px;
-}
-button {
+.input-search{
+  width: 17rem;
+  outline: none;
+  border: 1px solid #8c52ff80;
   padding: 5px 10px;
-  border-radius: 7%;
-  cursor: pointer;
-  margin-right: 10px;
-  font-size: 13px;
-  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+  border-radius: 10px;
+  transition: all .3s ease-in-out;
 }
-
-.btn-apply,
-.btn-cancel {
-  height: auto;
-  background-color: white;
+.input-search:focus{
+border: 1px solid #8c52ff;
 }
-
-.btn-apply {
-  border: 1px solid #8c52ff;
-  color: #8c52ff;
-}
-
-.btn-apply:hover {
-  background-color: #8c52ff;
-  color: #fff;
-}
-
-.btn-cancel:hover {
-  background-color: #606060;
-  color: #fff;
-}
-
-.btn-cancel {
-  border: 1px solid #606060;
-  color: #808080;
-}
-
 .reservation-list {
   margin-top: 20px;
 }
@@ -124,16 +116,8 @@ button {
 .select-wrapper {
   position: relative;
   display: inline-block;
-
 }
 
-input[type="date"] {
-  padding: 8px;
-  border: 1px solid #8c52ff80;
-  border-radius: 5px;
-  font-size: 14px;
-  outline: none;
-}
 .row {
   width: 100%;
   display: flex;
@@ -143,6 +127,7 @@ input[type="date"] {
 }
 
 .card {
+  margin: 5px ;
   flex: 0 0 calc(100% - 20px);
   max-width: calc(33.33% - 20px);
   min-width: calc(33.33% - 20px);
@@ -181,6 +166,7 @@ input[type="date"] {
   cursor: pointer;
   border: 1px solid #8244ff50;
   color: #8244ff;
+  background-color: transparent;
 }
 .btn{
   background-color: #8c52ff;
@@ -189,4 +175,10 @@ input[type="date"] {
 }
 .btn:hover{
   background-color: #6c22ff;
+}
+.reserves-list{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
 }
