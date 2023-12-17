@@ -6,13 +6,15 @@ import { CreateRoomComponent } from './pages/create-room/create-room.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReserveComponent } from './pages/reserve/reserve.component';
 import { CreateEquipamentoComponent } from './pages/create-equipamento/create-equipamento.component';
+import { ViewReserveComponent } from './pages/view-reserve/view-reserve.component';
 
 
 @NgModule({
   declarations: [
     CreateRoomComponent,
     ReserveComponent,
-    CreateEquipamentoComponent
+    CreateEquipamentoComponent,
+    ViewReserveComponent,
   ],
   imports: [
     CommonModule,
