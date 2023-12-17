@@ -22,20 +22,12 @@ const Reserva_Salas = new Schema({
     required: true
    },
    date_reserv:{
-    type:Date,
+    type:String,
     required: true
    },
    date_entrega:{
-    type:Date,
+    type:String,
     required: true
-   },
-   date_create:{
-    type:Date,
-    default:Date.now()
-   },
-   date_update:{
-    type:Date,
-    default:Date.now()
    },
    hora_reserva:{
     type:String,
@@ -45,6 +37,14 @@ const Reserva_Salas = new Schema({
     type:String,
     required:true
    },
+   date_create:{
+      type:Date,
+      default:Date.now()
+     },
+     date_update:{
+      type:Date,
+      default:Date.now()
+     },
    D_E_L_E_T:{
     type:String,
     default:''
