@@ -64,34 +64,45 @@ router.get('/view',checkToken, async(req,res) =>{
         else{
             //Validação secundária, compara o valor recebido com o existente ao banco de dados para evitar duplicação dos dados.
         
-           R_Equip.findOne({
-            cod_equip: cod_equip,
-            $or: [
-                {date_reserv: date_reserv},
-                {date_reserv: date_entrega}
-              ],
-
-            $or: [
-                {date_entrega: date_reserv},
-                {date_entrega: date_entrega}
-              ],
-              
-             qnt_equip:qnt_equip,
-             hora_reserva:hora_reserva,
-             hora_entrega:hora_entrega,
-
-               D_E_L_E_T: '',
-          
-          }
-          ).lean().then((exists)=>{
-             
-                if(exists){
-                 res.status(409).json({msg:'O equipamento já está reservado'})
-             }
-        
-             else{
+            R_Equip.find(
+              {
+                  cod_equip: cod_equip,
+                  $or: [
+                    { date_reserv: date_reserv },
+                    { date_reserv: date_entrega }
+                  ],
+                  $or: [
+                    { date_entrega: date_reserv },
+                    { date_entrega: date_entrega }
+                  ],
+                  hora_reserva: hora_reserva,
+                  hora_entrega: hora_entrega,
+                  D_E_L_E_T: ''
+              }).lean().then((exists)=>{
+                //Verificando se o equipamento digitado existe ou não no sistema.
+             let sum = 0
+             exists.forEach(function (doc) {
+              sum += doc.qnt_equip;
+            })
+  
                 //Verificando se o equipamento digitado existe ou não no sistema.
               Equips.findOne({codigo: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
+                  soma = +qnt_equip + +sum    
+                
+                  if(equips.qnt_estoque < soma){
+                    res.status(400).json({msg:`Equipamento não pode mais ser reservado, escolha outro horário`})
+                  }
+
+                  else {
+                                
+                    if(equips.qnt_estoque == 0){
+                      res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
+                    }
+
+                    if(equips.qnt_estoque < qnt_equip){
+                      res.status(401).json({msg:'A quantidade de pedida é maior que a quantidade em estoque.'})
+                      }
+                 
                  if(equips){
                     R_Equip.findOne().sort({_id: -1}).lean().then((u_R_Equips)=>{
                         u_R_Equips ? cod_reserva = u_R_Equips.cod_reserva : cod_reserva = 0
@@ -109,7 +120,7 @@ router.get('/view',checkToken, async(req,res) =>{
                         }
                
                        new R_Equip(newR_Equip).save().then(() =>{
-                           res.status(200).json({msg:'Salvo com sucesso'})
+                           res.status(200).json({msg:`Salvo com sucesso ${sum}`})
                        }).catch((err) => {
                           res.status(500).json({msg:'Error ao salvar.'+err})
                        })
@@ -122,9 +133,10 @@ router.get('/view',checkToken, async(req,res) =>{
                  else{
                  res.status(404).json({msg:'Sala não encontrada.'})
                  }
-              })
+                }
+                })
            
-             }
+           
             }).catch((err)=>{
                 res.status(422).json({msg:'Houve um error ao validar os dados.'})
             })
@@ -165,34 +177,50 @@ router.get('/view',checkToken, async(req,res) =>{
                         
                 else{
     
-                    R_Equip.findOne({_id: {$ne: `${req.params.id}`},
+                  R_Equip.find(
+                    {
                         cod_equip: cod_equip,
                         $or: [
-                            {date_reserv: date_reserv},
-                            {date_reserv: date_entrega}
-                          ],
-            
+                          { date_reserv: date_reserv },
+                          { date_reserv: date_entrega }
+                        ],
                         $or: [
-                            {date_entrega: date_reserv},
-                            {date_entrega: date_entrega}
-                          ],
-                         qnt_equip:qnt_equip,
-                         hora_reserva:hora_reserva,
-                         hora_entrega:hora_entrega,
-            
-                           D_E_L_E_T: '',
+                          { date_entrega: date_reserv },
+                          { date_entrega: date_entrega }
+                        ],
+                        hora_reserva: hora_reserva,
+                        hora_entrega: hora_entrega,
+                        D_E_L_E_T: ''
+                    }).lean().then((exists)=>{
+                      //Verificando se o equipamento digitado existe ou não no sistema.
+                   let sum = 0
+                   exists.forEach(function (doc) {
+                    sum += doc.qnt_equip;
+                  })
+        
+                      //Verificando se o equipamento digitado existe ou não no sistema.
+                    Equips.findOne({codigo: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
+                        soma = +qnt_equip + +sum    
                       
+                        if(equips.qnt_estoque < soma){
+                          res.status(400).json({msg:`Equipamento não pode mais ser reservado, escolha outro horário`})
+                        }
+                        
+                  else {
+                    
+                    if(equips.qnt_estoque == 0){
+                      res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
+                    }
+
+                    if(equips.qnt_estoque < qnt_equip){
+                      res.status(401).json({msg:'A quantidade de pedida é maior que a quantidade em estoque.'})
                       }
-                      ).lean().then((exists)=>{
-                         
-                            if(exists){
-                             res.status(409).json({msg:'O equipamento já está reservado'})
-                         }
-            
-                 else{
-                    Equips.findOne({codigo: cod_equip ,qnt_estoque: {$ne: 0}, D_E_L_E_T:''}).lean().then((equips)=>{
+      
                         if(equips){
+
+                          
                             R_Equip.findOne({_id: req.params.id}).then(async(R_Equips)=>{
+                              
                                   
                                 if (
                                     R_Equips.cod_user != cod_user ||
@@ -239,10 +267,11 @@ router.get('/view',checkToken, async(req,res) =>{
                         else{
                          res.status(404).json({msg:'Equipamento não encontrado ou fora de estoque.'})
                         }
+                      }
                     }).catch((err)=>{
                         res.status(400).json({msg:'Erro ao consultar o equipamento!'})
                     })
-                 }
+                 
             
             }).catch((err)=>{
                    res.status(404).json({msg:'Reserva de Equipamento não encontrada.'})
@@ -268,7 +297,7 @@ router.get('/view',checkToken, async(req,res) =>{
 
 // DISCLAMER: APENAS DESENVOLVEDORES EM AMBIENTE DE TESTE PODEM UTILIZAR ESTAS ROTAS.
 
-       /* router.delete('/delete_total/:id', async(req,res)=>{
+        router.delete('/delete_total/:id', async(req,res)=>{
           await R_Equip.deleteOne({_id: req.params.id}).then(()=>{
             res.status(200).json({msg:'Deletado totalmente.'})
             }).catch((err)=>{
@@ -286,6 +315,6 @@ router.delete('/delete_everything',async(req,res)=>{
     })
 })
 
-*/
+
 
 module.exports = router
