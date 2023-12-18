@@ -22,7 +22,7 @@ https://api-clee.onrender.com/equip/add_equip
 method: POST
 
 - Rota para listar equipamento:
-https://api-clee.onrender.com/user/equip/listEquip
+https://api-clee.onrender.com/equip/listEquip
 method: GET
 
 - Rota para atualizar equipamento:
