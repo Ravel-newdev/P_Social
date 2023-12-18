@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { reservas_salas } from 'src/app/models/reserva_salas';
 import { PopupService } from 'src/app/services/popup.service';
+import { ReserveService } from 'src/app/services/reserve.service';
 
 @Component({
   selector: 'app-reserve',
@@ -29,15 +31,16 @@ export class ReserveComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    public popupService: PopupService
+    public popupService: PopupService,
+    private reserveService: ReserveService
   ) {
     this.reservaRoomForm = this.formBuilder.group({
-      nomeSala: ['',[Validators.required]],
-      diaReserva: ['',[Validators.required]],
-      horarioReserva: ['',[Validators.required]],
-      diaEntrega: ['',[Validators.required]],
-      horarioEntrega:['',[Validators.required]],
-      motivoReserva:['',[Validators.required]]
+      nomeSala: ['', Validators.required],
+      diaReserva: ['', Validators.required],
+      horarioReserva: ['', Validators.required],
+      diaEntrega: ['', Validators.required],
+      horarioEntrega: ['', Validators.required],
+      motivoReserva: ['', Validators.required]
     });
 
     this.reservaEquipamentoForm = this.formBuilder.group({
@@ -108,32 +111,22 @@ export class ReserveComponent implements OnInit {
 
   createReserveRoom() {
     if (this.reservaRoomForm.valid) {
-      const horarioReserva = this.reservaRoomForm.get('horarioReserva')?.value;
-      const horarioEntrega = this.reservaRoomForm.get('horarioEntrega')?.value;
-      const diaReserva = this.reservaRoomForm.get('diaReserva')?.value;
-      const diaEntrega = this.reservaRoomForm.get('diaEntrega')?.value;
+      const reservaData = this.reservaRoomForm.value as reservas_salas;
 
-      if (diaReserva == diaEntrega) {
-        if (horarioReserva > horarioEntrega) {
-          this.success = false;
-          this.errorCad = true;
-          this.popupService.addMessage('O horário de entrega não pode ser menor que o de reserva!');
-        } else {
+      this.reserveService.createReservaSala(reservaData).subscribe(
+        (response) => {
           this.success = true;
           this.errorCad = false;
           this.popupService.addMessage('Sala reservada com sucesso!');
+          this.reservaRoomForm.reset();
+        },
+        (error) => {
+          this.success = false;
+          this.errorCad = true;
+          this.popupService.addMessage('Ocorreu um erro ao reservar a sala.');
+          console.error(error);
         }
-      } else if (diaReserva > diaEntrega) {
-        this.success = false;
-        this.errorCad = true;
-        this.popupService.addMessage('O dia de entrega não pode ser menor que o de reserva!');
-      } else {
-        this.success = true;
-        this.errorCad = false;
-        this.popupService.addMessage('Sala reservada com sucesso!');
-      }
-
-
+      );
     } else {
       this.success = false;
       this.errorCad = true;

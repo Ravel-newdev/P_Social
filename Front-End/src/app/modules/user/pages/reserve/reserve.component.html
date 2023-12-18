@@ -27,28 +27,28 @@
                 </div>
                 <div class="input-field">
                   <label for="diaReserva">Selecione o dia da reserva</label>
-                  <input type="date" id="diaReserva" formControlName="diaReserva" [min]="dataAtual" (change)="toggleHoraReserva($event)">
+                  <input type="date" id="diaReserva" formControlName="diaReserva" [min]="dataAtual" (change)="toggleHoraReserva($event)" required>
 
                 </div>
                 <!-- QUANDO ELE SELECIONAR A DATA -->
                 <div class="input-field" *ngIf="showHoraReserva">
                   <label for="horarioReserva">Selecione o horário da reserva</label>
                   <input type="time" id="horarioReserva" formControlName="horarioReserva"
-                         [min]="horaMinima" [max]="horaMaxima" step="300">
+                         [min]="horaMinima" [max]="horaMaxima" step="300" required>
                 </div>
 
                 <div class="input-field">
                   <label for="diaEntrega">Selecione o dia da entrega</label>
-                  <input type="date" id="diaEntrega" formControlName="diaEntrega" [min]="dataAtual" (change)="toggleHoraEntrega($event)">
+                  <input type="date" id="diaEntrega" formControlName="diaEntrega" [min]="dataAtual" (change)="toggleHoraEntrega($event)" required="">
                   <div class="input-field" *ngIf="showHoraEntrega">
                     <label for="horarioEntrega">Selecione o horário de entrega</label>
                     <input type="time" id="horarioEntrega" formControlName="horarioEntrega"
-                         [min]="horaMinima" [max]="horaMaxima" step="300">
+                         [min]="horaMinima" [max]="horaMaxima" step="300" required>
                   </div>
                 </div>
                 <div class="input-field textarea-field">
                   <label for="motivoReserva">Motivo da reserva</label>
-                  <textarea id="motivoReserva" formControlName="motivoReserva" cols="30" rows="7 "></textarea>
+                  <textarea id="motivoReserva" formControlName="motivoReserva" cols="30" rows="7 " required=""></textarea>
                 </div>
               </div>
               <button type="submit" id="concluirReserva" class="btn">Concluir Reserva</button>
