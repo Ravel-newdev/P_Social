@@ -1,3 +1,4 @@
+import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
     this.authService.login({name: name, password: password}).subscribe(
       response => {
         this.router.navigate(['/user']);
+        
       },
       error =>{
         console.error('Erro ao fazer login!', error);

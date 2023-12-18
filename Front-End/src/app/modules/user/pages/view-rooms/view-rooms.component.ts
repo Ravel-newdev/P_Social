@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { reservas_salas } from 'src/app/models/reserva_salas';
-import { salas } from 'src/app/models/salas';
+// view-rooms.component.ts
+
+import { Component, OnInit } from '@angular/core';
 import { RoomService } from 'src/app/services/room.service';
 
 @Component({
@@ -8,10 +8,11 @@ import { RoomService } from 'src/app/services/room.service';
   templateUrl: './view-rooms.component.html',
   styleUrls: ['./view-rooms.component.css']
 })
-export class ViewRoomsComponent {
+export class ViewRoomsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 3;
-  salas: any[] = []
+  salas: any[] = [];
+
   constructor(private roomService: RoomService) {}
 
   ngOnInit(): void {
@@ -21,8 +22,11 @@ export class ViewRoomsComponent {
   carregarSalas(): void {
     this.roomService.getSalas().subscribe(
       (data: any) => {
-        this.salas = data;  
-        console.log(data)
+        this.salas = data.map((sala: any) => ({
+          nome: sala.nome,
+          status: this.getStatusLabel(sala.status),
+        }));
+        console.log(this.salas);
       },
       (error) => {
         console.error('Erro ao carregar salas:', error);
@@ -30,4 +34,30 @@ export class ViewRoomsComponent {
     );
   }
 
+  getStatusLabel(status: string): string {
+    return status === 'A' ? 'Ativo' : 'Inativo';
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.salas.length / this.itemsPerPage);
+  }
+
+  getPages(): number[] {
+    const totalPages = this.getTotalPages();
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  setPage(page: number): void {
+    if (page >= 1 && page <= this.getTotalPages()) {
+      this.currentPage = page;
+    }
+  }
+
+  previousPage(): void {
+    this.setPage(this.currentPage - 1);
+  }
+
+  nextPage(): void {
+    this.setPage(this.currentPage + 1);
+  }
 }

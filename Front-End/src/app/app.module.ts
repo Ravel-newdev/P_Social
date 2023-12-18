@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './modules/user/pages/dashboard/dashboard.component';
 import { RelationRoomsComponent } from './modules/user/pages/relation-rooms/relation-rooms.component';
 import {HttpClientModule} from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {HttpClientModule} from '@angular/common/http';
     RelationRoomsComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
