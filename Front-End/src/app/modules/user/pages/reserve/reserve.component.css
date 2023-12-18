@@ -67,7 +67,7 @@ input[type="radio"] {
   margin-top: 20px;
 }
 
-.btn {
+#concluirReserva {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -75,6 +75,7 @@ input[type="radio"] {
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
+  background-color: #8c52ff;
 }
 
 .btn-danger {
@@ -83,10 +84,6 @@ input[type="radio"] {
 
 .btn-primary {
   background-color: #337ab7;
-}
-
-.btn-success {
-  background-color: #5cb85c;
 }
 
 label {
