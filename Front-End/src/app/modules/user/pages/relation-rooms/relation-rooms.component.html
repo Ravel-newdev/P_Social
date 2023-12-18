@@ -4,7 +4,7 @@
   </div>
   <div class="filter">
     <div class="filter-options">
-      <!-- Adicione opções de filtro aqui (ex: datas, salas, equipamentos) -->
+      <!-- Opções de filtro (ex: datas, salas, equipamentos) -->
       <div class="filter-option">
         <label for="date">Data: </label>
         <input type="date" id="date" name="date" />
@@ -29,29 +29,22 @@
 
   <i class="linha"></i>
 </section>
+
 <div class="reserves-list">
-  <div class="card" *ngFor="let sala of filteredSalas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+  <div class="card" *ngFor="let reserva of filteredReservas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
     <div class="card-body">
-      <h5 class="card-title">{{ sala.cod_sala }}</h5>
-      <p class="">Quem reservou: {{ sala.cod_user }}</p>
-      <p class="card-text">Descrição: {{ sala.desc }}</p>
+      <h5 class="card-title" *ngIf="selectedRoom === 'room1'">{{ reserva.cod_sala }}</h5>
+      <h5 class="card-title" *ngIf="selectedRoom === 'room2'">{{ reserva.cod_equip }}</h5>
+      <p class="">Quem reservou: {{ reserva.cod_user }}</p>
+      <p class="card-text">Descrição: {{ reserva.desc }}</p>
       <a routerLink="./view-reserve" class="btn btn-primary">Visualizar</a>
     </div>
   </div>
 </div>
-<div class="reserves-list">
-  <div class="card" *ngFor="let sala of filteredEquipamentos.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
-    <div class="card-body">
-      <h5 class="card-title">{{ sala.cod_equip }}</h5>
-      <p class="">Quem reservou: {{ sala.cod_user }}</p>
-      <p class="card-text">Descrição: {{ sala.desc }}</p>
-      <a class="btn btn-primary" routerLink="./view-reserve" >Visualizar</a>
-    </div>
-  </div>
-</div>
+
 <div class="paginator">
   <ul class="pagination">
-    <li class="page-item" *ngIf="currentPage > 1" (click)="previousPage()"><a class="page-link">Previous</a></li>
+    <li class="page-item" *ngIf="currentPage > 1" (click)="previousPage()"><a class="page-link">Anterior</a></li>
     <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage" (click)="setPage(page)"><a class="page-link">{{ page }}</a></li>
     <li class="page-item" *ngIf="currentPage < totalPages" (click)="nextPage()"><a class="page-link">Próximo</a></li>
   </ul>

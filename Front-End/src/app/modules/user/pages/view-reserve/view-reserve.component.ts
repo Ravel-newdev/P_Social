@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { reservas_salas } from 'src/app/models/reserva_salas';
+import { ReserveService } from 'src/app/services/reserve.service';
 
 @Component({
   selector: 'app-view-reserve',
@@ -7,15 +8,23 @@ import { reservas_salas } from 'src/app/models/reserva_salas';
   styleUrls: ['./view-reserve.component.css']
 })
 export class ViewReserveComponent {
-  salas: reservas_salas[] = [
-    {
-      cod_sala: 'AUDITÓRIO',
-      cod_user: 'Elizabeth',
-      desc: 'porque eu que mando',
-      data_reserva: '14/12/2023',
-      hora_reserva: '08:00',
-      data_entrega: '14/12/2023',
-      hora_entrega: '15:00'
-    },]
+  salas: reservas_salas[] = [];
 
+  constructor(private reserveService: ReserveService) { }
+
+  ngOnInit(): void {
+    this.carregarReservas();
+  }
+
+  carregarReservas(): void {
+    this.reserveService.getReservasSalas().subscribe(
+      (data: reservas_salas[]) => {
+        this.salas = data;
+      },
+      (error) => {
+        console.error('Erro ao carregar reservas:', error);
+        // Trate o erro, exiba uma mensagem ao usuário, etc.
+      }
+    );
+  }
 }
