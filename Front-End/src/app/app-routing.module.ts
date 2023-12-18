@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: 'relation-rooms', component: RelationRoomsComponent},
   {path: 'auth/login', component: LoginComponent},
   {path: 'user', loadChildren: () => import('./modules/user/user.module').then((m) => m.UserModule)}
-]; 
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

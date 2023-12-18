@@ -5,7 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = environment.baseApiURL;
@@ -30,6 +30,10 @@ export class AuthService {
   getToken(): string | null {
     var token = localStorage.getItem('token');
     return this.authToken || token
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 
   logout(): void {

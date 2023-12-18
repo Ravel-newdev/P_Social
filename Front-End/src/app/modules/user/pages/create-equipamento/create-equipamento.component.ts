@@ -31,6 +31,7 @@ export class CreateEquipamentoComponent implements OnInit {
         '',
         [Validators.required, Validators.min(1), Validators.pattern(/^-?\d+$/)],
       ],
+      status_equipamento: ['', Validators.required]
     });
   }
 
@@ -60,9 +61,14 @@ export class CreateEquipamentoComponent implements OnInit {
         }
       );
     } else {
-      this.errorCad = true;
-      this.success = false;
-      this.popupService.addMessage('Preencha todos os campos para concluir o cadastro!');
+      if (
+        this.name_equipamento.value == '' ||
+        this.qtd_equipamento.value.length === 0 || this.status_equipamento.value == ''
+      ) {
+        this.errorCad = true;
+        this.success = false;
+        this.popupService.addMessage('Preencha todos os campos!');
+      }
     }
   }
 
@@ -72,5 +78,8 @@ export class CreateEquipamentoComponent implements OnInit {
 
   get qtd_equipamento() {
     return this.equipamentoForm.get('qtd_equipamento')!;
+  }
+  get status_equipamento() {
+    return this.equipamentoForm.get('status_equipamento')!;
   }
 }
