@@ -23,12 +23,17 @@ mongoose.Promise = global.Promise
 
 //models
 const User = require('./models/User')
+const salaModel = require('./models/Reserva_Salas')
+const equipModel = require('./models/Reserva_Equip')
 
 app.use(express.json())
 
 //open route
-app.get('/',(req,res)=>{
-    res.status(200).json({msg:"Bem vindo a API"})
+app.get('/',async(req,res)=>{
+    const reservaSala = await salaModel.find()
+    const reservaEquip = await equipModel.find()
+    res.status(200).json({msg:"Bem vindo a API",reservaSala,reservaEquip})
+
 })
 
 app.get("/user/:id",checkToken,async(req,res)=>{
@@ -62,8 +67,8 @@ const dbPassword = process.env.DB_PASS
 const port = process.env.DB_PORT
 
 
-//mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
-mongoose.connect(`mongodb://localhost/CLEE_T`).then(()=>{    
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
+    //mongoose.connect(`mongodb://localhost/CLEE_T`).then(()=>{    
 app.listen(port)
     console.log('connect successful')
 
