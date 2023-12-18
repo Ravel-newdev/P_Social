@@ -32,9 +32,17 @@
     background-color: #6c22ff;
   }
   
-  .page-link{
-    cursor: pointer;
-    border: 1px solid #8244ff50;
-    color: #8244ff;
-    background-color: transparent;
-  }
+.pagination{
+  margin-top: 2em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-link{
+  cursor: pointer;
+  border: 1px solid #8244ff50;
+  color: #8244ff;
+  background-color: transparent;
+}
