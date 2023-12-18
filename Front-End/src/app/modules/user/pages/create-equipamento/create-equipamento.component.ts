@@ -24,6 +24,7 @@ export class CreateEquipamentoComponent implements OnInit {
         '',
         [Validators.required, Validators.min(1), Validators.pattern(/^-?\d+$/)],
       ],
+      status_equipamento: ['', Validators.required]
     });
   }
   ngOnInit(): void {}
@@ -36,7 +37,7 @@ export class CreateEquipamentoComponent implements OnInit {
     } else {
       if (
         this.name_equipamento.value == '' ||
-        this.qtd_equipamento.value.length === 0
+        this.qtd_equipamento.value.length === 0 || this.status_equipamento.value == ''
       ) {
         this.errorCad = true;
         this.success = false;
@@ -50,5 +51,8 @@ export class CreateEquipamentoComponent implements OnInit {
   }
   get qtd_equipamento() {
     return this.equipamentoForm.get('qtd_equipamento')!;
+  }
+  get status_equipamento() {
+    return this.equipamentoForm.get('status_equipamento')!;
   }
 }

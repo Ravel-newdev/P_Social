@@ -15,6 +15,10 @@
         <p *ngIf="qtd_equipamento?.errors?.['pattern']" style="margin: 0;">Insira um número inteiro</p>
       </div>
     </div>
+    <div class="input-field">
+      <label for="status_equipamento">Status</label>
+      <input type="text" name="status_equipamento" formControlName="status_equipamento">
+    </div>
     <button type="submit">Adicionar Equipamento</button>
   </form>
 </div>

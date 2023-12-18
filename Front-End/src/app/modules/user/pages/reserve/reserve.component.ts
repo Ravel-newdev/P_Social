@@ -40,6 +40,15 @@ export class ReserveComponent implements OnInit {
       motivoReserva:['',[Validators.required]]
     });
 
+    this.reservaEquipamentoForm = this.formBuilder.group({
+      nomeEquipamento: ['', Validators.required],
+      quantidadeEquipamento: ['', Validators.required],
+      dataReservaEquipamento: ['', Validators.required],
+      horarioReservaEquipamento: ['', Validators.required],
+      dataEntregaEquipamento: ['', Validators.required],
+      horarioEntregaEquipamento: ['', Validators.required],
+    });
+
     const dataAtual = new Date();
     let horas: number | string = dataAtual.getHours();
     let minutos: number | string = dataAtual.getMinutes();
@@ -104,25 +113,27 @@ export class ReserveComponent implements OnInit {
       const diaReserva = this.reservaRoomForm.get('diaReserva')?.value;
       const diaEntrega = this.reservaRoomForm.get('diaEntrega')?.value;
 
-      if (horarioReserva > horarioEntrega) {
+      if (diaReserva == diaEntrega) {
+        if (horarioReserva > horarioEntrega) {
+          this.success = false;
+          this.errorCad = true;
+          this.popupService.addMessage('O horário de entrega não pode ser menor que o de reserva!');
+        } else {
+          this.success = true;
+          this.errorCad = false;
+          this.popupService.addMessage('Sala reservada com sucesso!');
+        }
+      } else if (diaReserva > diaEntrega) {
         this.success = false;
         this.errorCad = true;
-        this.popupService.addMessage('O horário de entrega não pode ser menor que o de reserva!');
+        this.popupService.addMessage('O dia de entrega não pode ser menor que o de reserva!');
       } else {
         this.success = true;
         this.errorCad = false;
         this.popupService.addMessage('Sala reservada com sucesso!');
       }
 
-      if(diaReserva > diaEntrega){
-        this.success = false;
-        this.errorCad = true;
-        this.popupService.addMessage('O dia de entrega não pode ser menor que o de reserva!');
-      } else{
-        this.success = true;
-        this.errorCad = false;
-        this.popupService.addMessage('Sala reservada com sucesso!');
-      }
+
     } else {
       this.success = false;
       this.errorCad = true;
@@ -130,9 +141,40 @@ export class ReserveComponent implements OnInit {
     }
   }
 
-  createReserveEquipamento(){
+  createReserveEquipamento() {
+    if (this.reservaEquipamentoForm.valid) {
+      const horarioReserva = this.reservaRoomForm.get('horarioReservaEquipamento')?.value;
+      const horarioEntrega = this.reservaRoomForm.get('horarioEntregaEquipamento')?.value;
+      const diaReserva = this.reservaRoomForm.get('dataReservaEquipamento')?.value;
+      const diaEntrega = this.reservaRoomForm.get('dataEntregaEquipamento')?.value;
 
+      if (diaReserva == diaEntrega) {
+        if (horarioReserva > horarioEntrega) {
+          this.success = false;
+          this.errorCad = true;
+          this.popupService.addMessage('O horário de entrega não pode ser menor que o de reserva!');
+        } else {
+          this.success = true;
+          this.errorCad = false;
+          this.popupService.addMessage('Sala reservada com sucesso!');
+        }
+      } else if (diaReserva > diaEntrega) {
+        this.success = false;
+        this.errorCad = true;
+        this.popupService.addMessage('O dia de entrega não pode ser menor que o de reserva!');
+      } else {
+        this.success = true;
+        this.errorCad = false;
+        this.popupService.addMessage('Sala reservada com sucesso!');
+      }
+
+    } else {
+      this.success = false;
+      this.errorCad = true;
+      this.popupService.addMessage('Preencha todos os campos corretamente!');
+    }
   }
+
 
 
 
@@ -159,4 +201,28 @@ export class ReserveComponent implements OnInit {
   get motivo_reserva(){
     return this.reservaRoomForm.get('motivoReserva')!;
   }
+  get nome_equipamento() {
+    return this.reservaEquipamentoForm.get('nomeEquipamento')!;
+  }
+
+  get qntd_equipamento() {
+    return this.reservaEquipamentoForm.get('quantidadeEquipamento')!;
+  }
+
+  get dia_reserva_equipamento() {
+    return this.reservaEquipamentoForm.get('dataReservaEquipamento')!;
+  }
+
+  get horario_reserva_equipamento() {
+    return this.reservaEquipamentoForm.get('horarioReservaEquipamento')!;
+  }
+
+  get dia_entrega_equipamento() {
+    return this.reservaEquipamentoForm.get('dataEntregaEquipamento')!;
+  }
+
+  get horario_entrega_equipamento() {
+    return this.reservaEquipamentoForm.get('horarioEntregaEquipamento')!;
+  }
+
 }

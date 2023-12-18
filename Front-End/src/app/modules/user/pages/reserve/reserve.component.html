@@ -67,36 +67,36 @@
         <!-- RESERVA DOS EQUIPAMENTOS -->
 
         <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
-          <form (ngSubmit)="createReserveEquipamento()">
+          <form (ngSubmit)="createReserveEquipamento()"[formGroup]="reservaEquipamentoForm">
             <div *ngFor="let equipamento of equipamentos; let i = index" class="form-container">
               <div class="field">
                 <label for="nomeEquipamento{{i}}">Equipamento:</label>
-                <input type="text" id="nomeEquipamento{{i}}" name="nomeEquipamento{{i}}" [(ngModel)]="equipamento.nomeEquipamento" required>
+                <input type="text" id="nomeEquipamento{{i}}" name="nomeEquipamento{{i}}" formControlName="nomeEquipamento" required>
               </div>
 
               <div class="field">
                 <label for="quantidade{{i}}">Quantidade:</label>
-                <input type="number" id="quantidade{{i}}" name="quantidade{{i}}" [(ngModel)]="equipamento.quantidade" required>
+                <input type="number" id="quantidade{{i}}" name="quantidade{{i}}" formControlName="quantidadeEquipamento" required>
               </div>
 
               <div class="field">
                 <label for="dataReserva{{i}}">Data de Reserva:</label>
-                <input type="date" id="dataReserva{{i}}" name="dataReserva{{i}}" [(ngModel)]="equipamento.dataEntrega" required>
+                <input type="date" id="dataReserva{{i}}" name="dataReserva{{i}}" formControlName="dataReservaEquipamento" required [min]="dataAtual" (change)="toggleHoraReserva($event)">
               </div>
 
               <div class="field">
                 <label for="horarioReserva{{i}}">Horário de Reserva:</label>
-                <input type="time" id="horarioReserva{{i}}" name="horarioReserva{{i}}" [(ngModel)]="equipamento.horarioEntrega" required>
+                <input type="time" id="horarioReserva{{i}}" name="horarioReserva{{i}}" formControlName="horarioReservaEquipamento" required [min]="horaMinima" [max]="horaMaxima" step="300">
               </div>
 
               <div class="field">
                 <label for="dataEntrega{{i}}">Data de Entrega:</label>
-                <input type="date" id="dataEntrega{{i}}" name="dataEntrega{{i}}" [(ngModel)]="equipamento.dataEntrega" required>
+                <input type="date" id="dataEntrega{{i}}" name="dataEntrega{{i}}" formControlName="dataEntregaEquipamento" required [min]="dataAtual" (change)="toggleHoraReserva($event)">
               </div>
 
               <div class="field">
                 <label for="horarioEntrega{{i}}">Horário de Entrega:</label>
-                <input type="time" id="horarioEntrega{{i}}" name="horarioEntrega{{i}}" [(ngModel)]="equipamento.horarioEntrega" required>
+                <input type="time" id="horarioEntrega{{i}}" name="horarioEntrega{{i}}" formControlName="horarioEntregaEquipamento" required [min]="horaMinima" [max]="horaMaxima" step="300">
               </div>
 
               <div class="actions-btns">

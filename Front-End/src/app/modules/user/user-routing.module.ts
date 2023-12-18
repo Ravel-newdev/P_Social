@@ -8,10 +8,11 @@ import { CreateEquipamentoComponent } from './pages/create-equipamento/create-eq
 import { ViewReserveComponent } from './pages/view-reserve/view-reserve.component';
 import { ViewRoomsComponent } from './pages/view-rooms/view-rooms.component';
 import { ViewEquipsComponent } from './pages/view-equips/view-equips.component';
+import { AdminGuard } from 'src/app/guards/admin.guard';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent, pathMatch: 'full'},
-  {path: '', component: DashboardComponent, children: [
+  {path: '', component: DashboardComponent, canActivate: [AdminGuard] ,children: [
     {path: 'relation-rooms', component: RelationRoomsComponent},
     {path: 'relation-rooms/view-reserve', component: ViewReserveComponent},
     {path: 'view-rooms/reserve/:id', component: ReserveComponent },
