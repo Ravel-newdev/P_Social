@@ -33,6 +33,7 @@ export class ViewEquipsComponent implements OnInit {
       }
     );
   }
+  
   getStatusLabel(status: string): string {
     return status === 'A' ? 'Ativo' : 'Inativo';
   }
@@ -43,7 +44,16 @@ export class ViewEquipsComponent implements OnInit {
 
   getPages(): number[] {
     const totalPages = this.getTotalPages();
-    return Array.from({ length: totalPages }, (_, index) => index + 1);
+    const maxPagesToShow = 6;  // Defina o número máximo de páginas a serem exibidas
+
+    if (totalPages <= maxPagesToShow) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
+    }
+
+    const startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }
 
   setPage(page: number): void {

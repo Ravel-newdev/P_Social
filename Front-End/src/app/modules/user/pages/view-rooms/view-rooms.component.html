@@ -3,7 +3,7 @@
     Salas
   </h1>
   <div class="container">
-    <div class="col-md-4 mb-3" *ngFor="let sala of salas">
+    <div class="col-md-4 mb-3" *ngFor="let sala of salas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
       <div class="card">
         <div class="card-header">
           <p class="card-text">{{sala.nome}}</p>

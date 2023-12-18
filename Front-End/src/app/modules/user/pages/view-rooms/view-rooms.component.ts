@@ -9,9 +9,9 @@ import { RoomService } from 'src/app/services/room.service';
   styleUrls: ['./view-rooms.component.css']
 })
 export class ViewRoomsComponent implements OnInit {
-  currentPage: number = 1;
-  itemsPerPage: number = 3;
   salas: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 6;
 
   constructor(private roomService: RoomService) {}
 
