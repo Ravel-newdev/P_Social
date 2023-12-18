@@ -298,7 +298,7 @@ router.get('/view',checkToken, async(req,res) =>{
         })
 
 // DISCLAMER: APENAS DESENVOLVEDORES EM AMBIENTE DE TESTE PODEM UTILIZAR ESTAS ROTAS.
-
+/*
        router.delete('/delete_total/:id', async(req,res)=>{
           await R_Equip.deleteOne({_id: req.params.id}).then(()=>{
             res.status(200).json({msg:'Deletado totalmente.'})
@@ -315,7 +315,7 @@ router.delete('/delete_everything',async(req,res)=>{
     }).catch((err)=>{
         res.status(400).json({msg:'Não foi possivel deletar'})
     })
-})
+})*/
 
 
 module.exports = router
