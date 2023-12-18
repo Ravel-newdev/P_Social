@@ -15,10 +15,6 @@ const Equip = new Schema({
         type: Number,
         required: true
     },
-    status:{
-       type: String,
-       required:true
-    },
     date_create:{
         type: Date,
         default: Date.now()

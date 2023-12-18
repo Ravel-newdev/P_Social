@@ -33,7 +33,7 @@ router.get('/view',checkToken, async(req,res) =>{
             //Validação primária, verificando se campos estão ou não vazios
             let cod_reserva = 0
         
-            const {cod_user,cod_equip,desc,qnt_equip,data_reserva,data_entrega,hora_reserva,hora_entrega} = req.body
+            const {cod_user,cod_equip,desc,qnt_equip,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
             if(!cod_user){
                 res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
              }
@@ -45,11 +45,11 @@ router.get('/view',checkToken, async(req,res) =>{
         if(!qnt_equip || qnt_equip == 0){
           res.status(422).json({msg:'A quantidade de equipamento é obrigatória'})
 }
-           if(!data_reserva){
+           if(!date_reserv){
         res.status(422).json({msg: "A data da reserva é obrigatória"})
              }
 
-           if(!data_entrega){
+           if(!date_entrega){
                 res.status(422).json({msg: "A data da entrega é obrigatória"})
                      }
            if(!hora_reserva){
@@ -64,64 +64,52 @@ router.get('/view',checkToken, async(req,res) =>{
         else{
             //Validação secundária, compara o valor recebido com o existente ao banco de dados para evitar duplicação dos dados.
         
-           
-            R_Equip.find(
-              {
-                  cod_equip: cod_equip,
-                  $or: [
-                    { date_reserv: data_reserva },
-                    { date_reserv: data_entrega }
-                  ],
-                  $or: [
-                    { date_entrega: data_reserva },
-                    { date_entrega: data_entrega }
-                  ],
-                  hora_reserva: hora_reserva,
-                  hora_entrega: hora_entrega,
-                  D_E_L_E_T: ''
-              }).then((exists)=>{
+           R_Equip.findOne({
+            cod_equip: cod_equip,
+            $or: [
+                {date_reserv: date_reserv},
+                {date_reserv: date_entrega}
+              ],
+
+            $or: [
+                {date_entrega: date_reserv},
+                {date_entrega: date_entrega}
+              ],
+              
+             qnt_equip:qnt_equip,
+             hora_reserva:hora_reserva,
+             hora_entrega:hora_entrega,
+
+               D_E_L_E_T: '',
+          
+          }
+          ).lean().then((exists)=>{
+             
+                if(exists){
+                 res.status(409).json({msg:'O equipamento já está reservado'})
+             }
+        
+             else{
                 //Verificando se o equipamento digitado existe ou não no sistema.
-             let sum = 0
-             exists.forEach(function (doc) {
-              sum += doc.qnt_equip;
-          })
-              Equips.findOne({_id: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
+              Equips.findOne({codigo: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
                  if(equips){
-
-                  if(equips.qnt_estoque <= sum){
-                    res.status(400).json({msg:`Equipamento não pode ser reservado, escolha outro horário.`})
-                  }
-
-                  else{
-
-                  if(equips.qnt_estoque == 0){
-                    res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
-                  }
-
-                  if(equips.qnt_estoque < qnt_equip){
-                  res.status(401).json({msg:'A quantidade de pedida é maior que a quantidade em estoque.'})
-                  }
-
-                  else{
-
                     R_Equip.findOne().sort({_id: -1}).lean().then((u_R_Equips)=>{
                         u_R_Equips ? cod_reserva = u_R_Equips.cod_reserva : cod_reserva = 0
                         const newR_Equip = {
                            cod_reserva: +cod_reserva + +1,
-                           cod_user: cod_user,
+                           cod_user:cod_user,
                            cod_equip: cod_equip,
                            qnt_equip:qnt_equip,
                            desc: desc,
-                           date_reserv: data_reserva,
-                           date_entrega: data_entrega,
+                           date_reserv: date_reserv,
+                           date_entrega: date_entrega,
                            hora_reserva: hora_reserva,
                            hora_entrega: hora_entrega
                            
                         }
                
                        new R_Equip(newR_Equip).save().then(() =>{
-                           res.status(200).json({msg:`Salvo com sucesso.`})
-                           
+                           res.status(200).json({msg:'Salvo com sucesso'})
                        }).catch((err) => {
                           res.status(500).json({msg:'Error ao salvar.'+err})
                        })
@@ -130,15 +118,13 @@ router.get('/view',checkToken, async(req,res) =>{
                    })
                
                  }
-                }
-              }
 
                  else{
-                 res.status(404).json({msg:'Equipamento não encontrado.'})
+                 res.status(404).json({msg:'Sala não encontrada.'})
                  }
               })
            
-             
+             }
             }).catch((err)=>{
                 res.status(422).json({msg:'Houve um error ao validar os dados.'})
             })
@@ -147,25 +133,25 @@ router.get('/view',checkToken, async(req,res) =>{
 
         //Atualização dos dados da reserva de equips
         router.put('/update/:id', checkToken,async(req,res)=>{
-                const {cod_user,cod_equip,desc,qnt_equip,data_reserva,data_entrega,hora_reserva,hora_entrega} = req.body
+                const {cod_user,cod_equip,desc,qnt_equip,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
                 //Validações iniciais para que a reserva seja feita
                 if(!cod_user){
                     res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
                  }
 
                if(!cod_equip){
-                res.status(422).json({msg: "O equipamento é obrigatório"})
+                res.status(422).json({msg: "A sala é obrigatória"})
                  }
 
                  if(!qnt_equip || qnt_equip == 0){
                     res.status(422).json({msg:'A quantidade de equipamento é obrigatória'})
           }
     
-               if(!data_reserva){
+               if(!date_reserv){
             res.status(422).json({msg: "A data da reserva é obrigatória"})
                  }
     
-               if(!data_entrega){
+               if(!date_entrega){
                     res.status(422).json({msg: "A data da entrega é obrigatória"})
                          }
 
@@ -179,55 +165,42 @@ router.get('/view',checkToken, async(req,res) =>{
                         
                 else{
     
-                  R_Equip.find(
-                    {
+                    R_Equip.findOne({_id: {$ne: `${req.params.id}`},
                         cod_equip: cod_equip,
                         $or: [
-                          { date_reserv: data_reserva },
-                          { date_reserv: data_entrega }
-                        ],
+                            {date_reserv: date_reserv},
+                            {date_reserv: date_entrega}
+                          ],
+            
                         $or: [
-                          { date_entrega: data_reserva },
-                          { date_entrega: data_entrega }
-                        ],
-                        hora_reserva: hora_reserva,
-                        hora_entrega: hora_entrega,
-                        D_E_L_E_T: ''
-                    }).lean().then((exists)=>{
-                      //Verificando se o equipamento digitado existe ou não no sistema.
-                   let sum = 0
-                   exists.forEach(function (doc) {
-                    sum += doc.qnt_equip;
-                  })
-
-                   Equips.findOne({_id: cod_equip , D_E_L_E_T:''}).lean().then((equips)=>{
-                 
+                            {date_entrega: date_reserv},
+                            {date_entrega: date_entrega}
+                          ],
+                         qnt_equip:qnt_equip,
+                         hora_reserva:hora_reserva,
+                         hora_entrega:hora_entrega,
+            
+                           D_E_L_E_T: '',
+                      
+                      }
+                      ).lean().then((exists)=>{
+                         
+                            if(exists){
+                             res.status(409).json({msg:'O equipamento já está reservado'})
+                         }
+            
+                 else{
+                    Equips.findOne({codigo: cod_equip ,qnt_estoque: {$ne: 0}, D_E_L_E_T:''}).lean().then((equips)=>{
                         if(equips){
-                          
-                          if(equips.qnt_estoque <= sum){
-                            res.status(400).json({msg:`Equipamento não pode mais ser reservado, escolha outro horário`})
-                          }
-
-                              else {
-                                
-                          if(equips.qnt_estoque == 0){
-                            res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
-                          }
-
-                          if(equips.qnt_estoque < qnt_equip){
-                            res.status(401).json({msg:'A quantidade de pedida é maior que a quantidade em estoque.'})
-                            }
-
-                            else{
-
-                                R_Equip.findOne({_id: req.params.id}).then(async(R_Equips)=>{
+                            R_Equip.findOne({_id: req.params.id}).then(async(R_Equips)=>{
+                                  
                                 if (
                                     R_Equips.cod_user != cod_user ||
                                     R_Equips.cod_equip != cod_equip ||
                                     R_Equips.desc != desc ||
                                     R_Equips.qnt_equip != qnt_equip||
-                                    R_Equips.date_reserv != data_reserva ||
-                                    R_Equips.date_entrega != data_entrega ||
+                                    R_Equips.date_reserv != date_reserv ||
+                                    R_Equips.date_entrega != date_entrega ||
                                     R_Equips.hora_reserva != hora_reserva ||
                                     R_Equips.hora_entrega != hora_entrega
                                   ) {
@@ -239,8 +212,8 @@ router.get('/view',checkToken, async(req,res) =>{
                                         cod_equip: cod_equip,
                                         desc: desc,
                                         qnt_equip: qnt_equip,
-                                        date_reserv: data_reserva,
-                                        date_entrega: data_entrega,
+                                        date_reserv: date_reserv,
+                                        date_entrega: date_entrega,
                                         hora_reserva: hora_reserva,
                                         hora_entrega: hora_entrega,
                                         date_update: Date.now(),
@@ -254,26 +227,22 @@ router.get('/view',checkToken, async(req,res) =>{
                                       .catch((err) => {
                                         res.status(400).json({ msg: 'Erro ao atualizar reserva!' });
                                       });
-                                  } 
-                                  
-                                  else {
+                                  } else {
                                     // Nenhum dado foi alterado, redirecione com uma mensagem
-                                    res.status(401).json({ msg: 'Nenhuma alteração feita nos dados!' });
+                                    res.status(404).json({ msg: 'Nenhuma alteração feita nos dados!' });
                                   }
+                                  
                                 }).catch((err)=>{
                                   res.status(404).json({msg:'Error ao atualizar os dados. ERROR: '+err})
                                 })
-                                }
-                              }
                         }
-
                         else{
                          res.status(404).json({msg:'Equipamento não encontrado ou fora de estoque.'})
                         }
                     }).catch((err)=>{
                         res.status(400).json({msg:'Erro ao consultar o equipamento!'})
                     })
-                 
+                 }
             
             }).catch((err)=>{
                    res.status(404).json({msg:'Reserva de Equipamento não encontrada.'})
@@ -293,13 +262,13 @@ router.get('/view',checkToken, async(req,res) =>{
                     res.status(404).json({msg:'Error ao deletar reserva (equipamento). ERROR: '+err})
                    })
            }).catch((err)=>{
-            res.status(404).json({msg:'Reserva de Equipamento não encontrado.'})
+            res.status(404).json({msg:'Equipamento não encontrado.'})
            })
         })
 
 // DISCLAMER: APENAS DESENVOLVEDORES EM AMBIENTE DE TESTE PODEM UTILIZAR ESTAS ROTAS.
-/*
-       router.delete('/delete_total/:id', async(req,res)=>{
+
+       /* router.delete('/delete_total/:id', async(req,res)=>{
           await R_Equip.deleteOne({_id: req.params.id}).then(()=>{
             res.status(200).json({msg:'Deletado totalmente.'})
             }).catch((err)=>{
@@ -315,7 +284,8 @@ router.delete('/delete_everything',async(req,res)=>{
     }).catch((err)=>{
         res.status(400).json({msg:'Não foi possivel deletar'})
     })
-})*/
+})
 
+*/
 
 module.exports = router

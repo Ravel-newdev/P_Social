@@ -18,19 +18,19 @@ method: GET
 
 ========================================== EQUIPAMENTOS ==========================================
 - Rota para criar equipamento:
-https://api-clee.onrender.com/equip/create
+https://api-clee.onrender.com/equip/add_equip
 method: POST
 
 - Rota para listar equipamento:
-https://api-clee.onrender.com/equip/view
+https://api-clee.onrender.com/user/equip/listEquip
 method: GET
 
 - Rota para atualizar equipamento:
-https://api-clee.onrender.com/equip/update/ {id do equipamento}
+https://api-clee.onrender.com/equip/attEquip/ {id do equipamento}
 method: PUT
 
 - Rota para deletar equipamento:
-https://api-clee.onrender.com/equip/delete/ {id do equipamento}
+https://api-clee.onrender.com/equip/deleteEquip/ {id do equipamento}
 method: DELETE
 
 ========================================== SALAS ==========================================
