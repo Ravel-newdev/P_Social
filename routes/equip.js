@@ -57,7 +57,7 @@ else{
      equipss ? codigo = equipss.codigo : codigo = 0
      qnt_estoque == 0 ? sts = 'I' : sts = `${status}` //se a quantidade de estoque do produto for igual a zero, o seu status será setado automaticamente para inativo.
        const newEquips = {
-        codigo: +codigo + +1,
+        codigo,
         nome: nome.toUpperCase(),
         status: sts, //STATUS = A - ATIVO, STATUS = I - INATIVO, STATUS = D - DELETADO
         qnt_estoque:qnt_estoque
