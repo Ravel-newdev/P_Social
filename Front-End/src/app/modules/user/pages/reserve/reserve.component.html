@@ -23,32 +23,36 @@
               <div class="form-content" id="formSala">
                 <div class="input-field">
                   <label for="nomeSala">Nome da Sala</label>
-                  <input type="text" id="nomeSala" formControlName="nomeSala" required>
+                  <input type="text" id="nomeSala" formControlName="cod_sala" required>
+                </div>
+                <div class="input-field">
+                  <label for="nomeSala">Quem está reservando:</label>
+                  <input type="text" id="nomeSala" formControlName="cod_user" required>
                 </div>
                 <div class="input-field">
                   <label for="diaReserva">Selecione o dia da reserva</label>
-                  <input type="date" id="diaReserva" formControlName="diaReserva" [min]="dataAtual" (change)="toggleHoraReserva($event)" required>
+                  <input type="text" id="diaReserva" formControlName="date_reserv" required>
 
                 </div>
                 <!-- QUANDO ELE SELECIONAR A DATA -->
-                <div class="input-field" *ngIf="showHoraReserva">
+                <div class="input-field" >
                   <label for="horarioReserva">Selecione o horário da reserva</label>
-                  <input type="time" id="horarioReserva" formControlName="horarioReserva"
+                  <input type="text" id="horarioReserva" formControlName="hora_reserva"
                          [min]="horaMinima" [max]="horaMaxima" step="300" required>
                 </div>
 
                 <div class="input-field">
                   <label for="diaEntrega">Selecione o dia da entrega</label>
-                  <input type="date" id="diaEntrega" formControlName="diaEntrega" [min]="dataAtual" (change)="toggleHoraEntrega($event)" required="">
-                  <div class="input-field" *ngIf="showHoraEntrega">
+                  <input type="text" id="diaEntrega" formControlName="date_entrega"  required="">
+                  <div class="input-field" >
                     <label for="horarioEntrega">Selecione o horário de entrega</label>
-                    <input type="time" id="horarioEntrega" formControlName="horarioEntrega"
+                    <input type="text" id="horarioEntrega" formControlName="hora_entrega"
                          [min]="horaMinima" [max]="horaMaxima" step="300" required>
                   </div>
                 </div>
                 <div class="input-field textarea-field">
                   <label for="motivoReserva">Motivo da reserva</label>
-                  <textarea id="motivoReserva" formControlName="motivoReserva" cols="30" rows="7 " required=""></textarea>
+                  <textarea id="motivoReserva" formControlName="desc" cols="30" rows="7 " required=""></textarea>
                 </div>
               </div>
               <button type="submit" id="concluirReserva" class="btn">Concluir Reserva</button>
@@ -81,7 +85,7 @@
 
               <div class="field">
                 <label for="dataReserva{{i}}">Data de Reserva:</label>
-                <input type="date" id="dataReserva{{i}}" name="dataReserva{{i}}" formControlName="dataReservaEquipamento" required [min]="dataAtual" (change)="toggleHoraReserva($event)">
+                <input type="date" id="dataReserva{{i}}" name="dataReserva{{i}}" formControlName="dataReservaEquipamento" >
               </div>
 
               <div class="field">
@@ -91,7 +95,7 @@
 
               <div class="field">
                 <label for="dataEntrega{{i}}">Data de Entrega:</label>
-                <input type="date" id="dataEntrega{{i}}" name="dataEntrega{{i}}" formControlName="dataEntregaEquipamento" required [min]="dataAtual" (change)="toggleHoraReserva($event)">
+                <input type="date" id="dataEntrega{{i}}" name="dataEntrega{{i}}" formControlName="dataEntregaEquipamento" required >
               </div>
 
               <div class="field">

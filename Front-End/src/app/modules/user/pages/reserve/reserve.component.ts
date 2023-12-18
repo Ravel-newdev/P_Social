@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { reservas_salas } from 'src/app/models/reserva_salas';
 import { PopupService } from 'src/app/services/popup.service';
 import { ReserveService } from 'src/app/services/reserve.service';
@@ -17,17 +17,16 @@ export class ReserveComponent implements OnInit {
 
   success: boolean = false;
   errorCad: boolean = false;
-  showHoraReserva: boolean = false;
-  showHoraEntrega: boolean = false;
 
   dataAtual: string = new Date().toISOString().split('T')[0];
   horaAtual: string = '';
   horaMinima: string = '07:20';
   horaMaxima: string = '16:50';
 
+  // Array para armazenar as reservas de equipamentos
+  equipamentos: any[] = [];
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,43 +34,26 @@ export class ReserveComponent implements OnInit {
     private reserveService: ReserveService
   ) {
     this.reservaRoomForm = this.formBuilder.group({
-      nomeSala: ['', Validators.required],
-      diaReserva: ['', Validators.required],
-      horarioReserva: ['', Validators.required],
-      diaEntrega: ['', Validators.required],
-      horarioEntrega: ['', Validators.required],
-      motivoReserva: ['', Validators.required]
+      cod_sala: [''],
+      date_reserv: [''],
+      hora_reserva: [''],
+      date_entrega: [''],
+      hora_entrega: [''],
+      desc: [''],
+      cod_user: [''],
     });
 
     this.reservaEquipamentoForm = this.formBuilder.group({
-      nomeEquipamento: ['', Validators.required],
-      quantidadeEquipamento: ['', Validators.required],
-      dataReservaEquipamento: ['', Validators.required],
-      horarioReservaEquipamento: ['', Validators.required],
-      dataEntregaEquipamento: ['', Validators.required],
-      horarioEntregaEquipamento: ['', Validators.required],
+      nomeEquipamento: [''],
+      quantidadeEquipamento: [''],
+      dataReservaEquipamento: [''],
+      horarioReservaEquipamento: [''],
+      dataEntregaEquipamento: [''],
+      horarioEntregaEquipamento: [''],
     });
-
-    const dataAtual = new Date();
-    let horas: number | string = dataAtual.getHours();
-    let minutos: number | string = dataAtual.getMinutes();
-
-    horas = horas < 10 ? '0' + horas : horas;
-    minutos = minutos < 10 ? '0' + minutos : minutos;
-
-    this.horaAtual = `${horas}:${minutos}`;
   }
 
 
-  toggleHoraReserva(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.showHoraReserva = !!value;
-  }
-
-  toggleHoraEntrega(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.showHoraEntrega = !!value;
-  }
 
   formSala() {
     this.showSala = true;
@@ -83,26 +65,15 @@ export class ReserveComponent implements OnInit {
     this.showEquipamentos = true;
   }
 
-  equipamentos: any[] = [
-    {
-      nomeEquipamento: '',
-      quantidade: 0,
-      dataReserva: '',
-      horarioReserva: '',
-      dataEntrega: '',
-      horarioEntrega: '',
-    },
-  ];
-
   adicionarEquipamento() {
-    this.equipamentos.push({
-      nomeEquipamento: '',
-      quantidade: 0,
-      dataReserva: '',
-      horarioReserva: '',
-      dataEntrega: '',
-      horarioEntrega: '',
-    });
+    // Coleta as informações do formulário de equipamentos
+    const equipamentoData = this.reservaEquipamentoForm.value;
+
+    // Adiciona as informações ao array
+    this.equipamentos.push(equipamentoData);
+
+    // Limpa o formulário
+    this.reservaEquipamentoForm.reset();
   }
 
   removerEquipamento(index: number) {
@@ -111,9 +82,12 @@ export class ReserveComponent implements OnInit {
 
   createReserveRoom() {
     if (this.reservaRoomForm.valid) {
-      const reservaData = this.reservaRoomForm.value as reservas_salas;
+      const reservaData: reservas_salas[] = [
+        // Aqui você pode adicionar lógica para coletar os dados do formulário de sala
+        // e adicioná-los ao array
+      ];
 
-      this.reserveService.createReservaSala(reservaData).subscribe(
+      this.reserveService.createReservaSala(reservaData[0]).subscribe(
         (response) => {
           this.success = true;
           this.errorCad = false;
@@ -135,87 +109,19 @@ export class ReserveComponent implements OnInit {
   }
 
   createReserveEquipamento() {
-    if (this.reservaEquipamentoForm.valid) {
-      const horarioReserva = this.reservaRoomForm.get('horarioReservaEquipamento')?.value;
-      const horarioEntrega = this.reservaRoomForm.get('horarioEntregaEquipamento')?.value;
-      const diaReserva = this.reservaRoomForm.get('dataReservaEquipamento')?.value;
-      const diaEntrega = this.reservaRoomForm.get('dataEntregaEquipamento')?.value;
+    if (this.equipamentos.length > 0) {
+      // Lógica para processar as reservas de equipamentos
+      console.log('Reservas de Equipamentos:', this.equipamentos);
 
-      if (diaReserva == diaEntrega) {
-        if (horarioReserva > horarioEntrega) {
-          this.success = false;
-          this.errorCad = true;
-          this.popupService.addMessage('O horário de entrega não pode ser menor que o de reserva!');
-        } else {
-          this.success = true;
-          this.errorCad = false;
-          this.popupService.addMessage('Sala reservada com sucesso!');
-        }
-      } else if (diaReserva > diaEntrega) {
-        this.success = false;
-        this.errorCad = true;
-        this.popupService.addMessage('O dia de entrega não pode ser menor que o de reserva!');
-      } else {
-        this.success = true;
-        this.errorCad = false;
-        this.popupService.addMessage('Sala reservada com sucesso!');
-      }
+      // Limpa o array de equipamentos
+      this.equipamentos = [];
 
+      // Limpa o formulário
+      this.reservaEquipamentoForm.reset();
     } else {
       this.success = false;
       this.errorCad = true;
-      this.popupService.addMessage('Preencha todos os campos corretamente!');
+      this.popupService.addMessage('Adicione pelo menos um equipamento!');
     }
   }
-
-
-
-
-  get nome_sala(){
-    return this.reservaRoomForm.get('nomeSala')!;
-  }
-
-  get dia_reserva(){
-    return this.reservaRoomForm.get('diaReserva')!;
-  }
-
-  get horario_reserva(){
-    return this.reservaRoomForm.get('horarioReserva')!;
-  }
-
-  get dia_entrega(){
-    return this.reservaRoomForm.get('diaEntrega')!;
-  }
-
-  get horario_entrega(){
-    return this.reservaRoomForm.get('horarioReserva')!;
-  }
-
-  get motivo_reserva(){
-    return this.reservaRoomForm.get('motivoReserva')!;
-  }
-  get nome_equipamento() {
-    return this.reservaEquipamentoForm.get('nomeEquipamento')!;
-  }
-
-  get qntd_equipamento() {
-    return this.reservaEquipamentoForm.get('quantidadeEquipamento')!;
-  }
-
-  get dia_reserva_equipamento() {
-    return this.reservaEquipamentoForm.get('dataReservaEquipamento')!;
-  }
-
-  get horario_reserva_equipamento() {
-    return this.reservaEquipamentoForm.get('horarioReservaEquipamento')!;
-  }
-
-  get dia_entrega_equipamento() {
-    return this.reservaEquipamentoForm.get('dataEntregaEquipamento')!;
-  }
-
-  get horario_entrega_equipamento() {
-    return this.reservaEquipamentoForm.get('horarioEntregaEquipamento')!;
-  }
-
 }

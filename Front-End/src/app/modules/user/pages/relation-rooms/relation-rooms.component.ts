@@ -27,6 +27,7 @@ export class RelationRoomsComponent {
     this.reservasService.getReservasSalas().subscribe(
       (reservas: reservas_salas[]) => {
         this.reservasSalas = reservas;
+        console.log(reservas)
       },
       (error) => {
         console.error('Erro ao carregar reservas de salas:', error);
@@ -36,6 +37,7 @@ export class RelationRoomsComponent {
     this.reservasService.getReservasEquipamentos().subscribe(
       (reservas: reserva_equip[]) => {
         this.reservasEquipamentos = reservas;
+        console.log(reservas)
       },
       (error) => {
         console.error('Erro ao carregar reservas de equipamentos:', error);
