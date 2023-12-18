@@ -1,0 +1,40 @@
+<div class="view-rooms">
+  <h1 class="display-4 d-flex align-items-center justify-content-center mx-auto">
+    Salas
+  </h1>
+  <div class="container">
+    <div class="col-md-4 mb-3" *ngFor="let sala of salas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+      <div class="card">
+        <div class="card-header">
+          <p class="card-text">{{sala.nome}}</p>
+        </div>
+        <div class="card-body">
+          <span>Status:</span>
+          <p>{{sala.status}}</p>
+        </div>
+        <div class="card-footer">
+          <div class="input-group">
+            <button class="btn btn-primary">Reservar</button>
+            <button class="btn btn-danger" style="margin-left: 10px;">Deletar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-5 d-flex align-items-center justify-content-center mx-auto">
+  <div class="paginator">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="previousPage()">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of getPages()" [class.active]="currentPage === page">
+        <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+        <a class="page-link" (click)="nextPage()">Next</a>
+      </li>
+    </ul>
+  </div>
+</div>

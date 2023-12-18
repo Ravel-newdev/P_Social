@@ -1,0 +1,290 @@
+/* Estilos gerais */
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  font-family: Arial, sans-serif;
+}
+
+header h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.check-field {
+  margin-bottom: 20px;
+}
+
+.radios {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+.radios label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.container_equipamentos {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos do formulário */
+.reservation-form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.input-field {
+  margin-bottom: 15px;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-field input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-danger {
+  background-color: #d9534f;
+}
+
+.btn-primary {
+  background-color: #337ab7;
+}
+
+.btn-success {
+  background-color: #5cb85c;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+}
+
+button {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  outline: none;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.form-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.form-container :where(.field) {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container :where(.field input) {
+  height: 40px;
+  padding: 0 1rem;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+hr {
+  margin-top: 20px;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.actions-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-field select {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.textarea-field textarea {
+  width: 100%;
+  outline: none;
+  text-align: justify;
+  padding: 1rem 1rem 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #8c52ff80;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="date"]:focus {
+  border: 1px solid #8c52ff;
+}
+
+input[type="time"] {
+  padding: 8px;
+  border: 1px solid #8c52ff80;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="time"]:focus {
+  border: 1px solid #8c52ff;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+/* animation Popup */
+
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.popup {
+  width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  animation: popup 0.3s;
+}
+
+.popup .icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1rem auto;
+  border-radius: 50%;
+}
+
+.popup .icon.success {
+  border: 1px solid green;
+}
+
+.popup .icon.error {
+  border: 1px solid red;
+}
+
+.popup .icon i {
+  font-size: 2em;
+  color: green;
+  font-weight: bold;
+}
+
+.popup .icon i.error {
+  color: red;
+}
+
+.popup .icon i.success {
+  color: green;
+}
+
+.popup button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #8c52ff;
+  color: white;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #824eeb;
+}

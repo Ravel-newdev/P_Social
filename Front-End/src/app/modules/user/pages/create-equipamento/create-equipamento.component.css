@@ -1,0 +1,170 @@
+.container{
+  width: 600px;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translate(50%,-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: .5px solid #cfcfcf;
+  padding: 20px;
+  border-radius: 1rem;
+}
+
+.container header{
+  padding: 1rem 2rem;
+}
+
+.container header h1{
+  font-size: 1.5rem;
+}
+
+.container form{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form .input-field{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-field input{
+  height: 40px;
+  outline: none;
+  padding: 0 .5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1.5px solid #ccc;
+  transition: border .3s ease-in-out;
+}
+
+.input-field input:focus{
+  border: 1.5px solid #824eeb;
+}
+
+.input-field select.room-status{
+  width: 50%;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-field select.room-status option{
+  padding: 10px;
+  border-radius: 5px;
+}
+
+form button{
+  padding: .8rem 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+  margin: 1rem 0;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #fff;
+  font-size: 1.1rem;
+  border: 1px solid #8c52ff;
+  background-color: #8c52ff;
+  transition: .3s ease-in-out;
+}
+
+
+form button:hover{
+  background-color: #824eeb;
+}
+
+
+/* POPUP */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+/* animation Popup */
+
+@keyframes popup {
+  0%{
+    transform: scale(0.5);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+.overlay.active{
+  display: flex;
+}
+
+.popup {
+  width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  animation: popup .3s;
+}
+
+.popup .icon{
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1rem auto;
+  border-radius: 50%;
+}
+
+.popup .icon.success{
+  border: 1px solid green;
+}
+
+.popup .icon.error{
+  border: 1px solid red;
+}
+
+.popup .icon i{
+  font-size: 2em;
+  color: green;
+  font-weight: bold;
+}
+
+.popup .icon i.error{
+  color: red;
+}
+
+.popup .icon i.success{
+  color: green;
+}
+
+.popup button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #8c52ff;
+  color: white;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #824eeb;
+}

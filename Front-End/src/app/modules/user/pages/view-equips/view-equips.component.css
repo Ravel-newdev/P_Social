@@ -1,0 +1,48 @@
+.view-rooms {
+    text-align: center;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 80%;
+    margin: 0 auto; 
+  }
+  
+  .col-md-4 {
+    width: calc(33.333% - 20px); 
+    margin-bottom: 20px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .btn{
+    background-color: #8c52ff;
+    border: none;
+    transition: all .3s ease-in-out;
+  }
+  .btn:hover{
+    background-color: #6c22ff;
+  }
+  
+.pagination{
+  margin-top: 2em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-link{
+  cursor: pointer;
+  border: 1px solid #8244ff50;
+  color: #8244ff;
+  background-color: transparent;
+}

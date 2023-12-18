@@ -1,0 +1,47 @@
+<main>
+    <div class="container">
+      <div class="header-title">
+        <i class="fa-solid fa-user"></i>
+        <h1>Iniciar Sessão</h1>
+      </div>
+      <form (submit)="onLogin()"  [formGroup]="loginForm" #formDir="ngForm">
+        <div class="field">
+          <label>Usuário</label>
+          <input
+            type="text"
+            formControlName="name"
+            required
+            [ngClass]="{ error: formDir.submitted && name.invalid }"
+          />
+          <ng-container *ngIf=" formDir.submitted && name.invalid">
+            <div class="error-message">
+              <span>email invalido</span>
+            </div>
+          </ng-container>
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <div class="pass-field">
+            <input
+              type="{{showPass ? 'text' : 'password'}}"
+              formControlName="password"
+              required
+              [ngClass]="{ error: formDir.submitted && password.invalid }"
+            />
+            <div class="showIcon" (click)="passShow()">
+              <i class="fa-regular" style="color: #250094" ngClass="{{!showPass ? 'fa-eye' : 'fa-eye-slash'}}"></i>
+            </div>
+          </div>
+          <ng-container *ngIf=" formDir.submitted && password.invalid">
+            <div class="error-message">
+              <span *ngIf="password.errors?.['required']">Senha inválida</span>
+              <span *ngIf="password.errors?.['minlength']">A senha deve conter 8 caracteres</span>
+            </div>
+          </ng-container>
+        </div>
+        <div class="btn">
+          <button type="submit" class="btn-submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </main>

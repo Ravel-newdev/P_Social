@@ -1,0 +1,184 @@
+.container {
+  width: 100%;
+  max-height: 90%;
+  padding: 20px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+select {
+  margin-left: 5px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #8c52ff80;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  width: 150px;
+  transition: all .3s ease-in-out;
+}
+select:focus{
+  border: 1px solid #8c52ff;
+}
+select option{
+  outline: none;
+}
+
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #8c52ff;
+}
+.filter{
+  display: flex;
+  gap: 30px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+}
+
+.linha {
+  background-color: #7070705e;
+  height: 0.2px;
+  width: 70%;
+  display: block;
+  margin: 15px 0;
+}
+
+h2{
+  font-size: 20px;
+}
+
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #8c52ff80;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: all .3s ease-in-out;
+}
+input[type="date"]:focus{
+  border: 1px solid #8c52ff;
+}
+.filter-options {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px;
+}
+
+.filter-option {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.search{
+  display: flex;
+  justify-content: center;
+  align-items : center;
+  gap: 10px;
+  margin: 0 20px 10px 10px;
+}
+.input-search{
+  width: 17rem;
+  outline: none;
+  border: 1px solid #8c52ff80;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  transition: all .3s ease-in-out;
+}
+.input-search:focus{
+border: 1px solid #8c52ff;
+}
+.reservation-list {
+  margin-top: 20px;
+}
+
+.reservation-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.card {
+  margin: 5px ;
+  flex: 0 0 calc(100% - 20px);
+  max-width: calc(33.33% - 20px);
+  min-width: calc(33.33% - 20px);
+  box-shadow: 0 5px 14px rgb(219, 219, 219);
+  transition: .3s ease;
+}
+
+.card-content {
+  width: 100%;
+}
+
+.card-content p {
+  font-size: .9em;
+}
+
+.card-content span {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-content span > i:hover {
+  color: red;
+  cursor: pointer;
+}
+.pagination{
+  margin-top: 2em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-link{
+  cursor: pointer;
+  border: 1px solid #8244ff50;
+  color: #8244ff;
+  background-color: transparent;
+}
+.btn{
+  background-color: #8c52ff;
+  border: none;
+  transition: all .3s ease-in-out;
+}
+.btn:hover{
+  background-color: #6c22ff;
+}
+.reserves-list{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
