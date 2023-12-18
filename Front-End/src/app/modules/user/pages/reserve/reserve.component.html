@@ -72,51 +72,39 @@
 
         <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
           <form (ngSubmit)="createReserveEquipamento()"[formGroup]="reservaEquipamentoForm">
-            <div *ngFor="let equipamento of equipamentos; let i = index" class="form-container">
-              <div class="field">
-                <label for="nomeEquipamento{{i}}">Equipamento:</label>
-                <input type="text" id="nomeEquipamento{{i}}" name="nomeEquipamento{{i}}" formControlName="cod_equip" required>
-              </div>
-              <div class="field">
-                <label for="nomeEquipamento{{i}}">Quem vai reservar:</label>
-                <input type="text" id="nomeEquipamento{{i}}" name="nomeEquipamento{{i}}" formControlName="cod_user" required>
-              </div>
-
-              <div class="field">
-                <label for="quantidade{{i}}">Quantidade:</label>
-                <input type="number" id="quantidade{{i}}" name="quantidade{{i}}" formControlName="qnt_equip" required>
-              </div>
-
-              <div class="field">
-                <label for="dataReserva{{i}}">Data de Reserva:</label>
-                <input type="text" id="dataReserva{{i}}" name="dataReserva{{i}}" formControlName="data_reserva" >
-              </div>
-
-              <div class="field">
-                <label for="horarioReserva{{i}}">Horário de Reserva:</label>
-                <input type="text" id="horarioReserva{{i}}" name="horarioReserva{{i}}" formControlName="hora_reserva" required [min]="horaMinima" [max]="horaMaxima" step="300">
-              </div>
-
-              <div class="field">
-                <label for="dataEntrega{{i}}">Data de Entrega:</label>
-                <input type="text" id="dataEntrega{{i}}" name="dataEntrega{{i}}" formControlName="data_entrega" required >
-              </div>
-
-              <div class="field">
-                <label for="horarioEntrega{{i}}">Horário de Entrega:</label>
-                <input type="time" id="horarioEntrega{{i}}" name="horarioEntrega{{i}}" formControlName="hora_entrega" required [min]="horaMinima" [max]="horaMaxima" step="300">
-              </div>
-              <div class="input-field textarea-field">
-                <label for="motivoReserva">Motivo da reserva</label>
-                <textarea id="motivoReserva" formControlName="desc" cols="30" rows="7 " required=""></textarea>
-              </div>
-              <div class="actions-btns">
-                <button (click)="removerEquipamento(i)" class="btn btn-danger">Remover Equipamento</button> <br>
-              </div>
+            <div class="field-equipamento-date">
+              <label for="cod_equip">Codigo do Equipamento</label>
+              <input type="number" name="cod_equip" formControlName="cod_equip">
             </div>
-
+            <div class="field-equipamento-date">
+              <label for="qnt_equip">Quantidade</label>
+              <input type="number" name="qnt_equip" formControlName="qnt_equip">
+            </div>
+            <div class="field-equipamento-date">
+              <label for="cod_user">Quem quer reservar?</label>
+              <input type="number" name="cod_user" formControlName="cod_user">
+            </div>
+            <div class="field-equipamento-date">
+              <label for="date_reserva">Data de Reserva</label>
+              <input type="text" name="date_reserva" formControlName="date_reserva">
+            </div>
+            <div class="field-equipamento-date">
+              <label for="hora_reserva">Horario da reserva</label>
+              <input type="text" name="hora_reserva" formControlName="hora_reserva">
+            </div>
+            <div class="field-equipamento-date">
+              <label for="date_entrega">Data de Entrega</label>
+              <input type="text" name="date_entrega" formControlName="date_entrega">
+            </div>
+            <div class="field-equipamento-date">
+              <label for="hora_entrega">Horário de Entrega</label>
+              <input type="text" name="hora_entrega" formControlName="hora_entrega">
+            </div>
+            <div class="field-equipamento-date">
+              <label for="desc">Motivo da Reserva</label>
+              <input type="text" name="desc" formControlName="desc">
+            </div>
             <div class="btns">
-              <button type="button" (click)="adicionarEquipamento()">Adicionar Equipamento</button>
               <button type="submit" id="concluirReserva" class="btn">Concluir Reserva</button>
             </div>
           </form>

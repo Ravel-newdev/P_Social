@@ -285,3 +285,18 @@ input[type="time"]:focus {
 .popup button:hover {
   background-color: #824eeb;
 }
+
+.field-equipamento-date{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field-equipamento-date input{
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #824eeb;
+  outline: none;
+  padding: 0 1rem;
+}
