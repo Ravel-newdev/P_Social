@@ -12,7 +12,7 @@ const Reserva_Salas = new Schema({
     required:true
    },
    cod_sala:{
-    type:Schema.Types.ObjectId,
+    type:Number,
     ref: 'salas',
     required:true
    }
@@ -22,15 +22,15 @@ const Reserva_Salas = new Schema({
     required: true
    },
    date_reserv:{
-    type:Date,
+    type:String,
     required: true
    },
    date_entrega:{
-    type:Date,
+    type:String,
     required: true
    },
    date_create:{
-    type:Date,
+    type:String,
     default:Date.now()
    },
    date_update:{

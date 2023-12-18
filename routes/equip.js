@@ -26,7 +26,6 @@ router.post('/create' , checkToken,async(req,res)=>{
 
   //Validação primeira, verificando se campos estão ou não vazios
   let codigo = 0
-  let sts = ''
   const {nome,qnt_estoque,status} = req.body
    //aqui fica a procura do cadastro, pra ver se ele existe
   // validação da entrada de dados
@@ -38,10 +37,6 @@ router.post('/create' , checkToken,async(req,res)=>{
   if(!qnt_estoque){
     res.status(422).json({msg: 'Você precisa informar uma quantidade valida'})
   }
-  if(!status || status == 0){
-    res.status(422).json({msg:' Informe o status atual do produto'})
-  }
-
 
 else{
   //Validação secundária, compara o valor recebido com o existente ao banco de dados para evitar duplicação dos dados.
@@ -55,12 +50,10 @@ else{
 
   Equips.findOne().sort({_id: -1}).lean().then((equipss)=>{    
      equipss ? codigo = equipss.codigo : codigo = 0
-     qnt_estoque == 0 ? sts = 'I' : sts = `${status}` //se a quantidade de estoque do produto for igual a zero, o seu status será setado automaticamente para inativo.
        const newEquips = {
         codigo: +codigo + +1,
         nome: nome.toUpperCase(),
-        status: sts, //STATUS = A - ATIVO, STATUS = I - INATIVO, STATUS = D - DELETADO
-        qnt_estoque:qnt_estoque
+        qnt_estoque
      }
 
       new Equips(newEquips).save().then(() =>{
@@ -88,13 +81,9 @@ else{
 router.put('/update/:id',checkToken ,async(req,res)=>{
 
   let sts = ''
-  const {nome,status,qnt_estoque} = req.body
+  const {nome,qnt_estoque} = req.body
   if(!nome){
       res.status(422).json({msg: "O nome é obrigatório"})
- }
-
- if(status == 0 || !status){
-  res.status(422).json({msg: "Selecione um status antes de prosseguir!"})
  }
  if(!qnt_estoque){
   res.status(422).json({msg: "A quantidade do estoque é obrigatória"})
@@ -110,9 +99,8 @@ router.put('/update/:id',checkToken ,async(req,res)=>{
    else{
        Equips.findOne({_id: req.params.id}).then(async(equipss)=>{
 
-          if (equipss.nome != nome.toUpperCase() || equipss.status != status || equipss.qnt_estoque != qnt_estoque ) {
+          if (equipss.nome != nome.toUpperCase() || equipss.qnt_estoque != qnt_estoque ) {
                           // Faça as atualizações apenas se houver diferenças
-                     qnt_estoque == 0 ? sts = 'I' : sts = `${status}` 
                      const filter = { _id: req.params.id };
                           const update = { $set: { nome: nome.toUpperCase(), status: sts ,
                          qnt_estoque: qnt_estoque , date_update: Date.now()}};
@@ -160,7 +148,7 @@ router.put('/update/:id',checkToken ,async(req,res)=>{
   router.put('/delete/:id',checkToken ,async(req,res)=>{ 
     await Equips.findOne({_id:req.params.id}).then(async()=>{
          const filter = { _id: req.params.id };
-         const update = { $set: { D_E_L_E_T: '*',status:'D'
+         const update = { $set: { D_E_L_E_T: '*'
          , date_update: Date.now()}};
  
        await Equips.findByIdAndUpdate(filter, update, { new: true }).then(() =>{

@@ -12,7 +12,7 @@ const Reserva_Equip = new Schema({
     required:true
    },
    cod_equip:{
-    type:Schema.Types.ObjectId,
+    type:Number,
     ref: 'equip',
     required:true
    }

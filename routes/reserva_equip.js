@@ -33,7 +33,7 @@ router.get('/view',checkToken, async(req,res) =>{
             //Validação primária, verificando se campos estão ou não vazios
             let cod_reserva = 0
         
-            const {cod_user,cod_equip,desc,qnt_equip,data_reserva,data_entrega,hora_reserva,hora_entrega} = req.body
+            const {cod_user,cod_equip,desc,qnt_equip,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
             if(!cod_user){
                 res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
              }
@@ -45,11 +45,11 @@ router.get('/view',checkToken, async(req,res) =>{
         if(!qnt_equip || qnt_equip == 0){
           res.status(422).json({msg:'A quantidade de equipamento é obrigatória'})
 }
-           if(!data_reserva){
+           if(!date_reserv){
         res.status(422).json({msg: "A data da reserva é obrigatória"})
              }
 
-           if(!data_entrega){
+           if(!date_entrega){
                 res.status(422).json({msg: "A data da entrega é obrigatória"})
                      }
            if(!hora_reserva){
@@ -67,13 +67,13 @@ router.get('/view',checkToken, async(req,res) =>{
            R_Equip.findOne({
             cod_equip: cod_equip,
             $or: [
-                {date_reserv: data_reserva},
-                {date_reserv: data_entrega}
+                {date_reserv: date_reserv},
+                {date_reserv: date_entrega}
               ],
 
             $or: [
-                {date_entrega: data_reserva},
-                {date_entrega: data_entrega}
+                {date_entrega: date_reserv},
+                {date_entrega: date_entrega}
               ],
               
              qnt_equip:qnt_equip,
@@ -91,7 +91,7 @@ router.get('/view',checkToken, async(req,res) =>{
         
              else{
                 //Verificando se o equipamento digitado existe ou não no sistema.
-              Equips.findOne({_id: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
+              Equips.findOne({codigo: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
                  if(equips){
                     R_Equip.findOne().sort({_id: -1}).lean().then((u_R_Equips)=>{
                         u_R_Equips ? cod_reserva = u_R_Equips.cod_reserva : cod_reserva = 0
@@ -101,8 +101,8 @@ router.get('/view',checkToken, async(req,res) =>{
                            cod_equip: cod_equip,
                            qnt_equip:qnt_equip,
                            desc: desc,
-                           date_reserv: data_reserva,
-                           date_entrega: data_entrega,
+                           date_reserv: date_reserv,
+                           date_entrega: date_entrega,
                            hora_reserva: hora_reserva,
                            hora_entrega: hora_entrega
                            
@@ -133,7 +133,7 @@ router.get('/view',checkToken, async(req,res) =>{
 
         //Atualização dos dados da reserva de equips
         router.put('/update/:id', checkToken,async(req,res)=>{
-                const {cod_user,cod_equip,desc,qnt_equip,data_reserva,data_entrega,hora_reserva,hora_entrega} = req.body
+                const {cod_user,cod_equip,desc,qnt_equip,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
                 //Validações iniciais para que a reserva seja feita
                 if(!cod_user){
                     res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
@@ -147,11 +147,11 @@ router.get('/view',checkToken, async(req,res) =>{
                     res.status(422).json({msg:'A quantidade de equipamento é obrigatória'})
           }
     
-               if(!data_reserva){
+               if(!date_reserv){
             res.status(422).json({msg: "A data da reserva é obrigatória"})
                  }
     
-               if(!data_entrega){
+               if(!date_entrega){
                     res.status(422).json({msg: "A data da entrega é obrigatória"})
                          }
 
@@ -168,13 +168,13 @@ router.get('/view',checkToken, async(req,res) =>{
                     R_Equip.findOne({_id: {$ne: `${req.params.id}`},
                         cod_equip: cod_equip,
                         $or: [
-                            {date_reserv: data_reserva},
-                            {date_reserv: data_entrega}
+                            {date_reserv: date_reserv},
+                            {date_reserv: date_entrega}
                           ],
             
                         $or: [
-                            {date_entrega: data_reserva},
-                            {date_entrega: data_entrega}
+                            {date_entrega: date_reserv},
+                            {date_entrega: date_entrega}
                           ],
                          qnt_equip:qnt_equip,
                          hora_reserva:hora_reserva,
@@ -190,7 +190,7 @@ router.get('/view',checkToken, async(req,res) =>{
                          }
             
                  else{
-                    Equips.findOne({_id: cod_equip ,qnt_estoque: {$ne: 0}, D_E_L_E_T:''}).lean().then((equips)=>{
+                    Equips.findOne({codigo: cod_equip ,qnt_estoque: {$ne: 0}, D_E_L_E_T:''}).lean().then((equips)=>{
                         if(equips){
                             R_Equip.findOne({_id: req.params.id}).then(async(R_Equips)=>{
                                   
@@ -199,8 +199,8 @@ router.get('/view',checkToken, async(req,res) =>{
                                     R_Equips.cod_equip != cod_equip ||
                                     R_Equips.desc != desc ||
                                     R_Equips.qnt_equip != qnt_equip||
-                                    R_Equips.date_reserv != data_reserva ||
-                                    R_Equips.date_entrega != data_entrega ||
+                                    R_Equips.date_reserv != date_reserv ||
+                                    R_Equips.date_entrega != date_entrega ||
                                     R_Equips.hora_reserva != hora_reserva ||
                                     R_Equips.hora_entrega != hora_entrega
                                   ) {
@@ -212,8 +212,8 @@ router.get('/view',checkToken, async(req,res) =>{
                                         cod_equip: cod_equip,
                                         desc: desc,
                                         qnt_equip: qnt_equip,
-                                        date_reserv: data_reserva,
-                                        date_entrega: data_entrega,
+                                        date_reserv: date_reserv,
+                                        date_entrega: date_entrega,
                                         hora_reserva: hora_reserva,
                                         hora_entrega: hora_entrega,
                                         date_update: Date.now(),
