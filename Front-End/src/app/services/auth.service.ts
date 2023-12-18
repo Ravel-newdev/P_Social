@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { Observable, tap } from 'rxjs';
+import { EMPTY, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -27,9 +27,31 @@ export class AuthService {
       );
   }
 
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (!refreshToken) {
+      this.logout(); 
+      return EMPTY;
+    }
+    
+
+    return this.http.post<any>(`${this.apiUrl}/auth/refresh-token`, { refreshToken })
+      .pipe(
+        tap((response) => {
+          if (response && response.token) {
+            this.authToken = response.token;
+            if (this.authToken) {
+              localStorage.setItem('token', this.authToken);
+            }
+          }
+        })
+      );
+  }
+
   getToken(): string | null {
     var token = localStorage.getItem('token');
-    return this.authToken || token
+    return this.authToken || token;
   }
 
   isLoggedIn(): boolean {
@@ -38,7 +60,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken'); // Remove refresh token on logout
     this.authToken = null;
-    this.router.navigate(['/logizn']);
+    this.router.navigate(['/login']);
   }
 }
