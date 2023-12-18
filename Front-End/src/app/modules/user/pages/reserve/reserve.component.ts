@@ -72,18 +72,6 @@ export class ReserveComponent implements OnInit {
     this.showEquipamentos = true;
   }
 
-  adicionarEquipamento() {
-    const equipamentoData = this.reservaEquipamentoForm.value;
-
-    this.equipamentos.push(equipamentoData);
-
-    this.reservaEquipamentoForm.reset();
-  }
-
-  removerEquipamento(index: number) {
-    this.equipamentos.splice(index, 1);
-  }
-
   createReserveRoom() {
     if (this.reservaRoomForm.valid) {
       const reservaData: reservas_salas= {
@@ -130,6 +118,13 @@ export class ReserveComponent implements OnInit {
         qnt_equip: this.reservaEquipamentoForm.get('qnt_equip')!.value
       }
        this.reserveService.createReservaEquip(reservaEquip)
+       this.success = true;
+       this.errorCad = false;
+       this.popupService.addMessage('Equipamento reservado com sucesso!');
+    } else {
+      this.success = false;
+      this.errorCad = true;
+      this.popupService.addMessage('Preencha todos os campos corretamente!');
     }
   }
 }
