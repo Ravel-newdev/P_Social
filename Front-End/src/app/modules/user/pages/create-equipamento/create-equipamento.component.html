@@ -5,31 +5,26 @@
   <form (ngSubmit)="createEquipamento()" [formGroup]="equipamentoForm" #formDir="ngForm">
     <div class="input-field">
       <label for="name_equipamento">Nome do Equipamento</label>
-      <input type="text" name="name_equipamento" formControlName="name_equipamento">
+      <input type="text" id="name_equipamento" formControlName="name_equipamento">
     </div>
     <div class="input-field">
       <label for="qtd_equipamento">Quantidade</label>
-      <input type="number" name="qtd_equipamento" id="qtd_equipamento" formControlName="qtd_equipamento" min="1" step="1">
-      <div *ngIf="qtd_equipamento?.errors?.['min'] && formDir.submitted || qtd_equipamento?.errors?.['pattern'] && formDir.submitted">
-        <p *ngIf="qtd_equipamento?.errors?.['min']" style="margin: 0;">O valor minimo é 1</p>
-        <p *ngIf="qtd_equipamento?.errors?.['pattern']" style="margin: 0;">Insira um número inteiro</p>
-      </div>
-    </div>
-    <div class="input-field">
-      <label for="status_equipamento">Status</label>
-      <input type="text" name="status_equipamento" formControlName="status_equipamento">
+      <input type="number" id="qtd_equipamento" formControlName="qtd_equipamento" min="1" step="1">
+      <div *ngIf="equipamentoForm.get('qtd_equipamento')?.hasError('min') && formDir.submitted || equipamentoForm.get('qtd_equipamento')?.hasError('pattern') && formDir.submitted">
+        <p *ngIf="equipamentoForm.get('qtd_equipamento')?.hasError('min')" style="margin: 0;">O valor mínimo é 1</p>
+        <p *ngIf="equipamentoForm.get('qtd_equipamento')?.hasError('pattern')" style="margin: 0;">Insira um número inteiro</p>
+      </div>      
     </div>
     <button type="submit">Adicionar Equipamento</button>
   </form>
 </div>
 
-  <div class="overlay" [ngClass]="{'active': this.popupService.messagePopup}">
-    <div class="popup">
-      <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
-        <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
-      </div>
-      <p>{{this.popupService.messagePopup}}</p>
-      <button (click)="this.popupService.clear()">Fechar</button>
+<div class="overlay" [ngClass]="{'active': popupService.messagePopup}">
+  <div class="popup">
+    <div class="icon" [ngClass]="{'error': errorCad, 'success': success}">
+      <i class="fa-solid" [ngClass]="{'fa-xmark': errorCad, 'error': errorCad, 'fa-check': success, 'success': success}"></i>
     </div>
+    <p>{{ popupService.messagePopup }}</p>
+    <button (click)="popupService.clear()">Fechar</button>
   </div>
-
+</div>
