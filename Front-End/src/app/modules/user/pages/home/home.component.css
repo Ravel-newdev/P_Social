@@ -1,0 +1,29 @@
+ .container{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+ }
+ .left img{
+    height: 100%;
+    max-width: 100%;
+ }
+ .left{
+    width: 70%;
+}
+.right{
+    width: 50%;
+    height: auto;
+}
+.header h1{
+    color: #8c52ff;
+    font-size: 4rem;
+}
+.header h2{
+    color: #70707070;
+    font-size: 1.5rem;
+}
+.text p{
+
+}

@@ -285,3 +285,17 @@ input[type="time"]:focus {
 .popup button:hover {
   background-color: #824eeb;
 }
+#sala,
+#equipamento {
+  display: none;
+}
+.radios label {
+  padding: 0.5rem 1rem;
+  background-color: #8c52ff;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+.radios label:hover {
+  background-color: #7f3fff;
+}

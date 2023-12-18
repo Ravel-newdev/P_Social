@@ -11,16 +11,22 @@ import { ViewReserveComponent } from './pages/view-reserve/view-reserve.componen
 import { ViewRoomsComponent } from './pages/view-rooms/view-rooms.component';
 import { ViewEquipsComponent } from './pages/view-equips/view-equips.component';
 import { AdminGuard } from 'src/app/guards/admin.guard';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, pathMatch: 'full' },
+
   {
     path: '',
     component: DashboardComponent,
     canActivate: [AdminGuard],
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
+      { path: 'home', component: HomeComponent },
       { path: 'relation-rooms', component: RelationRoomsComponent },
-      { path: 'relation-rooms/view-reserve/:id', component: ViewReserveComponent },
+      {
+        path: 'relation-rooms/view-reserve/:id',
+        component: ViewReserveComponent,
+      },
       { path: 'view-rooms/reserve/:id', component: ReserveComponent },
       { path: 'create-rooms', component: CreateRoomComponent },
       { path: 'create-equipamento', component: CreateEquipamentoComponent },

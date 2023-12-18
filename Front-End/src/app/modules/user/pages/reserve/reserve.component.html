@@ -69,7 +69,6 @@
           </ng-container>
 
         <!-- RESERVA DOS EQUIPAMENTOS -->
-
         <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
           <form (ngSubmit)="createReserveEquipamento()"[formGroup]="reservaEquipamentoForm">
             <div *ngFor="let equipamento of equipamentos; let i = index" class="form-container">

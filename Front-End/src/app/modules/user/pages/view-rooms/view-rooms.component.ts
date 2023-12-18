@@ -36,11 +36,6 @@ export class ViewRoomsComponent implements OnInit {
       }
     );
   }
-  
-  navigateToReserve(id: string): void {
-    this.router.navigate(['./reserve', id]); 
-  }
-
 
   getStatusLabel(status: string): string {
     return status === 'A' ? 'Ativo' : 'Inativo';
