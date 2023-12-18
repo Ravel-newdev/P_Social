@@ -24,7 +24,7 @@ export class ViewEquipsComponent implements OnInit {
       (data: any) => {
         this.equips = data.map((equip: any) => ({
           nome: equip.nome,
-          status:  this.getStatusLabel(equip.status)
+          qnt_estoque: equip.qnt_estoque
         }))
         console.log(data);
       },
@@ -33,10 +33,6 @@ export class ViewEquipsComponent implements OnInit {
       }
     );
   }
-  
-  getStatusLabel(status: string): string {
-    return status === 'A' ? 'Ativo' : 'Inativo';
-  }
 
   getTotalPages(): number {
     return Math.ceil(this.equips.length / this.itemsPerPage);
@@ -44,17 +40,21 @@ export class ViewEquipsComponent implements OnInit {
 
   getPages(): number[] {
     const totalPages = this.getTotalPages();
-    const maxPagesToShow = 6;  // Defina o número máximo de páginas a serem exibidas
-
+    const maxPagesToShow = 6;
+  
     if (totalPages <= maxPagesToShow) {
       return Array.from({ length: totalPages }, (_, index) => index + 1);
     }
-
+  
     const startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
     const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-
-    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+  
+    // Certifique-se de que o número de páginas exibidas não ultrapasse o número total de páginas
+    const pagesToShow = Math.min(totalPages, maxPagesToShow);
+  
+    return Array.from({ length: pagesToShow }, (_, index) => startPage + index);
   }
+  
 
   setPage(page: number): void {
     if (page >= 1 && page <= this.getTotalPages()) {

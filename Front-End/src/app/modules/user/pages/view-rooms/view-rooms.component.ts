@@ -25,6 +25,7 @@ export class ViewRoomsComponent implements OnInit {
         this.salas = data.map((sala: any) => ({
           nome: sala.nome,
           status: this.getStatusLabel(sala.status),
+
         }));
         console.log(this.salas);
       },

@@ -3,7 +3,7 @@
     Equipamentos
   </h1>
   <div class="container">
-    <div class="col-md-4 mb-3" *ngFor="let equip of equips">
+    <div class="col-md-4 mb-3" *ngFor="let equip of equips.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
       <div class="card">
         <div class="card-header">
           <p class="card-text">{{ equip.nome }}</p>
@@ -11,7 +11,9 @@
         <div class="card-body">
           <span>Status:</span>
           <p>{{ equip.status }}</p>
-        </div>
+          <span>Quantidade:</span>
+          <p>{{ equip.qnt_estoque }}</p>
+        </div>        
         <div class="card-footer">
           <div class="input-group">
             <button class="btn btn-primary">Reservar</button>
