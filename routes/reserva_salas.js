@@ -27,7 +27,6 @@ router.get('/view',checkToken, async(req,res) =>{
         })
 
         //Registro da reserva de salas
-        
     router.post('/create' ,checkToken, async(req,res)=>{
 
             //Validação primária, verificando se campos estão ou não vazios
@@ -89,11 +88,6 @@ router.get('/view',checkToken, async(req,res) =>{
                  if(salas){
 
                   //Vê a ultima reserva de sala para gerar o codigo
-                  if(salas.status == 'I'){
-                    res.status(402).json({msg:'Não é possivel reservar, a sala está inativa.'})
-                    }
-                    
-                    else{
                     R_Salas.findOne().sort({_id: -1}).lean().then((u_r_salass)=>{
                         u_r_salass ? cod_reserva = u_r_salass.cod_reserva : cod_reserva = 0
                         const newR_Salas = {
@@ -116,7 +110,7 @@ router.get('/view',checkToken, async(req,res) =>{
                    }).catch((err)=>{
                        res.status(404).json({msg:'Error na consulta.'})
                    })
-                  }
+               
                  }
 
                  else{
@@ -189,12 +183,7 @@ router.get('/view',checkToken, async(req,res) =>{
                         if(salas){
                           
                           //Se existir ele tenta encontrar uma reserva com aquele mesmo codigo para que a atualização possa ocorrer com sucesso.
-                          if(salas.status == 'I'){
-                          res.status(402).json({msg:'Não é possivel reservar, a sala está inativa.'})
-                          }
-                          
-                          else{
-                             R_Salas.findOne({_id: req.params.id}).then(async(r_salass)=>{
+                            R_Salas.findOne({_id: req.params.id}).then(async(r_salass)=>{
             
                                 if (
                                     r_salass.cod_user != cod_user ||
@@ -235,8 +224,6 @@ router.get('/view',checkToken, async(req,res) =>{
                                 }).catch((err)=>{
                                   res.status(404).json({msg:'Error ao atualizar os dados. ERROR: '+err})
                                 })
-                              }
-
                         }
                         else{
                          res.status(404).json({msg:'Sala não encontrada'})

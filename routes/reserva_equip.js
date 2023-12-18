@@ -93,16 +93,6 @@ router.get('/view',checkToken, async(req,res) =>{
                 //Verificando se o equipamento digitado existe ou não no sistema.
               Equips.findOne({_id: cod_equip, D_E_L_E_T:''}).lean().then((equips)=>{
                  if(equips){
-
-                  if(equips.qnt_estoque == 0){
-                    res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
-                  }
-
-                  if(equips.qnt_estoque < qnt_equip){
-                  res.status(401).json({msg:'A quantidade de pedida é maior que a quantidade em estoque.'})
-                  }
-
-                  else{
                     R_Equip.findOne().sort({_id: -1}).lean().then((u_R_Equips)=>{
                         u_R_Equips ? cod_reserva = u_R_Equips.cod_reserva : cod_reserva = 0
                         const newR_Equip = {
@@ -128,10 +118,9 @@ router.get('/view',checkToken, async(req,res) =>{
                    })
                
                  }
-                }
 
                  else{
-                 res.status(404).json({msg:'Equipamento não encontrado.'})
+                 res.status(404).json({msg:'Sala não encontrada.'})
                  }
               })
            
@@ -151,7 +140,7 @@ router.get('/view',checkToken, async(req,res) =>{
                  }
 
                if(!cod_equip){
-                res.status(422).json({msg: "O equipamento é obrigatório"})
+                res.status(422).json({msg: "A sala é obrigatória"})
                  }
 
                  if(!qnt_equip || qnt_equip == 0){
@@ -201,21 +190,10 @@ router.get('/view',checkToken, async(req,res) =>{
                          }
             
                  else{
-                    Equips.findOne({_id: cod_equip , D_E_L_E_T:''}).lean().then((equips)=>{
-
+                    Equips.findOne({_id: cod_equip ,qnt_estoque: {$ne: 0}, D_E_L_E_T:''}).lean().then((equips)=>{
                         if(equips){
-
-                          if(equips.qnt_estoque == 0){
-                            res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
-                          }
-
-                          if(equips.qnt_estoque < qnt_equip){
-                            res.status(401).json({msg:'A quantidade de pedida é maior que a quantidade em estoque.'})
-                            }
-                        
-
-                              else {
-                                R_Equip.findOne({_id: req.params.id}).then(async(R_Equips)=>{
+                            R_Equip.findOne({_id: req.params.id}).then(async(R_Equips)=>{
+                                  
                                 if (
                                     R_Equips.cod_user != cod_user ||
                                     R_Equips.cod_equip != cod_equip ||
@@ -249,19 +227,15 @@ router.get('/view',checkToken, async(req,res) =>{
                                       .catch((err) => {
                                         res.status(400).json({ msg: 'Erro ao atualizar reserva!' });
                                       });
-                                  } 
-                                  
-                                  else {
+                                  } else {
                                     // Nenhum dado foi alterado, redirecione com uma mensagem
                                     res.status(404).json({ msg: 'Nenhuma alteração feita nos dados!' });
                                   }
+                                  
                                 }).catch((err)=>{
                                   res.status(404).json({msg:'Error ao atualizar os dados. ERROR: '+err})
                                 })
-                                }
-                            
                         }
-
                         else{
                          res.status(404).json({msg:'Equipamento não encontrado ou fora de estoque.'})
                         }
@@ -288,7 +262,7 @@ router.get('/view',checkToken, async(req,res) =>{
                     res.status(404).json({msg:'Error ao deletar reserva (equipamento). ERROR: '+err})
                    })
            }).catch((err)=>{
-            res.status(404).json({msg:'Reserva de Equipamento não encontrado.'})
+            res.status(404).json({msg:'Equipamento não encontrado.'})
            })
         })
 
