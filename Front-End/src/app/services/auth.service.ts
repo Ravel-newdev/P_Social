@@ -60,8 +60,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken'); // Remove refresh token on logout
+    localStorage.removeItem('refreshToken'); 
     this.authToken = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
 }
