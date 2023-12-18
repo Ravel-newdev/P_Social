@@ -9,11 +9,12 @@
     </div>
     <div class="input-field">
       <label for="qtd_equipamento">Quantidade</label>
+
       <input type="number" id="qtd_equipamento" formControlName="qtd_equipamento" min="1" step="1">
       <div *ngIf="equipamentoForm.get('qtd_equipamento')?.hasError('min') && formDir.submitted || equipamentoForm.get('qtd_equipamento')?.hasError('pattern') && formDir.submitted">
         <p *ngIf="equipamentoForm.get('qtd_equipamento')?.hasError('min')" style="margin: 0;">O valor mínimo é 1</p>
         <p *ngIf="equipamentoForm.get('qtd_equipamento')?.hasError('pattern')" style="margin: 0;">Insira um número inteiro</p>
-      </div>      
+      </div>
     </div>
     <button type="submit">Adicionar Equipamento</button>
   </form>

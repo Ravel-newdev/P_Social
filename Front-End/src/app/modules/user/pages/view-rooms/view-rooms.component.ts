@@ -34,6 +34,8 @@ export class ViewRoomsComponent implements OnInit {
       }
     );
   }
+  
+
 
   getStatusLabel(status: string): string {
     return status === 'A' ? 'Ativo' : 'Inativo';
