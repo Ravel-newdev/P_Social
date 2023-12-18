@@ -1,5 +1,5 @@
 export interface salas{
-    id?: number;
+    _id?: string;
     nome: string;
     status: string;
 }

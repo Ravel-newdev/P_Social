@@ -3,8 +3,8 @@ export interface reserva_equip{
     cod_user: number;
     cod_equip: number;
     qnt_equip: number;
-    data_reserva: string;
-    data_entrega: string;
+    date_reserva: string;
+    date_entrega: string;
     hora_reserva: string;
     hora_entrega: string;
 }

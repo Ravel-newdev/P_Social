@@ -1,6 +1,7 @@
 // view-rooms.component.ts
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoomService } from 'src/app/services/room.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ViewRoomsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 6;
 
-  constructor(private roomService: RoomService) {}
+  constructor(private roomService: RoomService, private router: Router) {}
 
   ngOnInit(): void {
     this.carregarSalas();
@@ -23,6 +24,7 @@ export class ViewRoomsComponent implements OnInit {
     this.roomService.getSalas().subscribe(
       (data: any) => {
         this.salas = data.map((sala: any) => ({
+          _id: sala._id,
           nome: sala.nome,
           status: this.getStatusLabel(sala.status),
 
@@ -35,6 +37,9 @@ export class ViewRoomsComponent implements OnInit {
     );
   }
   
+  navigateToReserve(id: string): void {
+    this.router.navigate(['./reserve', id]); 
+  }
 
 
   getStatusLabel(status: string): string {

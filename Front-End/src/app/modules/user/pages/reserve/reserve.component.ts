@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { reserva_equip } from 'src/app/models/reserva_equips';
 import { reservas_salas } from 'src/app/models/reserva_salas';
 import { PopupService } from 'src/app/services/popup.service';
 import { ReserveService } from 'src/app/services/reserve.service';
@@ -14,6 +16,7 @@ export class ReserveComponent implements OnInit {
   showEquipamentos: boolean = false;
   reservaRoomForm!: FormGroup;
   reservaEquipamentoForm!: FormGroup;
+  id_equip: string = ''
 
   success: boolean = false;
   errorCad: boolean = false;
@@ -23,15 +26,19 @@ export class ReserveComponent implements OnInit {
   horaMinima: string = '07:20';
   horaMaxima: string = '16:50';
 
-  // Array para armazenar as reservas de equipamentos
   equipamentos: any[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.params.subscribe( params =>{
+    this.id_equip = params['id'];
+    } )
+  }
 
   constructor(
     private formBuilder: FormBuilder,
     public popupService: PopupService,
-    private reserveService: ReserveService
+    private reserveService: ReserveService,
+    private route: ActivatedRoute
   ) {
     this.reservaRoomForm = this.formBuilder.group({
       cod_sala: [''],
@@ -44,16 +51,16 @@ export class ReserveComponent implements OnInit {
     });
 
     this.reservaEquipamentoForm = this.formBuilder.group({
-      nomeEquipamento: [''],
-      quantidadeEquipamento: [''],
-      dataReservaEquipamento: [''],
-      horarioReservaEquipamento: [''],
-      dataEntregaEquipamento: [''],
-      horarioEntregaEquipamento: [''],
+      cod_equip: [''],
+      qnt_equip: [''],
+      date_reserva: [''],
+      hora_reserva: [''],
+      date_entrega: [''],
+      hora_entrega: [''],
+      cod_user: [''],
+      desc: ['']
     });
   }
-
-
 
   formSala() {
     this.showSala = true;
@@ -66,13 +73,10 @@ export class ReserveComponent implements OnInit {
   }
 
   adicionarEquipamento() {
-    // Coleta as informações do formulário de equipamentos
     const equipamentoData = this.reservaEquipamentoForm.value;
 
-    // Adiciona as informações ao array
     this.equipamentos.push(equipamentoData);
 
-    // Limpa o formulário
     this.reservaEquipamentoForm.reset();
   }
 
@@ -82,12 +86,17 @@ export class ReserveComponent implements OnInit {
 
   createReserveRoom() {
     if (this.reservaRoomForm.valid) {
-      const reservaData: reservas_salas[] = [
-        // Aqui você pode adicionar lógica para coletar os dados do formulário de sala
-        // e adicioná-los ao array
-      ];
+      const reservaData: reservas_salas= {
+        cod_sala: this.reservaRoomForm.get('cod_sala')!.value,
+        cod_user: this.reservaRoomForm.get('cod_user')!.value,
+        date_entrega: this.reservaRoomForm.get('date_entrega')!.value,
+        date_reserv: this.reservaRoomForm.get('date_reserv')!.value,
+        desc: this.reservaRoomForm.get('desc')!.value,
+        hora_entrega: this.reservaRoomForm.get('hora_entrega')!.value,
+        hora_reserva: this.reservaRoomForm.get('hora_reserva')!.value
+      };
 
-      this.reserveService.createReservaSala(reservaData[0]).subscribe(
+      this.reserveService.createReservaSala(reservaData).subscribe(
         (response) => {
           this.success = true;
           this.errorCad = false;
@@ -109,19 +118,18 @@ export class ReserveComponent implements OnInit {
   }
 
   createReserveEquipamento() {
-    if (this.equipamentos.length > 0) {
-      // Lógica para processar as reservas de equipamentos
-      console.log('Reservas de Equipamentos:', this.equipamentos);
-
-      // Limpa o array de equipamentos
-      this.equipamentos = [];
-
-      // Limpa o formulário
-      this.reservaEquipamentoForm.reset();
-    } else {
-      this.success = false;
-      this.errorCad = true;
-      this.popupService.addMessage('Adicione pelo menos um equipamento!');
+    if(this.reservaEquipamentoForm.valid){
+      const reservaEquip: reserva_equip = {
+        cod_equip: this.reservaEquipamentoForm.get('cod_equip')!.value,
+        cod_user: this.reservaEquipamentoForm.get('cod_user')!.value,
+        date_entrega: this.reservaEquipamentoForm.get('date_entrega')!.value,
+        date_reserva: this.reservaEquipamentoForm.get('date_reserva')!.value,
+        desc: this.reservaEquipamentoForm.get('desc')!.value,
+        hora_entrega: this.reservaEquipamentoForm.get('hora_entrega')!.value,
+        hora_reserva: this.reservaEquipamentoForm.get('hora_reserva')!.value,
+        qnt_equip: this.reservaEquipamentoForm.get('qnt_equip')!.value
+      }
+       this.reserveService.createReservaEquip(reservaEquip)
     }
   }
 }

@@ -1,7 +1,7 @@
 
 export interface reservas_salas{
     desc: string;
-    cod_user: number;
+    cod_user: string;
     cod_sala: number;
     date_reserv: string;
     date_entrega: string;

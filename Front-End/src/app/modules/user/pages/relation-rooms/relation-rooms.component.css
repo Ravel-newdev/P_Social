@@ -131,7 +131,7 @@ border: 1px solid #8c52ff;
   flex: 0 0 calc(100% - 20px);
   max-width: calc(33.33% - 20px);
   min-width: calc(33.33% - 20px);
-  box-shadow: 0 5px 14px rgb(219, 219, 219);
+  box-shadow: 0 5px 14px #dbdbdb;
   transition: .3s ease;
 }
 

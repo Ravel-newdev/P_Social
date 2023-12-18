@@ -1,3 +1,5 @@
+// user-routing.module.ts
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -11,21 +13,26 @@ import { ViewEquipsComponent } from './pages/view-equips/view-equips.component';
 import { AdminGuard } from 'src/app/guards/admin.guard';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent, pathMatch: 'full'},
-  {path: '', component: DashboardComponent, canActivate: [AdminGuard] ,children: [
-    {path: 'relation-rooms', component: RelationRoomsComponent},
-    {path: 'relation-rooms/view-reserve', component: ViewReserveComponent},
-    {path: 'view-rooms/reserve/:id', component: ReserveComponent },
-    {path: 'create-rooms', component: CreateRoomComponent},
-    {path: 'create-equipamento', component: CreateEquipamentoComponent},
-    {path: 'reserve', component: ReserveComponent},
-    {path: 'view-rooms', component: ViewRoomsComponent},
-    {path: 'view-equips', component: ViewEquipsComponent}
-  ]}
+  { path: '', component: DashboardComponent, pathMatch: 'full' },
+  {
+    path: '',
+    component: DashboardComponent,
+    canActivate: [AdminGuard],
+    children: [
+      { path: 'relation-rooms', component: RelationRoomsComponent },
+      { path: 'relation-rooms/view-reserve/:id', component: ViewReserveComponent },
+      { path: 'view-rooms/reserve/:id', component: ReserveComponent },
+      { path: 'create-rooms', component: CreateRoomComponent },
+      { path: 'create-equipamento', component: CreateEquipamentoComponent },
+      { path: 'reserve', component: ReserveComponent },
+      { path: 'view-rooms', component: ViewRoomsComponent },
+      { path: 'view-equips', component: ViewEquipsComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}

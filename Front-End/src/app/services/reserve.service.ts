@@ -34,4 +34,8 @@ import { AuthService } from './auth.service';
     const headers = this.addAuthorizationHeader();
     return this.http.post<any>(`${this.apiUrl}/reserva_salas/create`, reserva, { headers });
   }
+  createReservaEquip(reserva: reserva_equip){
+    const headers = this.addAuthorizationHeader();
+    return this.http.post<any> (`${this.apiUrl}/create`, reserva,{headers} )
+  }
 }
