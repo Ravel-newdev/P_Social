@@ -18,20 +18,36 @@ method: GET
 
 ========================================== EQUIPAMENTOS ==========================================
 - Rota para criar equipamento:
-https://api-clee.onrender.com/equip/add_equip
+https://api-clee.onrender.com/equip/create
 method: POST
 
-- Rota para listar equipamento:
-https://api-clee.onrender.com/user/equip/listEquip
+- Rota para ver equipamentos não deletados:
+https://api-clee.onrender.com/equip/view
+method: GET
+
+- Rota para ver equipamentos deletados:
+https://api-clee.onrender.com/equip/view_delete
 method: GET
 
 - Rota para atualizar equipamento:
-https://api-clee.onrender.com/equip/attEquip/ {id do equipamento}
+https://api-clee.onrender.com/equip/update/ {id do equipamento}
 method: PUT
 
 - Rota para deletar equipamento:
-https://api-clee.onrender.com/equip/deleteEquip/ {id do equipamento}
-method: DELETE
+https://api-clee.onrender.com/equip/delete/ {id do equipamento}
+method: PUT
+
+- Rota para consultar equipamento por codigo:
+https://api-clee.onrender.com/equip/searchbycod
+method: POST
+
+- Rota para consultar equipamento por nome:
+https://api-clee.onrender.com/equip/searchbyname
+method: POST
+
+- Rota para consultar equipamento por status:
+https://api-clee.onrender.com/equip/searchbystatus
+method: POST
 
 ========================================== SALAS ==========================================
 
@@ -43,17 +59,29 @@ method: GET
 https://api-clee.onrender.com/salas/view_delete
 method: GET
 
--Rota para criar sala: 
+- Rota para criar sala: 
 https://api-clee.onrender.com/salas/create
 method: POST
 
--Rota para atualizar sala:
+- Rota para atualizar sala:
 https://api-clee.onrender.com/salas/update/{id da sala}
 method: PUT
 
--Rota para deletar a sala:
+- Rota para deletar a sala:
 https://api-clee.onrender.com/salas/delete/{id da sala}
 method: PUT
+
+- Rota para consultar sala por codigo:
+https://api-clee.onrender.com/salas/searchbycod
+method: POST
+
+- Rota para consultar sala por nome:
+https://api-clee.onrender.com/salas/searchbyname
+method: POST
+
+- Rota para consultar equipamento por status:
+https://api-clee.onrender.com/salas/searchbystatus
+method: POST
 
 ====================================== RESERVA DE SALAS ======================================
 
@@ -77,6 +105,30 @@ method: PUT
 https://api-clee.onrender.com/reserva_salas/delete/ {id da reserva da sala}
 method: PUT
 
+- Rota para consultar reserva de salas por codigo:
+https://api-clee.onrender.com/reserva_salas/searchbycod
+method: POST
+
+- Rota para consultar reserva de salas por sala:
+https://api-clee.onrender.com/reserva_salas/searchbyclass
+method: POST
+
+- Rota para consultar reserva de salas por data de reserva:
+https://api-clee.onrender.com/reserva_salas/searchbydater
+method: POST
+
+- Rota para consultar reserva de salas por data de entrega:
+https://api-clee.onrender.com/reserva_salas/searchbydatee
+method: POST
+
+- Rota para consultar reserva de salas por hora de reserva:
+https://api-clee.onrender.com/reserva_salas/searchbyhourr
+method: POST
+
+- Rota para consultar reserva de salas por hora de entrega:
+https://api-clee.onrender.com/reserva_salas/searchbyhoure
+method: POST
+
 ==================================== RESERVA DE EQUIPAMENTOS ====================================
 
 - Rota para ver reserva de equipamentos não deletadas
@@ -98,3 +150,27 @@ method: PUT
 - Rota para deletar a reserva de equipamentos:
 https://api-clee.onrender.com/delete/ {id da reserva de equipamento}
 method: PUT
+
+- Rota para consultar reserva de equipamento por codigo:
+https://api-clee.onrender.com/reserva_equip/searchbycod
+method: POST
+
+- Rota para consultar reserva de equipamentos por equipamento:
+https://api-clee.onrender.com/reserva_equip/searchbyequip
+method: POST
+
+- Rota para consultar reserva de equipamentos por data de reserva:
+https://api-clee.onrender.com/reserva_equip/searchbydater
+method: POST
+
+- Rota para consultar reserva de equipamentos por data de entrega:
+https://api-clee.onrender.com/reserva_equip/searchbydatee
+method: POST
+
+- Rota para consultar reserva de equipamentos por hora de reserva:
+https://api-clee.onrender.com/reserva_equip/searchbyhourr
+method: POST
+
+- Rota para consultar reserva de equipamentos por hora de entrega:
+https://api-clee.onrender.com/reserva_equip/searchbyhoure
+method: POST
