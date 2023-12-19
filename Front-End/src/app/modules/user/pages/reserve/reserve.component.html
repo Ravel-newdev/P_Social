@@ -22,8 +22,8 @@
             <form (ngSubmit)="createReserveRoom()" [formGroup]="reservaRoomForm" class="form-container">
               <div class="form-content" id="formSala">
                 <div class="input-field">
-                  <label for="nomeSala">Nome da Sala</label>
-                  <input type="text" id="nomeSala" formControlName="cod_sala" required>
+                  <label for="nomeSala">Codigo da Sala</label>
+                  <input type="number" id="nomeSala" formControlName="cod_sala" required>
                 </div>
                 <div class="input-field">
                   <label for="nomeSala">Quem está reservando:</label>
@@ -31,23 +31,21 @@
                 </div>
                 <div class="input-field">
                   <label for="diaReserva">Selecione o dia da reserva</label>
-                  <input type="text" id="diaReserva" formControlName="date_reserv" required>
+                  <input type="text" id="diaReserva" formControlName="date_reserv" (input)="formatarData($event,'date_reserv')" required>
 
                 </div>
                 <!-- QUANDO ELE SELECIONAR A DATA -->
                 <div class="input-field" >
                   <label for="horarioReserva">Selecione o horário da reserva</label>
-                  <input type="text" id="horarioReserva" formControlName="hora_reserva"
-                         [min]="horaMinima" [max]="horaMaxima" step="300" required>
+                  <input type="text" id="horarioReserva" formControlName="hora_reserva" (input)="formatarHora($event, 'hora_reserva')" required>
                 </div>
 
                 <div class="input-field">
                   <label for="diaEntrega">Selecione o dia da entrega</label>
-                  <input type="text" id="diaEntrega" formControlName="date_entrega"  required="">
+                  <input type="text" id="diaEntrega" formControlName="date_entrega" (input)="formatarData($event,'date_entrega')" required="">
                   <div class="input-field" >
                     <label for="horarioEntrega">Selecione o horário de entrega</label>
-                    <input type="text" id="horarioEntrega" formControlName="hora_entrega"
-                         [min]="horaMinima" [max]="horaMaxima" step="300" required>
+                    <input type="text" id="horarioEntrega" formControlName="hora_entrega" (input)="formatarHora($event, 'hora_entrega')" required>
                   </div>
                 </div>
                 <div class="input-field textarea-field">
@@ -70,7 +68,7 @@
 
         <!-- RESERVA DOS EQUIPAMENTOS -->
         <ng-container *ngIf="showEquipamentos" class="container_equipamentos">
-          <form (ngSubmit)="createReserveEquipamento()"[formGroup]="reservaEquipamentoForm">
+          <form (ngSubmit)="createReserveEquipamento()"[formGroup]="reservaEquipamentoForm" class="form-container" >
             <div class="field-equipamento-date">
               <label for="cod_equip">Codigo do Equipamento</label>
               <input type="number" name="cod_equip" formControlName="cod_equip">
@@ -85,24 +83,25 @@
             </div>
             <div class="field-equipamento-date">
               <label for="date_reserva">Data de Reserva</label>
-              <input type="text" name="date_reserva" formControlName="date_reserva">
+              <input type="text" name="date_reserva" formControlName="date_reserva" (input)="formatarData($event,'date_reserva')">
             </div>
             <div class="field-equipamento-date">
               <label for="hora_reserva">Horario da reserva</label>
-              <input type="text" name="hora_reserva" formControlName="hora_reserva">
+              <input type="text" name="hora_reserva" formControlName="hora_reserva" (input)="formatarHora($event, 'hora_reserva')">
             </div>
             <div class="field-equipamento-date">
               <label for="date_entrega">Data de Entrega</label>
-              <input type="text" name="date_entrega" formControlName="date_entrega">
+              <input type="text" name="date_entrega" formControlName="date_entrega" (input)="formatarData($event,'date_entrega')">
             </div>
             <div class="field-equipamento-date">
               <label for="hora_entrega">Horário de Entrega</label>
-              <input type="text" name="hora_entrega" formControlName="hora_entrega">
+              <input type="text" name="hora_entrega" formControlName="hora_entrega" (input)="formatarHora($event, 'hora_entrega')">
             </div>
             <div class="field-equipamento-date">
               <label for="desc">Motivo da Reserva</label>
-              <input type="text" name="desc" formControlName="desc">
+              <textarea name="desc" formControlName="desc" cols="5" rows="10"></textarea>
             </div>
+            <br>
             <div class="btns">
               <button type="submit" id="concluirReserva" class="btn">Concluir Reserva</button>
             </div>
