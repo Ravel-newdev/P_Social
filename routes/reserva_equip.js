@@ -408,8 +408,9 @@ router.get('/view',checkToken, async(req,res) =>{
                         u_R_Equips ? cod_reserva = u_R_Equips.cod_reserva : cod_reserva = 0
                         const newR_Equip = {
                            cod_reserva: +cod_reserva + +1,
-                           cod_user:cod_user,
+                           cod_user: cod_user,
                            cod_equip: cod_equip,
+                           nome_equip: equips.nome,
                            qnt_equip:qnt_equip,
                            desc: desc,
                            date_reserv: date_reserv,
@@ -556,6 +557,7 @@ router.get('/view',checkToken, async(req,res) =>{
                                       $set: {
                                         cod_user: cod_user,
                                         cod_equip: cod_equip,
+                                        nome_equip: equips.nome,
                                         desc: desc,
                                         qnt_equip: qnt_equip,
                                         date_reserv: date_reserv,
@@ -634,7 +636,7 @@ router.delete('/delete_everything',async(req,res)=>{
         res.status(400).json({msg:'Não foi possivel deletar'})
     })
 })
-
 */
+
 
 module.exports = router

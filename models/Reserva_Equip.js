@@ -17,6 +17,12 @@ const Reserva_Equip = new Schema({
     required:true
    }
    ,
+   nome_equip:{
+    type:String,
+    ref:'equip',
+    required:true
+   }
+   ,
     desc:{
     type:String,
     required: true

@@ -309,7 +309,7 @@ router.get('/view',checkToken, async(req,res) =>{
             //Validação primária, verificando se campos estão ou não vazios
             let cod_reserva = 0
         
-            const {cod_user,cod_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
+            const {cod_user,cod_sala,nome_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
 
             const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
             const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
@@ -385,6 +385,7 @@ router.get('/view',checkToken, async(req,res) =>{
                            cod_reserva: +cod_reserva + +1,
                            cod_user:cod_user,
                            cod_sala: cod_sala,
+                           nome_sala: salas.nome,
                            desc: desc,
                            date_reserv: date_reserv,
                            date_entrega: date_entrega,
@@ -430,7 +431,7 @@ router.get('/view',checkToken, async(req,res) =>{
                  }
                if(!cod_sala){
                 res.status(422).json({msg: "A sala é obrigatória"})
-                 }
+                 } 
     
                if(!date_reserv){
             res.status(422).json({msg: "A data da reserva é obrigatória"})
@@ -504,6 +505,7 @@ router.get('/view',checkToken, async(req,res) =>{
                                       $set: {
                                         cod_user: cod_user,
                                         cod_sala: cod_sala,
+                                        nome_sala: salas.nome,
                                         desc: desc,
                                         date_reserv: date_reserv,
                                         date_entrega: date_entrega,
@@ -560,8 +562,8 @@ router.get('/view',checkToken, async(req,res) =>{
         })
 
 // DISCLAMER: APENAS DESENVOLVEDORES EM AMBIENTE DE TESTE PODEM UTILIZAR ESTAS ROTAS.
-
-       /* router.delete('/delete_total/:id', async(req,res)=>{
+/*
+        router.delete('/delete_total/:id', async(req,res)=>{
           await R_Salas.deleteOne({_id: req.params.id}).then(()=>{
             res.status(200).json({msg:'Deletado totalmente.'})
             }).catch((err)=>{
@@ -578,6 +580,7 @@ router.delete('/delete_everything',async(req,res)=>{
         res.status(400).json({msg:'Não foi possivel deletar'})
     })
 })
+
 
 */
 

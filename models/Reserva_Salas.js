@@ -17,6 +17,12 @@ const Reserva_Salas = new Schema({
     required:true
    }
    ,
+   nome_sala:{
+      type:String ,
+      ref:'salas',
+      required:true
+     }
+     ,
     desc:{
     type:String,
     required: true
