@@ -37,7 +37,7 @@
       <h5 class="card-title" *ngIf="selectedRoom === 'room2'">{{ reserva.cod_equip }}</h5>
       <p class="">Quem reservou: {{ reserva.cod_user }}</p>
       <p class="card-text">Descrição: {{ reserva.desc }}</p>
-      <a routerLink="./view-reserve" class="btn btn-primary">Visualizar</a>
+      <a [routerLink]="['./view-reserve', reserva._id]" class="btn btn-primary">Visualizar</a>
     </div>
   </div>
 </div>

@@ -27,7 +27,9 @@ const routes: Routes = [
         path: 'relation-rooms/view-reserve/:id',
         component: ViewReserveComponent,
       },
-      { path: 'view-rooms/reserve/:id', component: ReserveComponent },
+      { path: 'view-rooms/reserve/:id/:name', component: ReserveComponent,  data: { type: 'room' } // Adicionando um segmento adicional de dados
+     },
+      { path: 'view-equips/reserve/:id/:name', component: ReserveComponent, data: { type: 'equip' }  },
       { path: 'create-rooms', component: CreateRoomComponent },
       { path: 'create-equipamento', component: CreateEquipamentoComponent },
       { path: 'reserve', component: ReserveComponent },

@@ -1,5 +1,5 @@
 export interface reserva_equip{
-    desc: string
+    desc: string;
     cod_user: number;
     cod_equip: number;
     qnt_equip: number;

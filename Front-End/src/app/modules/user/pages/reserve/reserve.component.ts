@@ -16,7 +16,9 @@ export class ReserveComponent implements OnInit {
   showEquipamentos: boolean = false;
   reservaRoomForm!: FormGroup;
   reservaEquipamentoForm!: FormGroup;
-  id_equip: string = ''
+  id_rota: string = '';
+  nome_rota: string = '';
+  reservationType: string = '';
 
   success: boolean = false;
   errorCad: boolean = false;
@@ -29,10 +31,30 @@ export class ReserveComponent implements OnInit {
   equipamentos: any[] = [];
 
   ngOnInit(): void {
-    this.route.params.subscribe( params =>{
-    this.id_equip = params['id'];
-    } )
+    this.route.params.subscribe(params => {
+      this.id_rota = params['id'];
+      this.nome_rota = params['name'];
+    });
+  
+    this.route.data.subscribe(data => {
+      this.reservationType = data['type']; // Obtendo o tipo de reserva
+    });
+  
+    if (this.id_rota && this.nome_rota && this.reservationType) {
+      if (this.reservationType === 'room') {
+        this.reservaRoomForm.patchValue({
+          cod_sala: this.nome_rota
+        });
+        this.formSala()
+      } else if (this.reservationType === 'equip') {
+        this.reservaEquipamentoForm.patchValue({
+          cod_equip: this.nome_rota
+        });
+        this.formEquipamentos()
+      }
+    }
   }
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,6 +82,7 @@ export class ReserveComponent implements OnInit {
       cod_user: [''],
       desc: ['']
     });
+   
   }
 
   formSala() {
@@ -73,7 +96,11 @@ export class ReserveComponent implements OnInit {
   }
 
   createReserveRoom() {
-    if (this.reservaRoomForm.valid) {
+    // if (this.reservaRoomForm.valid && this.nome_rota != null) {
+      
+    // }
+
+    if(this.reservaRoomForm.valid && this.nome_rota == null){
       const reservaData: reservas_salas= {
         cod_sala: this.reservaRoomForm.get('cod_sala')!.value,
         cod_user: this.reservaRoomForm.get('cod_user')!.value,
