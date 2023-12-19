@@ -5,6 +5,78 @@ require("../models/Equip");
 const Equips = mongoose.model("equip");
 const checkToken = require('../middleware/checkToken')
 
+//Consultas
+router.post('/searchbycod',checkToken,async(req,res)=>{
+
+  const {codigo} = req.body
+  
+  if(codigo){
+  Equips.find({codigo: codigo, D_E_L_E_T: ''}).lean().then((equips)=>{
+      if(equips){
+      res.status(200).json(equips)
+      }
+      else{
+      res.status(404).json({msg:'Nenhum dado encontrado'})
+      }
+  }).catch((err)=>{
+      res.status(404).json({msg:`Not found. ERROR: ${err} `})
+  })
+  }
+  
+  else{
+      res.status(422).json({msg:'Digite algum codigo.'})
+  }
+  
+  })
+  
+  router.post('/searchbyname',checkToken,async(req,res)=>{
+  
+      const {nome} = req.body
+      
+      if(nome){
+      Equips.find({nome: { $regex: `${nome.toUpperCase()}` }, D_E_L_E_T:''}).lean().then((equips)=>{
+          if(equips){
+          res.status(200).json(equips)
+          }
+          else{
+          res.status(404).json({msg:'Nenhum dado encontrado'})
+          }
+      }).catch((err)=>{
+          res.status(404).json({msg:`Not found. ERROR: ${err} `})
+      })
+      }
+      
+      else{
+          res.status(422).json({msg:'Digite algum nome.'})
+      }
+      
+      })
+  
+      router.post('/searchbystatus',checkToken,async(req,res)=>{
+  
+          const {status} = req.body
+          
+          if(status){
+          Equips.find({status: status, D_E_L_E_T:''}).lean().then((equips)=>{
+              if(equips){
+              res.status(200).json(equips)
+              }
+              else{
+              res.status(404).json({msg:'Nenhum dado encontrado'})
+              }
+          }).catch((err)=>{
+              res.status(404).json({msg:`Not found. ERROR: ${err} `})
+          })
+          }
+          
+          else{
+              res.status(422).json({msg:'Digite algum status.'})
+          }
+          
+          })
+
+          //Visualização
+
 router.get("/view", checkToken, async (req,res) =>{
 await Equips.find({D_E_L_E_T:''}).lean().then((equips)=>{
   res.status(200).json(equips)
@@ -21,6 +93,7 @@ router.get("/view_delete", checkToken,async (req,res) =>{
   })
   });
 
+//METODOS CREATE, UPDATE E DELETE
 
 router.post('/create' , checkToken,async(req,res)=>{
 

@@ -8,6 +8,144 @@ const Salas = mongoose.model('salas')
 
 const checkToken = require('../middleware/checkToken')
 
+
+router.post('/searchbycod',checkToken,async(req,res)=>{
+
+  const {cod_reserva} = req.body
+  
+  if(cod_reserva){
+  R_Salas.find({cod_reserva: cod_reserva, D_E_L_E_T: ''}).lean().then((r_salass)=>{
+      if(r_salass){
+      res.status(200).json(r_salass)
+      }
+      else{
+      res.status(404).json({msg:'Nenhum dado encontrado'})
+      }
+  }).catch((err)=>{
+      res.status(404).json({msg:`Not found. ERROR: ${err} `})
+  })
+  }
+  
+  else{
+      res.status(422).json({msg:'Digite o codigo da reserva.'})
+  }
+  
+  })
+
+  router.post('/searchbyclass',checkToken,async(req,res)=>{
+
+    const {cod_sala} = req.body
+    
+    if(cod_sala){
+    R_Salas.find({cod_sala: cod_sala, D_E_L_E_T: ''}).lean().then((r_salass)=>{
+        if(r_salass){
+        res.status(200).json(r_salass)
+        }
+        else{
+        res.status(404).json({msg:'Nenhum dado encontrado'})
+        }
+    }).catch((err)=>{
+        res.status(404).json({msg:`Not found. ERROR: ${err} `})
+    })
+    }
+    
+    else{
+        res.status(422).json({msg:'Digite o codigo da sala.'})
+    }
+    
+    })
+
+    router.post('/searchbydater',checkToken,async(req,res)=>{
+
+      const {date_reserv} = req.body
+      
+      if(date_reserv){
+      R_Salas.find({date_reserv: date_reserv, D_E_L_E_T:''}).lean().then((r_salass)=>{
+          if(r_salass){
+          res.status(200).json(r_salass)
+          }
+          else{
+          res.status(404).json({msg:'Nenhum dado encontrado'})
+          }
+      }).catch((err)=>{
+          res.status(404).json({msg:`Not found. ERROR: ${err} `})
+      })
+      }
+      
+      else{
+          res.status(422).json({msg:'Digite a data da reserva.'})
+      }
+      
+      })
+      router.post('/searchbydatee',checkToken,async(req,res)=>{
+
+        const {date_entrega} = req.body
+        
+        if(date_entrega){
+        R_Salas.find({date_entrega: date_entrega, D_E_L_E_T:''}).lean().then((r_salass)=>{
+            if(r_salass){
+            res.status(200).json(r_salass)
+            }
+            else{
+            res.status(404).json({msg:'Nenhum dado encontrado'})
+            }
+        }).catch((err)=>{
+            res.status(404).json({msg:`Not found. ERROR: ${err} `})
+        })
+        }
+        
+        else{
+            res.status(422).json({msg:'Digite a data da entrega.'})
+        }
+        
+        })
+
+
+        router.post('/searchbyhourr',checkToken,async(req,res)=>{
+
+          const {hora_reserva} = req.body
+          
+          if(hora_reserva){
+          R_Salas.find({hora_reserva: hora_reserva, D_E_L_E_T:''}).lean().then((r_salass)=>{
+              if(r_salass){
+              res.status(200).json(r_salass)
+              }
+              else{
+              res.status(404).json({msg:'Nenhum dado encontrado'})
+              }
+          }).catch((err)=>{
+              res.status(404).json({msg:`Not found. ERROR: ${err} `})
+          })
+          }
+          
+          else{
+              res.status(422).json({msg:'Digite a hora da reserva.'})
+          }
+          
+          })
+          router.post('/searchbyhoure',checkToken,async(req,res)=>{
+    
+            const {hora_entrega} = req.body
+            
+            if(hora_entrega){
+            R_Salas.find({hora_entrega: hora_entrega , D_E_L_E_T: ''}).lean().then((r_salass)=>{
+                if(r_salass){
+                res.status(200).json(r_salass)
+                }
+                else{
+                res.status(404).json({msg:'Nenhum dado encontrado'})
+                }
+            }).catch((err)=>{
+                res.status(404).json({msg:`Not found. ERROR: ${err} `})
+            })
+            }
+            
+            else{
+                res.status(422).json({msg:'Digite a hora da reserva.'})
+            }
+            
+            })
+
 //ver todas as reservas não deletadas
 router.get('/view',checkToken, async(req,res) =>{
     R_Salas.find({D_E_L_E_T:''}).lean().then((r_salass)=>{

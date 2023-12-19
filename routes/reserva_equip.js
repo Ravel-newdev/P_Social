@@ -8,6 +8,145 @@ const Equips = mongoose.model('equip')
 
 const checkToken = require('../middleware/checkToken')
 
+
+
+router.post('/searchbycod',checkToken,async(req,res)=>{
+
+  const {cod_reserva} = req.body
+  
+  if(cod_reserva){
+  R_Equip.find({cod_reserva: cod_reserva, D_E_L_E_T: ''}).lean().then((r_equips)=>{
+      if(r_equips){
+      res.status(200).json(r_equips)
+      }
+      else{
+      res.status(404).json({msg:'Nenhum dado encontrado'})
+      }
+  }).catch((err)=>{
+      res.status(404).json({msg:`Not found. ERROR: ${err} `})
+  })
+  }
+  
+  else{
+      res.status(422).json({msg:'Digite o codigo da reserva.'})
+  }
+  
+  })
+
+  router.post('/searchbyequip',checkToken,async(req,res)=>{
+
+    const {cod_equip} = req.body
+    
+    if(cod_equip){
+    R_Equip.find({cod_equip: cod_equip, D_E_L_E_T:''}).lean().then((r_equips)=>{
+        if(r_equips){
+        res.status(200).json(r_equips)
+        }
+        else{
+        res.status(404).json({msg:'Nenhum dado encontrado'})
+        }
+    }).catch((err)=>{
+        res.status(404).json({msg:`Not found. ERROR: ${err} `})
+    })
+    }
+    
+    else{
+        res.status(422).json({msg:'Digite o codigo do equipamento.'})
+    }
+    
+    })
+
+    router.post('/searchbydater',checkToken,async(req,res)=>{
+
+      const {date_reserv} = req.body
+      
+      if(date_reserv){
+      R_Equip.find({date_reserv: date_reserv, D_E_L_E_T: ''}).lean().then((r_equips)=>{
+          if(r_equips){
+          res.status(200).json(r_equips)
+          }
+          else{
+          res.status(404).json({msg:'Nenhum dado encontrado'})
+          }
+      }).catch((err)=>{
+          res.status(404).json({msg:`Not found. ERROR: ${err} `})
+      })
+      }
+      
+      else{
+          res.status(422).json({msg:'Digite a data da reserva.'})
+      }
+      
+      })
+      router.post('/searchbydatee',checkToken,async(req,res)=>{
+
+        const {date_entrega} = req.body
+        
+        if(date_entrega){
+        R_Equip.find({date_entrega: date_entrega, D_E_L_E_T: ''}).lean().then((r_equips)=>{
+            if(r_equips){
+            res.status(200).json(r_equips)
+            }
+            else{
+            res.status(404).json({msg:'Nenhum dado encontrado'})
+            }
+        }).catch((err)=>{
+            res.status(404).json({msg:`Not found. ERROR: ${err} `})
+        })
+        }
+        
+        else{
+            res.status(422).json({msg:'Digite a data da entrega.'})
+        }
+        
+        })
+
+
+        router.post('/searchbyhourr',checkToken,async(req,res)=>{
+
+          const {hora_reserva} = req.body
+          
+          if(hora_reserva){
+          R_Equip.find({hora_reserva: hora_reserva, D_E_L_E_T: ''}).lean().then((r_equips)=>{
+              if(r_equips){
+              res.status(200).json(r_equips)
+              }
+              else{
+              res.status(404).json({msg:'Nenhum dado encontrado'})
+              }
+          }).catch((err)=>{
+              res.status(404).json({msg:`Not found. ERROR: ${err} `})
+          })
+          }
+          
+          else{
+              res.status(422).json({msg:'Digite a hora da reserva.'})
+          }
+          
+          })
+          router.post('/searchbyhoure',checkToken,async(req,res)=>{
+    
+            const {hora_entrega} = req.body
+            
+            if(hora_entrega){
+            R_Equip.find({hora_entrega: hora_entrega, D_E_L_E_T:''}).lean().then((r_equips)=>{
+                if(r_equips){
+                res.status(200).json(r_equips)
+                }
+                else{
+                res.status(404).json({msg:'Nenhum dado encontrado'})
+                }
+            }).catch((err)=>{
+                res.status(404).json({msg:`Not found. ERROR: ${err} `})
+            })
+            }
+            
+            else{
+                res.status(422).json({msg:'Digite a hora da reserva.'})
+            }
+            
+            })
+
 //ver todas as reservas não deletadas
 router.get('/view',checkToken, async(req,res) =>{
     R_Equip.find({D_E_L_E_T:''}).lean().then((R_Equips)=>{
@@ -120,7 +259,7 @@ router.get('/view',checkToken, async(req,res) =>{
                         }
                
                        new R_Equip(newR_Equip).save().then(() =>{
-                           res.status(200).json({msg:`Salvo com sucesso ${sum}`})
+                           res.status(200).json({msg:`Salvo com sucesso`})
                        }).catch((err) => {
                           res.status(500).json({msg:'Error ao salvar.'+err})
                        })
@@ -296,7 +435,7 @@ router.get('/view',checkToken, async(req,res) =>{
         })
 
 // DISCLAMER: APENAS DESENVOLVEDORES EM AMBIENTE DE TESTE PODEM UTILIZAR ESTAS ROTAS.
-
+/*
         router.delete('/delete_total/:id', async(req,res)=>{
           await R_Equip.deleteOne({_id: req.params.id}).then(()=>{
             res.status(200).json({msg:'Deletado totalmente.'})
@@ -314,7 +453,7 @@ router.delete('/delete_everything',async(req,res)=>{
         res.status(400).json({msg:'Não foi possivel deletar'})
     })
 })
-
+*/
 
 
 module.exports = router

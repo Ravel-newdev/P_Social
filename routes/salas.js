@@ -5,6 +5,78 @@ require('../models/Salas')
 const Salas = mongoose.model('salas')
 const checkToken = require('../middleware/checkToken')
 
+//Consultas
+router.post('/searchbycod',checkToken,async(req,res)=>{
+
+const {codigo} = req.body
+
+if(codigo){
+Salas.find({codigo: codigo, D_E_L_E_T: ''}).lean().then((salass)=>{
+    if(salass){
+    res.status(200).json(salass)
+    }
+    else{
+    res.status(404).json({msg:'Nenhum dado encontrado'})
+    }
+}).catch((err)=>{
+    res.status(404).json({msg:`Not found. ERROR: ${err} `})
+})
+}
+
+else{
+    res.status(422).json({msg:'Digite algum codigo.'})
+}
+
+})
+
+router.post('/searchbyname',checkToken,async(req,res)=>{
+
+    const {nome} = req.body
+    
+    if(nome){
+    Salas.find({nome: { $regex: `${nome.toUpperCase()}` }, D_E_L_E_T:''}).lean().then((salass)=>{
+        if(salass){
+        res.status(200).json(salass)
+        }
+        else{
+        res.status(404).json({msg:'Nenhum dado encontrado'})
+        }
+    }).catch((err)=>{
+        res.status(404).json({msg:`Not found. ERROR: ${err} `})
+    })
+    }
+    
+    else{
+        res.status(422).json({msg:'Digite algum nome.'})
+    }
+    
+    })
+
+    router.post('/searchbystatus',checkToken,async(req,res)=>{
+
+        const {status} = req.body
+        
+        if(status){
+        Salas.find({status: status, D_E_L_E_T:''}).lean().then((salass)=>{
+            if(salass){
+            res.status(200).json(salass)
+            }
+            else{
+            res.status(404).json({msg:'Nenhum dado encontrado'})
+            }
+        }).catch((err)=>{
+            res.status(404).json({msg:`Not found. ERROR: ${err} `})
+        })
+        }
+        
+        else{
+            res.status(422).json({msg:'Digite algum status.'})
+        }
+        
+        })
+
+
+//Visualização
 router.get('/view', checkToken ,async(req,res) =>{
 Salas.find({D_E_L_E_T:''}).lean().then((salass)=>{
     res.status(200).json(salass)
@@ -22,6 +94,7 @@ router.get('/view_delete',checkToken ,async(req,res) =>{
     })
     
 
+//METODOS CREATE UPDATE E DELETE. 
 router.post('/create' ,checkToken ,async(req,res)=>{
 
     //Validação primeira, verificando se campos estão ou não vazios
