@@ -256,3 +256,85 @@ main {
   }
 
 
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* animation Popup */
+
+  @keyframes popup {
+    0%{
+      transform: scale(0.5);
+    }
+    100%{
+      transform: scale(1);
+    }
+  }
+
+  .overlay.active{
+    display: flex;
+  }
+
+  .popup {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    animation: popup .3s;
+  }
+
+  .popup .icon{
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1rem auto;
+    border-radius: 50%;
+  }
+
+  .popup .icon.success{
+    border: 1px solid green;
+  }
+
+  .popup .icon.error{
+    border: 1px solid red;
+  }
+
+  .popup .icon i{
+    font-size: 2em;
+    color: green;
+    font-weight: bold;
+    border: none;
+  }
+
+  .popup .icon i.error{
+    color: red;
+  }
+
+  .popup .icon i.success{
+    color: green;
+  }
+
+  .popup button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8c52ff;
+    color: white;
+    cursor: pointer;
+  }
+
+  .popup button:hover {
+    background-color: #824eeb;
+  }

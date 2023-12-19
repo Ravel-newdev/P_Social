@@ -80,7 +80,8 @@ export class ReserveComponent implements OnInit {
       date_entrega: [''],
       hora_entrega: [''],
       cod_user: [''],
-      desc: ['']
+      desc: [''],
+
     });
    
   }
@@ -90,9 +91,37 @@ export class ReserveComponent implements OnInit {
     this.showEquipamentos = false;
   }
 
+
+
   formEquipamentos() {
     this.showSala = false;
     this.showEquipamentos = true;
+  }
+
+  formatarData(event: Event,  campo: string): void {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    if (valor.length > 8) {
+      valor = valor.slice(0, 8); // Limita o tamanho máximo da data
+    }
+    if (valor.length > 4) {
+      valor = valor.replace(/^(\d{2})(\d{2})(\d{0,4})/, '$1/$2/$3'); // Aplica a máscara DD/MM/AAAA
+    } else if (valor.length > 2) {
+      valor = valor.replace(/^(\d{2})(\d{0,2})/, '$1/$2'); // Aplica a máscara DD/MM
+    }
+    this.reservaEquipamentoForm.get(campo)?.patchValue(valor); // Atualiza o valor no formulário
+  }
+
+  formatarHora(event: Event, campo: string): void {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    if (valor.length > 4) {
+      valor = valor.slice(0, 4); // Limita o tamanho máximo da hora
+    }
+    if (valor.length > 2) {
+      valor = valor.replace(/^(\d{2})(\d{0,2})/, '$1:$2'); // Aplica a máscara HH:MM
+    }
+    this.reservaEquipamentoForm.get(campo)?.patchValue(valor); // Atualiza o valor no formulário
   }
 
   createReserveRoom() {
