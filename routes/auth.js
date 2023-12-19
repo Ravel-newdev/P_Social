@@ -38,14 +38,12 @@ router.post("/login",async(req,res)=>{
      
      try{
          const secret = process.env.SECRET
-         const refreshToken = jwt.sign({  name,password }, secret,{expiresIn: '1800s'})
+         const refreshToken = jwt.sign({ name,password }, secret)
 
          const token = jwt.sign({
            refreshToken
 
-          },secret,{
-            expiresIn: '1800s'
-          }
+          },secret
           )
           
           res.status(200).json({msg: "autenticação realizada com sucesso", token, refreshToken})

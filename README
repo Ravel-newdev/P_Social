@@ -128,6 +128,9 @@ method: POST
 - Rota para consultar reserva de salas por hora de entrega:
 https://api-clee.onrender.com/reserva_salas/searchbyhoure
 method: POST
+OBS: PARA CONSULTAR OS DELETADOS APENAS COLOQUE "delete" na frente do "by"
+Exemplo - https://api-clee.onrender.com/reserva_salas/searchbydeletecod
+
 
 ==================================== RESERVA DE EQUIPAMENTOS ====================================
 
@@ -174,3 +177,5 @@ method: POST
 - Rota para consultar reserva de equipamentos por hora de entrega:
 https://api-clee.onrender.com/reserva_equip/searchbyhoure
 method: POST
+OBS: PARA CONSULTAR OS DELETADOS APENAS COLOQUE "delete" na frente do "by" na rota
+Exemplo - https://api-clee.onrender.com/reserva_equip/searchbydeletecod

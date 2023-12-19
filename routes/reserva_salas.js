@@ -146,6 +146,145 @@ router.post('/searchbycod',checkToken,async(req,res)=>{
             
             })
 
+            //Consultando os deletados
+
+            router.post('/searchbydeletecod',checkToken,async(req,res)=>{
+
+              const {cod_reserva} = req.body
+              
+              if(cod_reserva){
+              R_Salas.find({cod_reserva: cod_reserva, D_E_L_E_T: '*'}).lean().then((r_salass)=>{
+                  if(r_salass){
+                  res.status(200).json(r_salass)
+                  }
+                  else{
+                  res.status(404).json({msg:'Nenhum dado encontrado'})
+                  }
+              }).catch((err)=>{
+                  res.status(404).json({msg:`Not found. ERROR: ${err} `})
+              })
+              }
+              
+              else{
+                  res.status(422).json({msg:'Digite o codigo da reserva.'})
+              }
+              
+              })
+            
+              router.post('/searchbydeleteclass',checkToken,async(req,res)=>{
+            
+                const {cod_sala} = req.body
+                
+                if(cod_sala){
+                R_Salas.find({cod_sala: cod_sala, D_E_L_E_T: '*'}).lean().then((r_salass)=>{
+                    if(r_salass){
+                    res.status(200).json(r_salass)
+                    }
+                    else{
+                    res.status(404).json({msg:'Nenhum dado encontrado'})
+                    }
+                }).catch((err)=>{
+                    res.status(404).json({msg:`Not found. ERROR: ${err} `})
+                })
+                }
+                
+                else{
+                    res.status(422).json({msg:'Digite o codigo da sala.'})
+                }
+                
+                })
+            
+                router.post('/searchbydeletedater',checkToken,async(req,res)=>{
+            
+                  const {date_reserv} = req.body
+                  
+                  if(date_reserv){
+                  R_Salas.find({date_reserv: date_reserv, D_E_L_E_T:'*'}).lean().then((r_salass)=>{
+                      if(r_salass){
+                      res.status(200).json(r_salass)
+                      }
+                      else{
+                      res.status(404).json({msg:'Nenhum dado encontrado'})
+                      }
+                  }).catch((err)=>{
+                      res.status(404).json({msg:`Not found. ERROR: ${err} `})
+                  })
+                  }
+                  
+                  else{
+                      res.status(422).json({msg:'Digite a data da reserva.'})
+                  }
+                  
+                  })
+                  router.post('/searchbydeletedatee',checkToken,async(req,res)=>{
+            
+                    const {date_entrega} = req.body
+                    
+                    if(date_entrega){
+                    R_Salas.find({date_entrega: date_entrega, D_E_L_E_T:'*'}).lean().then((r_salass)=>{
+                        if(r_salass){
+                        res.status(200).json(r_salass)
+                        }
+                        else{
+                        res.status(404).json({msg:'Nenhum dado encontrado'})
+                        }
+                    }).catch((err)=>{
+                        res.status(404).json({msg:`Not found. ERROR: ${err} `})
+                    })
+                    }
+                    
+                    else{
+                        res.status(422).json({msg:'Digite a data da entrega.'})
+                    }
+                    
+                    })
+            
+            
+                    router.post('/searchbydeletehourr',checkToken,async(req,res)=>{
+            
+                      const {hora_reserva} = req.body
+                      
+                      if(hora_reserva){
+                      R_Salas.find({hora_reserva: hora_reserva, D_E_L_E_T:'*'}).lean().then((r_salass)=>{
+                          if(r_salass){
+                          res.status(200).json(r_salass)
+                          }
+                          else{
+                          res.status(404).json({msg:'Nenhum dado encontrado'})
+                          }
+                      }).catch((err)=>{
+                          res.status(404).json({msg:`Not found. ERROR: ${err} `})
+                      })
+                      }
+                      
+                      else{
+                          res.status(422).json({msg:'Digite a hora da reserva.'})
+                      }
+                      
+                      })
+                      router.post('/searchbydeletehoure',checkToken,async(req,res)=>{
+                
+                        const {hora_entrega} = req.body
+                        
+                        if(hora_entrega){
+                        R_Salas.find({hora_entrega: hora_entrega , D_E_L_E_T: '*'}).lean().then((r_salass)=>{
+                            if(r_salass){
+                            res.status(200).json(r_salass)
+                            }
+                            else{
+                            res.status(404).json({msg:'Nenhum dado encontrado'})
+                            }
+                        }).catch((err)=>{
+                            res.status(404).json({msg:`Not found. ERROR: ${err} `})
+                        })
+                        }
+                        
+                        else{
+                            res.status(422).json({msg:'Digite a hora da reserva.'})
+                        }
+                        
+                        })
+
 //ver todas as reservas não deletadas
 router.get('/view',checkToken, async(req,res) =>{
     R_Salas.find({D_E_L_E_T:''}).lean().then((r_salass)=>{
@@ -171,6 +310,12 @@ router.get('/view',checkToken, async(req,res) =>{
             let cod_reserva = 0
         
             const {cod_user,cod_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
+
+            const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
+            const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
+            const hora_rv = date_rv.getHours() 
+            const hora_ev = date_ev.getHours()
+
             if(!cod_user){
                 res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
              }
@@ -192,6 +337,14 @@ router.get('/view',checkToken, async(req,res) =>{
          if(!hora_entrega){
                         res.status(422).json({msg: "A hora da entrega é obrigatória"})
                              }
+
+                             if(hora_rv > hora_ev){
+                              res.status(422).json({msg:"HORA DA RESERVA NÃO PODE SER MAIOR QUE A HORA DA ENTREGA"})
+                            }
+                  
+                            if(date_rv > date_ev){
+                              res.status(422).json({msg:"DATA DA RESERVA NÃO PODE SER MAIOR QUE A DATA DA ENTREGA"})
+                            }
                     
                 
         else{
@@ -267,6 +420,11 @@ router.get('/view',checkToken, async(req,res) =>{
         router.put('/update/:id', checkToken,async(req,res)=>{
                 const {cod_user,cod_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
 
+                const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
+                const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
+                const hora_rv = date_rv.getHours() 
+                const hora_ev = date_ev.getHours()
+    
                 if(!cod_user){
                     res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
                  }
@@ -288,6 +446,14 @@ router.get('/view',checkToken, async(req,res) =>{
              if(!hora_entrega){
                             res.status(422).json({msg: "A hora da entrega é obrigatória"})
                                  }
+
+                                 if(hora_rv > hora_ev){
+                                  res.status(422).json({msg:"HORA DA RESERVA NÃO PODE SER MAIOR QUE A HORA DA ENTREGA"})
+                                }
+                      
+                                if(date_rv > date_ev){
+                                  res.status(422).json({msg:"DATA DA RESERVA NÃO PODE SER MAIOR QUE A DATA DA ENTREGA"})
+                                }
                         
             
                 else{

@@ -75,7 +75,7 @@ const port = process.env.DB_PORT
 
 
 //mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@clee.8t8902l.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
-    mongoose.connect(`mongodb://localhost/CLEE_T`).then(()=>{    
+mongoose.connect(`mongodb://localhost/CLEE_T`).then(()=>{    
 app.listen(port)
     console.log('connect successful')
 
