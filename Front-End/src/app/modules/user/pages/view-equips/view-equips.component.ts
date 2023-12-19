@@ -11,7 +11,7 @@ import { EquipamentoService } from 'src/app/services/equipamento.service';
 export class ViewEquipsComponent implements OnInit {
   equips: any[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 6;
+  itemsPerPage: number = 3;
 
   constructor(private equipamentoService: EquipamentoService) {}
 

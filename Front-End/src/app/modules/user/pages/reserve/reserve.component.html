@@ -1,25 +1,12 @@
 <div class="container">
-    <header>
-        <div class="check-field">
-            <h3>O que você quer reservar?</h3>
-            <div class="radios">
-                <label for="sala">
-                    <input type="radio" name="option_reserve" id="sala" (click)="formSala()">
-                    <span>Sala</span>
-                </label>
-                <label for="equipamento">
-                    <input type="radio" name="o+ption_reserve" id="equipamento" (click)="formEquipamentos()">
-                    <span>Equipamento</span>
-                </label>
-            </div>
-        </div>
-    </header>
+
 
     <main>
         <div class="reservation-form" *ngIf="showSala || showEquipamentos">
           <!--  RESERVA DAS SALAS -->
           <ng-container *ngIf="showSala">
             <form (ngSubmit)="createReserveRoom()" [formGroup]="reservaRoomForm" class="form-container">
+              <h1>Reservar sala</h1>
               <div class="form-content" id="formSala">
                 <div class="input-field">
                   <label for="nomeSala">Codigo da Sala</label>

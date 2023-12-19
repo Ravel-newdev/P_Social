@@ -103,6 +103,15 @@ input[type="date"]:focus{
 .input-search:focus{
 border: 1px solid #8c52ff;
 }
+.input-search::-webkit-search-cancel-button{
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("src/assets/img/x-solid.svg");
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+}
 .reservation-list {
   margin-top: 20px;
 }

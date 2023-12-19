@@ -28,6 +28,7 @@
   background-color: #8c52ff;
   border: none;
   transition: all .3s ease-in-out;
+  border-radius: 5px;
 }
 
 .btn:hover {
@@ -43,4 +44,32 @@
   border: 1px solid #8244ff50;
   color: #8244ff;
   background-color: transparent;
+}
+button{
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: .3rem;
+  transition: all .3s ease-in-out;
+}
+.btn-reserve{
+  background-color: #8c52ff;
+}
+.btn-delete{
+  background-color: rgba(248, 57, 57, 0.805);
+}
+.btn-delete:hover{
+  background-color: rgba(255, 18, 18, 0.988);
+}
+.btn-reserve:hover{
+  background-color: #7c3aff;
+}
+.btn-grupo{
+  background-color: #70707010;
+  border-top: 1px solid #70707050;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }

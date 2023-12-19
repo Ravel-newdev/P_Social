@@ -2,6 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { salas_2 } from 'src/app/models/salas_2';
 import { RoomService } from 'src/app/services/room.service';
 
 @Component({
@@ -10,9 +11,9 @@ import { RoomService } from 'src/app/services/room.service';
   styleUrls: ['./view-rooms.component.css']
 })
 export class ViewRoomsComponent implements OnInit {
-  salas: any[] = [];
+  salas: salas_2[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 6;
+  itemsPerPage: number = 3;
 
   constructor(private roomService: RoomService, private router: Router) {}
 
@@ -27,7 +28,7 @@ export class ViewRoomsComponent implements OnInit {
           _id: sala._id,
           nome: sala.nome,
           status: this.getStatusLabel(sala.status),
-
+          codigo: sala.codigo
         }));
         console.log(this.salas);
       },
