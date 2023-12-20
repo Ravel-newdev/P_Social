@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { reserva_equip } from 'src/app/models/reserva_equips';
 import { reservas_salas } from 'src/app/models/reserva_salas';
 import { ReserveService } from 'src/app/services/reserve.service';
@@ -13,6 +13,8 @@ export class ViewReserveComponent {
   equip: reserva_equip[] = [];
   selectedReserva: reserva_equip | null = null;
   reservaId: string = '';
+  canEdit: boolean = false;
+  reservaOriginal: reservas_salas | null = null;
 
   constructor(private reserveService: ReserveService) {}
 
@@ -42,4 +44,28 @@ export class ViewReserveComponent {
       }
     ); */
   }
+
+  alterarReserva(){
+
+  }
+
+  habilitarEdicao(sala: reservas_salas): void {
+    this.canEdit = true;
+    this.reservaOriginal = { ...sala }; // Cria uma cópia da reserva original para uso no cancelamento
+  }
+
+  salvarEdicao(sala: reservas_salas): void {
+    // Lógica para salvar a reserva editada usando this.reserveService.atualizarReserva(sala);
+    this.canEdit = false;
+  }
+
+  cancelarEdicao(sala: reservas_salas): void {
+    // Restaura os valores originais da reserva
+    if (this.reservaOriginal) {
+      Object.assign(sala, this.reservaOriginal);
+      this.reservaOriginal = null;
+    }
+    this.canEdit = false;
+  }
+
 }

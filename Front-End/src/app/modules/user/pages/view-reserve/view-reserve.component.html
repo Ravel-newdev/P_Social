@@ -3,22 +3,22 @@
     <h1>{{ sala.cod_sala }}</h1>
   </div>
   <div class="container-body">
-    <div class="container-text">
+    <div class="container-text" #inputContainer>
       Quem reservou:
       <input type="text" class="text" id="text" [(ngModel)]="sala.cod_user" disabled="disabled"/>
     </div>
-    <div class="container-desc">
+    <div class="container-desc" #inputContainer>
       <label for="descricao">Descrição da reserva:</label
-      ><textarea id="descricao" disabled="disabled">{{ sala.desc }}</textarea>
+      ><textarea id="descricao" [disabled]="!canEdit">{{ sala.desc }}</textarea>
     </div>
-    <div class="container-datetime">
+    <div class="container-datetime" #inputContainer>
       Estimativa de entrega:
       <input
         type="datetime"
         id="deliveryDate"
         name="deliveryDate"
         [(ngModel)]="sala.date_entrega"
-        disabled="disabled"
+        [disabled]="!canEdit"
       />
       às
       <input
@@ -26,13 +26,14 @@
         id="deliveryTime"
         name="deliveryTime"
         [(ngModel)]="sala.hora_entrega"
-        disabled="disabled"
+        [disabled]="!canEdit"
       />
     </div>
   </div>
   <div class="button">
-    <a class="btn btn-primary"
-      >Editar</a>
+    <a class="btn btn-primary" (click)="habilitarEdicao(sala)" *ngIf="!canEdit">Editar</a>
+    <a class="btn btn-primary" style="margin-right: 10px;" *ngIf="canEdit" (click)="salvarEdicao(sala)">Salvar</a>
+      <a class="btn btn-primary" *ngIf="canEdit" (click)="cancelarEdicao(sala)">Cancelar</a>
   </div>
 </section>
 
