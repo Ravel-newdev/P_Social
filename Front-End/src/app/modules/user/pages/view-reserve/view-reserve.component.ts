@@ -29,9 +29,10 @@ export class ViewReserveComponent {
   }
 
   carregarReservas(): void {
-     this.reserveService.getReservaSala(this.reservaId).subscribe(
+     this.reserveService.getReservasSalas().subscribe(
       (data: reservas_salas[]) => {
         this.salas = data;
+        console.log(data);
       },
       (error) => {
         console.error('Erro ao carregar reservas:', error);
@@ -60,9 +61,19 @@ export class ViewReserveComponent {
     this.reservaOriginal = { ...sala }; // Cria uma cópia da reserva original para uso no cancelamento
   }
 
-  salvarEdicao(sala: reservas_salas): void {
-    // Lógica para salvar a reserva editada usando this.reserveService.atualizarReserva(sala);
-    this.canEdit = false;
+  salvarEdicaoSala(sala: reservas_salas): void {
+
+    this.reserveService.atualizarReservaSala(sala).subscribe(
+      (response) => {
+        // Atualização bem-sucedida, adicione lógica para feedback ao usuário se necessário
+        console.log('Reserva de sala atualizada:', response);
+        this.canEdit = false; // Desabilita o modo de edição
+      },
+      (error) => {
+        // Trate os erros durante a atualização, como exibir mensagens de erro
+        console.error('Erro ao atualizar a reserva de sala:', error);
+      }
+    );
   }
 
   cancelarEdicao(sala: reservas_salas): void {

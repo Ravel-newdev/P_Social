@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { reservas_salas } from '../models/reserva_salas';
 import { reserva_equip } from '../models/reserva_equips';
 import { AuthService } from './auth.service';
+import { reservas_salas2 } from '../models/reserva_salas2';
 
   @Injectable({
     providedIn: 'root'
@@ -24,10 +25,7 @@ import { AuthService } from './auth.service';
     const headers = this.addAuthorizationHeader();
     return this.http.get<any>(`${this.apiUrl}/reserva_salas/view`, { headers });
   }
-  getReservaSala(id: string): Observable<any> {
-    const headers = this.addAuthorizationHeader();
-    return this.http.get<any>(`${this.apiUrl}/reserva_salas/searchbycod`, {headers})
-  }
+
 
   getReservasEquipamentos(): Observable<any> {
     const headers = this.addAuthorizationHeader();
@@ -41,5 +39,10 @@ import { AuthService } from './auth.service';
   createReservaEquip(reserva: reserva_equip){
     const headers = this.addAuthorizationHeader();
     return this.http.post<any>(`${this.apiUrl}/reserva_equip/create`, reserva,{headers} )
+  }
+
+  atualizarReservaSala(reserva: reservas_salas){
+    const headers = this.addAuthorizationHeader();
+    return this.http.put<any>(`${this.apiUrl}/reserva_salas/update/`, reserva,{headers} )
   }
 }
