@@ -389,7 +389,7 @@ router.get('/view',checkToken, async(req,res) =>{
                     if(qnt_equip == 0|| qnt_equip == null){
                       res.status(422).json({msg:'A quantidade pedida não pode ser nula.'})
                     }
-                    if(equips.qnt_estoque == 0){
+                    if(equips.qnt_estoque == 0 || equips.status == 'I'){
                       res.status(400).json({msg:'O equipamento se encontra inativo (fora de estoque).'})
                     }
                   
