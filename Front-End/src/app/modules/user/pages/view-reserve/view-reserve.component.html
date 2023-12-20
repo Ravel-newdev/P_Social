@@ -1,4 +1,4 @@
-<section class="container" *ngFor="let sala of salas">
+ <section class="container" *ngFor="let sala of salas">
   <div class="container-title">
     <h1>{{ sala.cod_sala }}</h1>
   </div>
@@ -31,7 +31,45 @@
     </div>
   </div>
   <div class="button">
-    <a class="btn btn-primary" 
+    <a class="btn btn-primary"
       >Editar</a>
   </div>
 </section>
+
+<!-- <section class="container" *ngFor="let equipamento of equip">
+  <div class="container-title">
+    <h1>{{ equipamento.cod_equip }}</h1>
+  </div>
+  <div class="container-body">
+    <div class="container-text">
+      Quem reservou:
+      <input type="text" class="text" id="text" [(ngModel)]="equipamento.cod_user" disabled="disabled"/>
+    </div>
+    <div class="container-desc">
+      <label for="descricao">Descrição da reserva:</label
+      ><textarea id="descricao" disabled="disabled">{{ equipamento.desc }}</textarea>
+    </div>
+    <div class="container-datetime">
+      Estimativa de entrega:
+      <input
+        type="datetime"
+        id="deliveryDate"
+        name="deliveryDate"
+        [(ngModel)]="equipamento.date_entrega"
+        disabled="disabled"
+      />
+      às
+      <input
+        type="time"
+        id="deliveryTime"
+        name="deliveryTime"
+        [(ngModel)]="equipamento.hora_entrega"
+        disabled="disabled"
+      />
+    </div>
+  </div>
+  <div class="button">
+    <a class="btn btn-primary"
+      >Editar</a>
+  </div>
+</section> -->

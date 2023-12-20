@@ -55,7 +55,7 @@ export class RelationRoomsComponent {
     else{
       return [];
     }
-  
+
   }
 
   get totalPages() {

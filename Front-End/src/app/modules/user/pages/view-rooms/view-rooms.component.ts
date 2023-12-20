@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { salas_2 } from 'src/app/models/salas_2';
+import { PopupService } from 'src/app/services/popup.service';
 import { RoomService } from 'src/app/services/room.service';
 
 @Component({
@@ -14,8 +15,10 @@ export class ViewRoomsComponent implements OnInit {
   salas: salas_2[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 3;
+  success: boolean = false;
+  errorCad: boolean = false;
 
-  constructor(private roomService: RoomService, private router: Router) {}
+  constructor(private roomService: RoomService, private router: Router, public popupService: PopupService) {}
 
   ngOnInit(): void {
     this.carregarSalas();
@@ -36,6 +39,28 @@ export class ViewRoomsComponent implements OnInit {
         console.error('Erro ao carregar salas:', error);
       }
     );
+  }
+
+  excluirSala(sala: salas_2): void {
+    if (sala._id) {
+      this.roomService.excluirSala(sala._id).subscribe(
+        () => {
+
+          this.carregarSalas();
+          this.success = true;
+          this.errorCad = false;
+          this.popupService.addMessage('Sala deletada com sucesso!');
+        },
+        (error) => {
+          this.success = false;
+          this.errorCad = true;
+          this.popupService.addMessage('Erro ao deletar sala!');
+          console.error('Erro ao deletar sala:', error);
+        }
+      );
+    } else {
+      console.error('ID da sala não encontrado para exclusão.');
+    }
   }
 
   getStatusLabel(status: string): string {

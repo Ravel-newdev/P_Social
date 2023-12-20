@@ -5,7 +5,7 @@
   <div class="container">
     <div class="col-md-4 mb-2 mt-4" *ngFor="let sala of salas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
       <div class="card">
-        <div class="card-header"> 
+        <div class="card-header">
           <p class="card-text">{{sala.nome}}</p>
         </div>
         <div class="card-body">
@@ -14,12 +14,12 @@
         </div>
         <div class="btn-grupo">
             <button class="btn-reserve"  [routerLink]="['reserve/', sala._id, sala.codigo]">Reservar</button>
-            <button class="btn-delete">Deletar</button>
+            <button class="btn-delete" (click)="excluirSala(sala)">Deletar</button>
         </div>
       </div>
     </div>
   </div>
-</div>  
+</div>
 
 <div class="container-fluid mt-5 d-flex align-items-center justify-content-center mx-auto">
   <div class="paginator">

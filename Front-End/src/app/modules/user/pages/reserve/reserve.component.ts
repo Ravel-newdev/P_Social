@@ -35,11 +35,11 @@ export class ReserveComponent implements OnInit {
       this.id_rota = params['id'];
       this.nome_rota = params['name'];
     });
-  
+
     this.route.data.subscribe(data => {
       this.reservationType = data['type']; // Obtendo o tipo de reserva
     });
-  
+
     if (this.id_rota && this.nome_rota && this.reservationType) {
       if (this.reservationType === 'room') {
         this.reservaRoomForm.patchValue({
@@ -54,7 +54,7 @@ export class ReserveComponent implements OnInit {
       }
     }
   }
-  
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,7 +83,7 @@ export class ReserveComponent implements OnInit {
       desc: [''],
 
     });
-   
+
   }
 
   formSala() {
@@ -126,10 +126,10 @@ export class ReserveComponent implements OnInit {
 
   createReserveRoom() {
     // if (this.reservaRoomForm.valid && this.nome_rota != null) {
-      
+
     // }
 
-    if(this.reservaRoomForm.valid && this.nome_rota == null){
+    if(this.reservaRoomForm.valid){
       const reservaData: reservas_salas= {
         cod_sala: this.reservaRoomForm.get('cod_sala')!.value,
         cod_user: this.reservaRoomForm.get('cod_user')!.value,
@@ -162,7 +162,7 @@ export class ReserveComponent implements OnInit {
   }
 
   createReserveEquipamento() {
-    if(this.reservaEquipamentoForm.valid){
+    if (this.reservaEquipamentoForm.valid) {
       const reservaEquip: reserva_equip = {
         cod_equip: this.reservaEquipamentoForm.get('cod_equip')!.value,
         cod_user: this.reservaEquipamentoForm.get('cod_user')!.value,
@@ -172,15 +172,27 @@ export class ReserveComponent implements OnInit {
         hora_entrega: this.reservaEquipamentoForm.get('hora_entrega')!.value,
         hora_reserva: this.reservaEquipamentoForm.get('hora_reserva')!.value,
         qnt_equip: this.reservaEquipamentoForm.get('qnt_equip')!.value
-      }
-       this.reserveService.createReservaEquip(reservaEquip)
-       this.success = true;
-       this.errorCad = false;
-       this.popupService.addMessage('Equipamento reservado com sucesso!');
+      };
+
+      this.reserveService.createReservaEquip(reservaEquip).subscribe(
+        (response) => {
+          this.success = true;
+          this.errorCad = false;
+          this.popupService.addMessage('Sala reservada com sucesso!');
+          this.reservaEquipamentoForm.reset();
+        },
+        (error) => {
+          this.success = false;
+          this.errorCad = true;
+          this.popupService.addMessage('Ocorreu um erro ao reservar a sala.');
+          console.error(error);
+        }
+      );
     } else {
       this.success = false;
       this.errorCad = true;
       this.popupService.addMessage('Preencha todos os campos corretamente!');
     }
   }
+
 }
