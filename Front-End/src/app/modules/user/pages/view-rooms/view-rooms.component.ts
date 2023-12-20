@@ -47,14 +47,9 @@ export class ViewRoomsComponent implements OnInit {
         () => {
 
           this.carregarSalas();
-          this.success = true;
-          this.errorCad = false;
-          this.popupService.addMessage('Sala deletada com sucesso!');
+          console.log('Sala deletada com sucesso!')
         },
         (error) => {
-          this.success = false;
-          this.errorCad = true;
-          this.popupService.addMessage('Erro ao deletar sala!');
           console.error('Erro ao deletar sala:', error);
         }
       );
