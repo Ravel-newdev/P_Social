@@ -309,7 +309,7 @@ router.get('/view',checkToken, async(req,res) =>{
             //Validação primária, verificando se campos estão ou não vazios
             let cod_reserva = 0
         
-            const {cod_user,cod_sala,nome_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
+            const {cod_user,cod_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
 
             const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
             const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)

@@ -139,19 +139,20 @@ https://api-clee.onrender.com/reserva_equip/view
 method: GET
 
 - Rota para ver reserva de equipamentos deletadas:
-https://api-clee.onrender.com/view_delete
+https://api-clee.onrender.com/reserva_equip/view_delete
 method: GET
 
+
 - Rota para criar reserva de equipamentos:
-https://api-clee.onrender.com/create
+https://api-clee.onrender.com/reserva_equip/create
 method: POST
 
 - Rota para atualizar a reserva de equipamentos:
-https://api-clee.onrender.com/update/{id da reserva de equipamento}
+https://api-clee.onrender.com/reserva_equip/update/{id da reserva de equipamento}
 method: PUT
 
 - Rota para deletar a reserva de equipamentos:
-https://api-clee.onrender.com/delete/ {id da reserva de equipamento}
+https://api-clee.onrender.com/reserva_equip/delete/ {id da reserva de equipamento}
 method: PUT
 
 - Rota para consultar reserva de equipamento por codigo:
