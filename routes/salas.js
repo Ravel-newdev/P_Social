@@ -3,6 +3,9 @@ const router = express.Router()
 const mongoose = require('mongoose')
 require('../models/Salas')
 const Salas = mongoose.model('salas')
+require('../models/Reserva_Salas')
+const R_Salas = mongoose.model('reserva_salas')
+
 const checkToken = require('../middleware/checkToken')
 
 //Consultas
@@ -213,11 +216,17 @@ router.put('/update/:id', checkToken,async(req,res)=>{
 
 
 router.put('/delete/:id',checkToken ,async(req,res)=>{
-   await Salas.findOne({_id:req.params.id}).then(async()=>{
+   await Salas.findOne({_id:req.params.id}).then(async(salass)=>{         
+   R_Salas.find({cod_sala:salass.codigo , D_E_L_E_T: ''}).lean().then(()=>{
+
+    const filter = { cod_sala: salass.codigo};
+    const update = { $set: { D_E_L_E_T: '*', date_update: Date.now()}};
+
+       R_Salas.updateMany(filter, update, { new: true }).then(async() =>{
         const filter = { _id: req.params.id };
         const update = { $set: { D_E_L_E_T: '*',status:'D'
         , date_update: Date.now()}};
-
+  
       await Salas.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
             res.status(200).json({msg:'Sala deletada com sucesso!'})
            }).catch((err)=>{
@@ -226,7 +235,14 @@ router.put('/delete/:id',checkToken ,async(req,res)=>{
    }).catch((err)=>{
     res.status(404).json({msg:'Sala não encontrada.'})
    })
+       }).catch((err)=>{
+        res.status(404).json({msg:'Error ao deletar reservas da sala. ERROR: '+err})
+       })
+}).catch((err)=>{
+res.status(404).json({msg:'Sala não encontrada.'})
 })
+   })  
+
 
 
 //DISCLAMER: O DELETE TOTAL NÃO SERÁ USADO EM NENHUM MOMENTO PELO USUÁRIO 

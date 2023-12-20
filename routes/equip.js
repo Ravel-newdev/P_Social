@@ -3,7 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 require("../models/Equip");
 const Equips = mongoose.model("equip");
+require('../models/Reserva_Equip')
+const R_Equip = mongoose.model('reserva_equip')
 const checkToken = require('../middleware/checkToken')
+
 
 //Consultas
 router.post('/searchbycod',checkToken,async(req,res)=>{
@@ -219,19 +222,33 @@ router.put('/update/:id',checkToken ,async(req,res)=>{
 
   //deletando o equipamento
   router.put('/delete/:id',checkToken ,async(req,res)=>{ 
-    await Equips.findOne({_id:req.params.id}).then(async()=>{
-         const filter = { _id: req.params.id };
-         const update = { $set: { D_E_L_E_T: '*'
-         , date_update: Date.now()}};
+  
+    
+   await Equips.findOne({_id:req.params.id}).then(async(equips)=>{         
+    R_Equip.find({cod_equip:equips.codigo , D_E_L_E_T: ''}).lean().then(()=>{
  
+     const filter = { cod_equip: equips.codigo};
+     const update = { $set: { D_E_L_E_T: '*', date_update: Date.now()}};
+ 
+        R_Equip.updateMany(filter, update, { new: true }).then(async() =>{
+         const filter = { _id: req.params.id };
+         const update = { $set: { D_E_L_E_T: '*',status:'D'
+         , date_update: Date.now()}};
+   
        await Equips.findByIdAndUpdate(filter, update, { new: true }).then(() =>{
              res.status(200).json({msg:'Equipamento deletado com sucesso!'})
             }).catch((err)=>{
              res.status(404).json({msg:'Error ao deletar equipamento. ERROR: '+err})
             })
     }).catch((err)=>{
-     res.status(404).json({msg:'Equipamento não encontrado.'})
+     res.status(404).json({msg:'Reserva de Equipamentos não encontrada.'})
     })
+        }).catch((err)=>{
+         res.status(404).json({msg:'Error ao deletar reservas do equipamento. ERROR: '+err})
+        })
+ }).catch((err)=>{
+ res.status(404).json({msg:'Equipamento não encontrado.'})
+ })
  })
 
 
@@ -245,7 +262,7 @@ router.put('/update/:id',checkToken ,async(req,res)=>{
     })
 })
 */
-  
+
    
 
 module.exports = router;
