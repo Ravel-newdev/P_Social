@@ -36,7 +36,7 @@ const Reserva_Salas = new Schema({
     required: true
    },
    date_create:{
-    type:String,
+    type:Date,
     default:Date.now()
    },
    date_update:{
