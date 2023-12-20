@@ -43,7 +43,7 @@ export class EquipamentoService {
   }
 
   excluirEquip(equipamento: equip_2): Observable<any> {
-    const url = `${this.apiUrl}/equip/delete/${equipamento.codigo}`;
+    const url = `${this.apiUrl}/equip/delete/${equipamento._id}`;
     return this.http.put<any>(url, equipamento, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError));
   }
