@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { reserva_equip } from 'src/app/models/reserva_equips';
 import { reservas_salas } from 'src/app/models/reserva_salas';
+import { reservas_salas2 } from 'src/app/models/reserva_salas2';
 import { ReserveService } from 'src/app/services/reserve.service';
 
 @Component({
@@ -14,14 +16,17 @@ export class ViewReserveComponent {
   selectedReserva: reserva_equip | null = null;
   reservaId: string = '';
 
-  constructor(private reserveService: ReserveService) {}
+  constructor(private reserveService: ReserveService, private activeroute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.carregarReservas();
+    this.activeroute.params.subscribe(params => {
+   this.reservaId = params['cod_reserva']
+    });
   }
 
   carregarReservas(): void {
-     this.reserveService.getReservasSalas().subscribe(
+     this.reserveService.getReservaSala(this.reservaId).subscribe(
       (data: reservas_salas[]) => {
         this.salas = data;
       },

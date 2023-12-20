@@ -145,7 +145,7 @@ export class ReserveComponent implements OnInit {
           this.success = true;
           this.errorCad = false;
           this.popupService.addMessage('Sala reservada com sucesso!');
-          this.reservaRoomForm.reset();
+        
         },
         (error) => {
           this.success = false;

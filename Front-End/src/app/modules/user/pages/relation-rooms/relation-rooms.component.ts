@@ -4,6 +4,7 @@ import { reservas_salas } from 'src/app/models/reserva_salas';
 import { reserva_equip } from 'src/app/models/reserva_equips';
 import { ReserveService } from 'src/app/services/reserve.service';
 import { EMPTY } from 'rxjs';
+import { reservas_salas2 } from 'src/app/models/reserva_salas2';
 
 @Component({
   selector: 'app-relation-rooms',
