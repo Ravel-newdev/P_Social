@@ -313,8 +313,10 @@ router.get('/view',checkToken, async(req,res) =>{
             let cod_reserva = 0
         
             const {cod_user,cod_equip,desc,qnt_equip,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
-            const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
-            const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
+            const dat_rv = date_reserv.split("/")
+            const dat_re = date_entrega.split("/")
+            const date_rv = new Date(`${dat_rv[1]}/${dat_rv[0]}/${dat_rv[2]} ${hora_reserva}:00`)
+            const date_ev = new Date(`${dat_re[1]}/${dat_re[0]}/${dat_re[2]} ${hora_entrega}:00`)
             const hora_rv = date_rv.getHours() 
             const hora_ev = date_ev.getHours()
             //Validações iniciais para que a reserva seja feita
@@ -433,7 +435,7 @@ router.get('/view',checkToken, async(req,res) =>{
                 }
 
                  else{
-                 res.status(404).json({msg:'Equipamento não encontrado ou fora de estoque.'})
+                 res.status(404).json({msg:`Equipamento não encontrado ou fora de estoque.`})
                  }
                 
                 })
@@ -448,8 +450,10 @@ router.get('/view',checkToken, async(req,res) =>{
         //Atualização dos dados da reserva de equips
         router.put('/update/:id', checkToken,async(req,res)=>{
                 const {cod_user,cod_equip,desc,qnt_equip,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
-                const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
-                const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
+                const dat_rv = date_reserv.split("/")
+                const dat_re = date_entrega.split("/")
+                const date_rv = new Date(`${dat_rv[1]}/${dat_rv[0]}/${dat_rv[2]} ${hora_reserva}:00`)
+                const date_ev = new Date(`${dat_re[1]}/${dat_re[0]}/${dat_re[2]} ${hora_entrega}:00`)
                 const hora_rv = date_rv.getHours() 
                 const hora_ev = date_ev.getHours()
                 //Validações iniciais para que a reserva seja feita
@@ -570,7 +574,7 @@ router.get('/view',checkToken, async(req,res) =>{
                                   
                                     await R_Equip.findByIdAndUpdate(filter, update, { new: true })
                                       .then(() => {
-                                        res.status(200).json({ msg: 'Reserva de Equipamento atualizada com sucesso!' });
+                                        res.status(200).json({ msg: `Reserva de Equipamento atualizada com sucesso!` });
                                       })
                                       .catch((err) => {
                                         res.status(400).json({ msg: 'Erro ao atualizar reserva!' });

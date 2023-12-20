@@ -310,11 +310,13 @@ router.get('/view',checkToken, async(req,res) =>{
             let cod_reserva = 0
         
             const {cod_user,cod_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
-
-            const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
-            const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
-            const hora_rv = date_rv.getHours() 
-            const hora_ev = date_ev.getHours()
+            
+                const dat_rv = date_reserv.split("/")
+                const dat_re = date_entrega.split("/")
+                const date_rv = new Date(`${dat_rv[1]}/${dat_rv[0]}/${dat_rv[2]} ${hora_reserva}:00`)
+                const date_ev = new Date(`${dat_re[1]}/${dat_re[0]}/${dat_re[2]} ${hora_entrega}:00`)
+                const hora_rv = date_rv.getHours() 
+                const hora_ev = date_ev.getHours()
 
             if(!cod_user){
                 res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
@@ -427,11 +429,13 @@ router.get('/view',checkToken, async(req,res) =>{
         router.put('/update/:id', checkToken,async(req,res)=>{
                 const {cod_user,cod_sala,desc,date_reserv,date_entrega,hora_reserva,hora_entrega} = req.body
 
-                const date_rv = new Date(`${date_reserv} ${hora_reserva +':00'}`)
-                const date_ev = new Date(`${date_entrega} ${hora_entrega +':00'}`)
+                const dat_rv = date_reserv.split("/")
+                const dat_re = date_entrega.split("/")
+                const date_rv = new Date(`${dat_rv[1]}/${dat_rv[0]}/${dat_rv[2]} ${hora_reserva}:00`)
+                const date_ev = new Date(`${dat_re[1]}/${dat_re[0]}/${dat_re[2]} ${hora_entrega}:00`)
                 const hora_rv = date_rv.getHours() 
                 const hora_ev = date_ev.getHours()
-    
+
                 if(!cod_user){
                     res.status(422).json({msg: "Digite o nome do usuário que irá reserva."})
                  }
