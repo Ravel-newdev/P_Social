@@ -36,6 +36,6 @@ import { AuthService } from './auth.service';
   }
   createReservaEquip(reserva: reserva_equip){
     const headers = this.addAuthorizationHeader();
-    return this.http.post<any>(`${this.apiUrl}/create`, reserva,{headers} )
+    return this.http.post<any>(`${this.apiUrl}/reserva_equip/create`, reserva,{headers} )
   }
 }

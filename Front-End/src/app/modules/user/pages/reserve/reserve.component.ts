@@ -167,7 +167,7 @@ export class ReserveComponent implements OnInit {
         cod_equip: this.reservaEquipamentoForm.get('cod_equip')!.value,
         cod_user: this.reservaEquipamentoForm.get('cod_user')!.value,
         date_entrega: this.reservaEquipamentoForm.get('date_entrega')!.value,
-        date_reserva: this.reservaEquipamentoForm.get('date_reserva')!.value,
+        date_reserv: this.reservaEquipamentoForm.get('date_reserva')!.value,
         desc: this.reservaEquipamentoForm.get('desc')!.value,
         hora_entrega: this.reservaEquipamentoForm.get('hora_entrega')!.value,
         hora_reserva: this.reservaEquipamentoForm.get('hora_reserva')!.value,
