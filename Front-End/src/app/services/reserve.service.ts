@@ -41,8 +41,9 @@ import { reservas_salas2 } from '../models/reserva_salas2';
     return this.http.post<any>(`${this.apiUrl}/reserva_equip/create`, reserva,{headers} )
   }
 
-  atualizarReservaSala(reserva: reservas_salas){
+  atualizarReservaSala(idreserva: string) {
     const headers = this.addAuthorizationHeader();
-    return this.http.put<any>(`${this.apiUrl}/reserva_salas/update/`, reserva,{headers} )
+    return this.http.put<any>(`${this.apiUrl}/reserva_salas/update/${idreserva}`, { headers });
   }
+  
 }

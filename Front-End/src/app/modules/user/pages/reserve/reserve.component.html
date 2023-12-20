@@ -9,8 +9,8 @@
               <h1>Reservar sala</h1>
               <div class="form-content" id="formSala">
                 <div class="input-field">
-                  <label for="nomeSala">Codigo da Sala</label>
-                  <input type="number" id="nomeSala" formControlName="cod_sala" required>
+                  <label  for="nomeSala">Codigo da Sala</label>
+                  <input [disabled]="canedit" type="number" id="nomeSala" formControlName="cod_sala"  required>
                 </div>
                 <div class="input-field">
                   <label for="nomeSala">Quem está reservando:</label>

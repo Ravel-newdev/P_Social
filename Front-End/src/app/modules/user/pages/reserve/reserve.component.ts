@@ -19,6 +19,7 @@ export class ReserveComponent implements OnInit {
   id_rota: string = '';
   nome_rota: string = '';
   reservationType: string = '';
+  canedit: boolean =  true;
 
   success: boolean = false;
   errorCad: boolean = false;

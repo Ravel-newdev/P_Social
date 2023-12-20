@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { reserva_equip } from 'src/app/models/reserva_equips';
 import { reservas_salas } from 'src/app/models/reserva_salas';
 import { reservas_salas2 } from 'src/app/models/reserva_salas2';
+import { AuthService } from 'src/app/services/auth.service';
 import { ReserveService } from 'src/app/services/reserve.service';
 
 @Component({
@@ -12,14 +13,14 @@ import { ReserveService } from 'src/app/services/reserve.service';
   styleUrls: ['./view-reserve.component.css'],
 })
 export class ViewReserveComponent {
-  salas: reservas_salas[] = [];
+  salas: reservas_salas2[] = [];
   equip: reserva_equip[] = [];
   selectedReserva: reserva_equip | null = null;
   reservaId: string = '';
   canEdit: boolean = false;
-  reservaOriginal: reservas_salas | null = null;
+  reservaOriginal: reservas_salas2 | null = null;
 
-  constructor(private reserveService: ReserveService, private activeroute: ActivatedRoute) {}
+  constructor(private reserveService: ReserveService, private activeroute: ActivatedRoute, private authservice: AuthService) {}
 
   ngOnInit(): void {
     this.carregarReservas();
@@ -30,7 +31,7 @@ export class ViewReserveComponent {
 
   carregarReservas(): void {
      this.reserveService.getReservasSalas().subscribe(
-      (data: reservas_salas[]) => {
+      (data: reservas_salas2[]) => {
         this.salas = data;
         console.log(data);
       },
@@ -56,14 +57,15 @@ export class ViewReserveComponent {
 
   }
 
-  habilitarEdicao(sala: reservas_salas): void {
+  habilitarEdicao(sala: reservas_salas2): void {
     this.canEdit = true;
     this.reservaOriginal = { ...sala }; // Cria uma cópia da reserva original para uso no cancelamento
+    
   }
 
-  salvarEdicaoSala(sala: reservas_salas): void {
+  salvarEdicaoSala(sala: reservas_salas2): void {
 
-    this.reserveService.atualizarReservaSala(sala).subscribe(
+    this.reserveService.atualizarReservaSala(sala._id).subscribe(
       (response) => {
         // Atualização bem-sucedida, adicione lógica para feedback ao usuário se necessário
         console.log('Reserva de sala atualizada:', response);
@@ -72,6 +74,7 @@ export class ViewReserveComponent {
       (error) => {
         // Trate os erros durante a atualização, como exibir mensagens de erro
         console.error('Erro ao atualizar a reserva de sala:', error);
+        console.log(this.authservice.getToken())
       }
     );
   }

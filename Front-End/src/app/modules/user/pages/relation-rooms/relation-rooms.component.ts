@@ -16,7 +16,7 @@ export class RelationRoomsComponent {
   selectedRoom: string = 'all';
   currentPage: number = 1;
   itemsPerPage: number = 3;
-  reservasSalas: reservas_salas[] = [];
+  reservasSalas: reservas_salas2[] = [];
   reservasEquipamentos: reserva_equip[] = [];
 
   constructor(private router: Router, private reservasService: ReserveService) {}
@@ -27,7 +27,7 @@ export class RelationRoomsComponent {
 
   carregarReservas(): void {
     this.reservasService.getReservasSalas().subscribe(
-      (reservas: reservas_salas[]) => {
+      (reservas: reservas_salas2[]) => {
         this.reservasSalas = reservas;
         console.log(reservas)
       },
