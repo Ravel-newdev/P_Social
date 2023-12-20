@@ -376,9 +376,14 @@ router.get('/view',checkToken, async(req,res) =>{
              else{
                 //Verificando se a sala digitada existe ou não no sistema.
               Salas.findOne({codigo: cod_sala, D_E_L_E_T:''}).lean().then((salas)=>{
-                 if(salas){
 
-                  //Vê a ultima reserva de sala para gerar o codigo
+                 if(salas){
+                  
+                    if(salas.status == 'I'){
+                        res.status(422).json({msg:'A sala não está ativa'})
+                    }
+
+                    else{
                     R_Salas.findOne().sort({_id: -1}).lean().then((u_r_salass)=>{
                         u_r_salass ? cod_reserva = u_r_salass.cod_reserva : cod_reserva = 0
                         const newR_Salas = {
@@ -402,7 +407,8 @@ router.get('/view',checkToken, async(req,res) =>{
                    }).catch((err)=>{
                        res.status(404).json({msg:'Error na consulta.'})
                    })
-               
+                }
+                
                  }
 
                  else{
@@ -486,8 +492,12 @@ router.get('/view',checkToken, async(req,res) =>{
                   //Encontra uma sala que nao esteja deletada para verificar se ela existe.
                     Salas.findOne({codigo: cod_sala, D_E_L_E_T:''}).lean().then((salas)=>{
                         if(salas){
+
+                          if(salas.status == 'I'){
+                            res.status(422).json({msg:'A sala não está ativa'})
+                          }
                           
-                          //Se existir ele tenta encontrar uma reserva com aquele mesmo codigo para que a atualização possa ocorrer com sucesso.
+                    else{
                             R_Salas.findOne({_id: req.params.id}).then(async(r_salass)=>{
             
                                 if (
@@ -530,6 +540,7 @@ router.get('/view',checkToken, async(req,res) =>{
                                 }).catch((err)=>{
                                   res.status(404).json({msg:'Error ao atualizar os dados. ERROR: '+err})
                                 })
+                     }
                         }
                         else{
                          res.status(404).json({msg:'Sala não encontrada'})
@@ -580,8 +591,7 @@ router.delete('/delete_everything',async(req,res)=>{
         res.status(400).json({msg:'Não foi possivel deletar'})
     })
 })
-
-
 */
+
 
 module.exports = router
